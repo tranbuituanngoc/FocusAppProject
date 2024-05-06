@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Register Page</title>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      th:href="@{'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap'}"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      th:href="@{'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap'}"
+    />
+    <link rel="preconnect" th:href="@{'https://fonts.googleapis.com'}" />
+    <link rel="preconnect" th:href="@{'https://fonts.gstatic.com'}" crossorigin />
+    <link
+            th:href="@{'https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap'}"
+      rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" th:href="@{/user_style/css/mdb.min.css}"/>
+    <link rel="stylesheet" th:href="@{/user_style/css/style.css}"/>
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="vw-100 vh-100 position-relative">
+      <div class="right-background">
+        <div class="right-eclipse1-register"></div>
+        <div class="right-eclipse2-register"></div>
+        <div class="right-rectangle-register">
+          <img
+            th:src="@{/user_style/img/Picture2.png}"
+            alt=""
+            srcset=""
+            class="right-rectangle-register"
+          />
+        </div>
+      </div>
+      <div class="register-form">
+        <div class="title-login">
+          <div class="Primary-Raleway_Big Origin-Black">Đăng ký</div>
+          <div class="text-center">
+            <span class="Primary-Raleway_Body Origin-Black"
+              >Bạn đã có tài khoản?</span
+            >
+            <a th:href="@{login}" class="Primary-Raleway_Body">Đăng nhập</a>
+          </div>
+        </div>
+        <form action="#" method="post">
+          <div class="login-field mb-2">
+            <div class="form-outline" data-mdb-input-init>
+              <input
+                type="text"
+                id="full-name"
+                class="form-control input-form"
+              />
+              <label class="form-label" for="full-name">Họ và tên</label>
+            </div>
+            <div class="form-outline" data-mdb-input-init>
+              <input type="text" id="email" class="form-control input-form" />
+              <label class="form-label" for="email">Email</label>
+            </div>
+            <div class="form-outline" data-mdb-input-init>
+              <input
+                type="password"
+                id="typePassword"
+                class="input-form form-control"
+              />
+              <label class="form-label" for="typePassword">Mật khẩu</label>
+            </div>
+            <div class="form-outline" data-mdb-input-init>
+              <input
+                type="password"
+                id="re-password"
+                class="input-form form-control"
+              />
+              <label class="form-label" for="re-password"
+                >Nhập lại mật khẩu</label
+              >
+            </div>
+          </div>
+          <div class="footer-login">
+            <button class="button-login Primary-Raleway_Medium w-13vw">
+              Tạo tài khoản
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MDB -->
+    <script type="text/javascript" th:src="@{/user_style/js/mdb.umd.min.js}"></script>
+  </body>
+</html>

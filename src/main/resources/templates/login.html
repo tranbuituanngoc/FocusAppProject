@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Login Page</title>
+    <!-- MDB icon -->
+    <link rel="icon" th:href="@{/user_style/img/mdb-favicon.ico}" type="image/x-icon"/>
+    <!-- Font Awesome -->
+    <link
+            rel="stylesheet"
+            th:href="@{'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'}"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+            rel="stylesheet"
+            th:href="@{'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap'}"
+    />
+    <link rel="preconnect" th:href="@{'https://fonts.googleapis.com'}"/>
+    <link rel="preconnect" th:href="@{'https://fonts.gstatic.com'}" crossorigin/>
+    <link th:href="@{'https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap'}"
+          rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" th:href="@{/user_style/css/mdb.min.css}"/>
+    <link rel="stylesheet" th:href="@{/user_style/css/style.css}"/>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="vw-100 vh-100 position-relative">
+    <div class="left-background">
+        <div class="left-eclipse-login"></div>
+        <div class="left-rectangle-login">
+            <img th:src="@{/user_style/img/Picture3.png}"
+                 alt=""
+                 srcset=""
+                 class="left-rectangle-login"
+            />
+        </div>
+    </div>
+    <div class="right-eclipse-login"></div>
+    <div class="login-form">
+        <div class="title-login">
+            <div class="Primary-Raleway_Big Origin-Black">Đăng nhập</div>
+            <div class="text-center">
+            <span class="Primary-Raleway_Body Origin-Black"
+            >Bạn chưa có tài khoản?</span
+            >
+                <a th:href="@{register}" class="Primary-Raleway_Body">Đăng ký</a>
+            </div>
+        </div>
+        <form th:action="@{/auth/login}" method="post">
+            <div class="login-field">
+                <div class="form-outline" data-mdb-input-init>
+                    <input
+                            type="text"
+                            id="typeText"
+                            class="form-control input-form"
+                            name="email"
+                    />
+                    <label class="form-label" for="typeText">Email</label>
+                </div>
+                <div class="form-outline mb-2" data-mdb-input-init>
+                    <input
+                            type="password"
+                            id="typePassword"
+                            class="input-form form-control"
+                            name="password"
+                    />
+                    <label class="form-label" for="typePassword">Password</label>
+                </div>
+                <div class="float-end">
+                    <a href="#" class="Primary-Raleway_Body Origin-MidGray"
+                    >Quên mật khẩu?</a
+                    >
+                </div>
+            </div>
+            <div class="footer-login">
+                <button type="submit" class="button-login Primary-Raleway_Medium">
+                    Đăng nhập
+                </button>
+                <div class="subtext-login">
+                    <p class="Primary-Raleway_Small Origin-Black">
+                        hoặc đăng nhập với
+                    </p>
+                </div>
+                <div class="other-login">
+                    <a class="socialButton" href="#">
+                        <img th:src="@{/user_style/img/icon/flat-color-icons_google.svg}"
+                             alt=""
+                             srcset=""
+                        />
+                    </a>
+                    <a class="socialButton" href="#">
+                        <img th:src="@{/user_style/img/icon/bxl_facebook.svg}" alt="" srcset=""/>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MDB -->
+<script type="text/javascript" th:src="@{/user_style/js/mdb.umd.min.js}"></script>
+<!-- Custom scripts -->
+<script type="text/javascript"></script>
+</body>
+</html>
