@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security6">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <h1>Admin Page</h1>
+<!--Name ở đây là username người dùng nhập vào authentication-->
+<h2 sec:authentication="name"></h2>
+<a th:href="@{/auth/logout}">Đăng xuất</a>
 </body>
 </html>

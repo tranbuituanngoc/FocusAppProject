@@ -18,7 +18,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final CustomUserDetailService customUserDetailService;
-    private final ObjectPostProcessor<Object> objectPostProcessor;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -34,7 +33,8 @@ public class SecurityConfig {
                                 .usernameParameter("email")
                                 .passwordParameter("password")
                                 .successHandler(new CustomAuthenticationSuccessHandler())
-                                .failureUrl("/auth/login").permitAll());
+                                .failureUrl("/auth/login").permitAll())
+                        .logout(logout -> logout.logoutUrl("/auth/logout").logoutSuccessUrl("/auth/login").permitAll());
 
         return http.build();
     }
