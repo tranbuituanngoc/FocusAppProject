@@ -1,10 +1,16 @@
 package vn.edu.hcmuaf.FocusAppProject.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.util.StringUtils;
 import vn.edu.hcmuaf.FocusAppProject.Util.EmailUtil;
 import vn.edu.hcmuaf.FocusAppProject.Util.SaltStringUtil;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserDTO;
+import vn.edu.hcmuaf.FocusAppProject.exception.DataNotFoundException;
+import vn.edu.hcmuaf.FocusAppProject.exception.PermissionDenyException;
 import vn.edu.hcmuaf.FocusAppProject.exception.VerifyDenyException;
 import lombok.RequiredArgsConstructor;
+import vn.edu.hcmuaf.FocusAppProject.models.Role;
 import vn.edu.hcmuaf.FocusAppProject.models.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,10 +27,15 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AuthService implements AuthServiceImp {
+    @Autowired
     UserRepository userRepository;
+    @Autowired
     RoleRepository roleRepository;
+    @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
     SaltStringUtil saltString;
+    @Autowired
     EmailUtil emailUtil;
 
     @Override
@@ -36,47 +47,46 @@ public class AuthService implements AuthServiceImp {
 
     @Override
     public User createUser(UserDTO userDTO) throws Exception {
-//        String email = userDTO.getEmail();
-//        if (userRepository.existsByEmail(email)) {
-//            throw new DataIntegrityViolationException("Email is already exists");
-//        }
-////        Role roles = roleRepository.findById(userDTO.getRole_id()).orElseThrow(() -> new DataNotFoundException("Role not found"));
-////        if (role.getRoleName().equalsIgnoreCase("ADMIN")) {
-////            throw new PermissionDenyException("You cannot register an admin account");
-////        }
-//        //Set timevalid
-//        Date todaysDate = new Date(new java.util.Date().getTime());
-//        Calendar c = Calendar.getInstance();
-//        c.setTime(todaysDate);
-//        //set time valid is 5 minute
-//        c.add(Calendar.MINUTE, 5);
-//        Timestamp timeValid = new Timestamp(c.getTimeInMillis());
-//        //Create salt string(random string)
-//        String verificationCode = saltString.getSaltString();
-//        System.out.println(userDTO.getPassword());
-//        //Create new user
-//        User user = User.builder().email(userDTO.getEmail())
-//                .name(userDTO.getName())
-//                .provider(userDTO.getProvider())
-//                .token(userDTO.getToken())
-//                .isVerify(false)
-//                .verificationCode(verificationCode)
-//                .timeValid(timeValid)
-//                .status(true)
-////                .roles(role)
-//                .build();
-//        if (!StringUtils.hasText(userDTO.getProvider())) {
-//            System.out.println(userDTO.getPassword());
-//            String password = userDTO.getPassword();
-//            String encodedPassword = passwordEncoder.encode(password);
-//            user.setPassword(encodedPassword);
-//        }
-//        User savedUser = userRepository.save(user);
-//
-//        emailUtil.sendMail(userDTO.getEmail(),"Đây là email xác thực","Xác thực tài khoản");
-//
-//        return savedUser;
-        return null;
+        String email = userDTO.getEmail();
+        if (userRepository.existsByEmail(email)) {
+            throw new DataIntegrityViolationException("Email is already exists");
+        }
+        Role role = roleRepository.findById(userDTO.getRole_id()).orElseThrow(() -> new DataNotFoundException("Role not found"));
+        if (role.getRoleName().equalsIgnoreCase("ADMIN")) {
+            throw new PermissionDenyException("You cannot register an admin account");
+        }
+        //Set timevalid
+        Date todaysDate = new Date(new java.util.Date().getTime());
+        Calendar c = Calendar.getInstance();
+        c.setTime(todaysDate);
+        //set time valid is 5 minute
+        c.add(Calendar.MINUTE, 5);
+        Timestamp timeValid = new Timestamp(c.getTimeInMillis());
+        //Create salt string(random string)
+        String verificationCode = saltString.getSaltString();
+        System.out.println(userDTO.getPassword());
+        //Create new user
+        User user = User.builder().email(userDTO.getEmail())
+                .name(userDTO.getName())
+                .provider(userDTO.getProvider())
+                .token(userDTO.getToken())
+                .isVerify(false)
+                .verificationCode(verificationCode)
+                .timeValid(timeValid)
+                .status(true)
+                .roles(role)
+                .build();
+        if (!StringUtils.hasText(userDTO.getProvider())) {
+            System.out.println(userDTO.getPassword());
+            String password = userDTO.getPassword();
+            String encodedPassword = passwordEncoder.encode(password);
+            user.setPassword(encodedPassword);
+        }
+        User savedUser = userRepository.save(user);
+
+        emailUtil.sendMail(userDTO.getEmail(),"Đây là email xác thực","Xác thực tài khoản");
+
+        return savedUser;
     }
 
     @Override

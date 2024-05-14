@@ -3,10 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!-- MDB icon -->
+    <link rel="icon" th:href="@{/user_style/img/mdb-favicon.ico}" type="image/x-icon"/>
+    <!-- Font Awesome -->
+    <link
+            rel="stylesheet"
+            th:href="@{'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'}"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+            rel="stylesheet"
+            th:href="@{'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap'}"
+    />
+    <link rel="preconnect" th:href="@{'https://fonts.googleapis.com'}"/>
+    <link rel="preconnect" th:href="@{'https://fonts.gstatic.com'}" crossorigin/>
+    <link th:href="@{'https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap'}"
+          rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" th:href="@{/user_style/css/mdb.min.css}"/>
+    <link rel="stylesheet" th:href="@{/user_style/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/user_style/css/style_guide.css}"/>
 </head>
 <body>
 <h1>Spring Boot Thymeleaf Example</h1>
 <a th:href="@{auth/login}">Đăng nhập</a>
 <a  th:href="@{auth/register}" >Đăng ký</a>
+<button class="button-link-dkmh" >Liên kết tài khoản</button>
+<button class="button-reload-data" >Cập nhật dữ liệu</button>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var user = /*[[${session.user}]]*/ 'default';
+    /*]]>*/
+</script>
+<script type="text/javascript" th:src="@{/user_style/js/jquery.js}"></script>
+<script th:src="@{'https://cdn.jsdelivr.net/npm/sweetalert2@11'}"></script>
+<script type="text/javascript" th:src="@{/user_style/js/script.js}"></script>
 </body>
 </html>

@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Data
 @NoArgsConstructor
@@ -22,13 +23,13 @@ public class BaseEntity {
 
     @PrePersist
     protected void onCreate() {
-        issued = LocalDateTime.now();
+        issued = LocalDateTime.now(ZoneId.of("GMT"));;
         expires = issued.plusMinutes(30);
     }
 
     @PreUpdate
     protected void onUpdate() {
-        issued = LocalDateTime.now();
+        issued = LocalDateTime.now(ZoneId.of("GMT"));
         expires = issued.plusMinutes(30);
     }
 }

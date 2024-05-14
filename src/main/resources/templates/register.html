@@ -60,25 +60,31 @@
             >
             <a th:href="@{login}" class="Primary-Raleway_Body">Đăng nhập</a>
           </div>
+          <div class="Primary-Raleway_Body fw-bolder " >
+            <p th:text="${message}"></p>
+          </div>
         </div>
-        <form action="#" method="post">
+        <form th:action="@{/auth/register}" method="post">
           <div class="login-field mb-2">
             <div class="form-outline" data-mdb-input-init>
               <input
                 type="text"
                 id="full-name"
+                name="name"
+                th:value="${userDTO.name==null?'':userDTO.name}"
                 class="form-control input-form"
               />
               <label class="form-label" for="full-name">Họ và tên</label>
             </div>
             <div class="form-outline" data-mdb-input-init>
-              <input type="text" id="email" class="form-control input-form" />
+              <input type="text" th:value="${userDTO.email==null?'':userDTO.email}" id="email" name="email" class="form-control input-form" />
               <label class="form-label" for="email">Email</label>
             </div>
             <div class="form-outline" data-mdb-input-init>
               <input
                 type="password"
                 id="typePassword"
+                name="password"
                 class="input-form form-control"
               />
               <label class="form-label" for="typePassword">Mật khẩu</label>
@@ -87,15 +93,17 @@
               <input
                 type="password"
                 id="re-password"
+                name="retypePassword"
                 class="input-form form-control"
               />
               <label class="form-label" for="re-password"
                 >Nhập lại mật khẩu</label
               >
             </div>
+            <input type="hidden" id="role_id" name="role_id" value="2">
           </div>
           <div class="footer-login">
-            <button class="button-login Primary-Raleway_Medium w-13vw">
+            <button class="button-login Primary-Raleway_Medium w-13vw" type="submit">
               Tạo tài khoản
             </button>
           </div>

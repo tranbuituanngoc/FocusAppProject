@@ -1,0 +1,38 @@
+:root {
+    --primaryblue: rgba(89, 213, 224, 1);
+    --primaryyellow: rgba(245, 221, 97, 1);
+    --primaryorange: rgba(250, 163, 0, 1);
+    --primarylightred: rgba(244, 83, 138, 1);
+    --originblack: rgba(55, 55, 55, 1);
+    --origindarkgrey: rgba(76, 76, 76, 1);
+    --originmidgrey: rgba(104, 104, 104, 1);
+    --origingrey: rgba(168, 168, 168, 1);
+    --originlightgrey: rgba(240, 240, 240, 1);
+    --originwhite: rgba(255, 255, 255, 1);
+    --primary-raleway-big-font-family: "Raleway", Helvetica;
+    --primary-raleway-big-font-weight: 900;
+    --primary-raleway-big-font-size: 48px;
+    --primary-raleway-big-letter-spacing: 0px;
+    --primary-raleway-big-line-height: normal;
+    --primary-raleway-big-font-style: normal;
+    --primary-raleway-medium-font-family: "Raleway", Helvetica;
+    --primary-raleway-medium-font-weight: 700;
+    --primary-raleway-medium-font-size: 24px;
+    --primary-raleway-medium-letter-spacing: 0px;
+    --primary-raleway-medium-line-height: normal;
+    --primary-raleway-medium-font-style: normal;
+    --primary-raleway-body-font-family: "Raleway", Helvetica;
+    --primary-raleway-body-font-weight: 400;
+    --primary-raleway-body-font-size: 16px;
+    --primary-raleway-body-letter-spacing: 0px;
+    --primary-raleway-body-line-height: normal;
+    --primary-raleway-body-font-style: normal;
+    --primary-raleway-small-font-family: "Raleway", Helvetica;
+    --primary-raleway-small-font-weight: 400;
+    --primary-raleway-small-font-size: 12px;
+    --primary-raleway-small-letter-spacing: 0px;
+    --primary-raleway-small-line-height: normal;
+    --primary-raleway-small-font-style: normal;
+    --shadow-textfield: 7px 7px 4px 0px rgba(0, 0, 0, 0.25);
+    --shadow-todo: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}

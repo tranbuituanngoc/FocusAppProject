@@ -25,15 +25,15 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                         request -> request
+                                .requestMatchers("/auth/login","/auth/register").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                                .requestMatchers("/auth/login,/auth/register").permitAll()
                                 .anyRequest().authenticated()).formLogin(
                         login -> login.loginPage("/auth/login")
                                 .loginProcessingUrl("/auth/login")
                                 .usernameParameter("email")
                                 .passwordParameter("password")
                                 .successHandler(new CustomAuthenticationSuccessHandler())
-                                .failureUrl("/auth/login").permitAll())
+                                .failureHandler(new CustomAuthenticationFailureHandler()).permitAll())
                         .logout(logout -> logout.logoutUrl("/auth/logout").logoutSuccessUrl("/auth/login").permitAll());
 
         return http.build();

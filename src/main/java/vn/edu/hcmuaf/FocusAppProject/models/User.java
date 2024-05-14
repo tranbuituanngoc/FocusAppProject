@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,9 +42,14 @@ public class User implements UserDetails {
     private Timestamp timeValid;
     @Column(name = "status")
     private boolean status;
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role roles;
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
     @Column(name = "faculty")
     private String faculty;
     @Column(name = "major")
@@ -53,6 +59,8 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "users")
     List<Note> notes;
+    @OneToMany(mappedBy = "user")
+    List<Semesters> semesters;
     @OneToMany(mappedBy = "user")
     List<Achivement> achivements;
     @OneToMany(mappedBy = "user")

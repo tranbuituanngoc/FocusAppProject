@@ -1,5 +1,7 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +25,7 @@ public class Role {
     private boolean userPermission;
     @Column(name = "role_permission")
     private boolean rolePermission;
-
+    @JsonBackReference
     @OneToMany(mappedBy = "roles")
     Set<User> listUser;
 

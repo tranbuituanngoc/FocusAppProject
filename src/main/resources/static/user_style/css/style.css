@@ -272,3 +272,74 @@
 .w-13vw{
     width: 13vw !important;
 }
+
+.error-message{
+    color: var(--Primary-LightRed)
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.confirm-button-class{
+    color: var(--Origin-White);
+    min-width: fit-content;
+    border: none;
+    background: var(--Primary-Blue) !important;
+    box-shadow: 7px 7px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 6px !important;
+}
+.cancel-button-class{
+    font-family: var(--primary-raleway-medium-font-family) !important;
+    font-weight: var(--primary-raleway-medium-font-weight) !important;
+    color: #000000 !important;
+    font-size: var(--primary-raleway-body-font-size) !important;
+    text-align: center;
+    letter-spacing: var(--primary-raleway-medium-letter-spacing) !important;
+    line-height: var(--primary-raleway-medium-line-height) !important;
+    white-space: nowrap !important;
+    font-style: var(--primary-raleway-medium-font-style) !important;
+    background: none !important;
+}
+.title-alert-class{
+    font-family: var(--primary-raleway-medium-font-family) !important;
+    font-weight: var(--primary-raleway-medium-font-weight) !important;
+    color: #000000 !important;
+    font-size: var(--primary-raleway-medium-font-size) !important;
+    text-align: center;
+    letter-spacing: var(--primary-raleway-medium-letter-spacing) !important;
+    line-height: var(--primary-raleway-medium-line-height) !important;
+    white-space: nowrap !important;
+    font-style: var(--primary-raleway-medium-font-style) !important;
+}
+.input-alert-class{
+    width: 260px;
+    height: 39px;
+    top: 0;
+    left: 0;
+    background-color: var( --originwhite);
+    border-radius: 7px;
+    border: 1px solid;
+    border-color: var( --origingrey) ;
+    box-shadow: var( --shadow-textfield);
+    padding-bottom: 10px;
+}
+div:where(.swal2-container) .swal2-html-container {
+    padding: 10px !important;
+}
+.swal2-validation-message {
+    font-family: var(--primary-raleway-body-font-family) !important;
+    font-weight: var(--primary-raleway-body-font-weight) !important;
+    color: #000000 !important;
+    font-size: var(--primary-raleway-body-font-size) !important;
+    text-align: center;
+    letter-spacing: var(--primary-raleway-body-letter-spacing) !important;
+    line-height: var(--primary-raleway-body-line-height) !important;
+    white-space: nowrap !important;
+    font-style: var(--primary-raleway-body-font-style) !important;
+}
+.my-validation-message{
+    white-space: pre-line !important;
+    padding: 5px !important;
+    margin: 5px !important;
+}

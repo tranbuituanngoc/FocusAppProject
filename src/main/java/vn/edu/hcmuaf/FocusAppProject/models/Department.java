@@ -7,25 +7,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.Set;
 
+@Entity(name = "department")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "todo")
-public class Todo {
+public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "deadline")
-    private LocalDate deadline;
-    @Column(name = "content")
-    private String content;
-    @Column(name = "is_complete")
-    private boolean isComplete;
-    @ManyToOne
+    @Column(name = "department_name")
+    private String departmentName;
+    @OneToMany(mappedBy = "department")
+    private Set<Course> courses;
+    @OneToMany(mappedBy = "department")
+    private Set<TrainingProgram> trainingPrograms;
     @JsonBackReference
-    @JoinColumn(name = "user_id")
-    private User user;
+    @OneToMany(mappedBy = "department")
+    private Set<User> users;
 }

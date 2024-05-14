@@ -15,16 +15,21 @@ public class Score {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "expected_score_coefficient_4")
-    private double expectedScoreCoefficient4;
-    @Column(name = "actual_score_coefficient_4")
-    private double actualScoreCoefficient4;
-    @Column(name = "expected_score_coefficient_10")
-    private double expectedScoreCoefficient10;
-    @Column(name = "actual_score_coefficient_10")
-    private double actualScoreCoefficient10;
-    @Column(name = "classification")
-    private String classification;
+    @Column(name = "component_score")
+    private double componentScore;
+    @Column(name = "score")
+    private double score;
+    @Column(name = "final_score_10")
+    private double finalScore10;
+    @Column(name = "final_score_4")
+    private double finalScore4;
+    @Column(name = "final_score_char")
+    private double finalScoreChar;
+    @Column(name = "result")
+    private boolean result;
+    @ManyToOne
+    @JoinColumn(name = "semester_id")
+    private Semesters semesters;
     @ManyToOne
     @JoinColumn(name = "user_course_id")
     UserCourse userCourse;

@@ -8,6 +8,8 @@
 <h1>Admin Page</h1>
 <!--Name ở đây là username người dùng nhập vào authentication-->
 <h2 sec:authentication="name"></h2>
+<h3 sec:authorize="hasRole('ROLE_ADMIN')">Admin</h3>
+<h3 sec:authorize="hasRole('ROLE_USER')">User</h3>
 <a th:href="@{/auth/logout}">Đăng xuất</a>
 </body>
 </html>
