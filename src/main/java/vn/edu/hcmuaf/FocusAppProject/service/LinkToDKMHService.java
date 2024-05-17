@@ -8,6 +8,7 @@ import vn.edu.hcmuaf.FocusAppProject.models.LinkToDKMH;
 import vn.edu.hcmuaf.FocusAppProject.models.User;
 import vn.edu.hcmuaf.FocusAppProject.repository.LinkToDKMHRepository;
 import vn.edu.hcmuaf.FocusAppProject.repository.UserRepository;
+import vn.edu.hcmuaf.FocusAppProject.response.LinkToDKMHResponse;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.LinkToDKMHImp;
 
 import java.util.Optional;
@@ -40,8 +41,11 @@ public class LinkToDKMHService implements LinkToDKMHImp {
     }
 
     @Override
-    public String getExpire(Long userId) throws DataNotFoundException {
+    public LinkToDKMHResponse getExpire(Long userId) throws DataNotFoundException {
         LinkToDKMH linkToDKMH = linkToDKMHRepository.findByUserId(userId).orElseThrow(() -> new DataNotFoundException("Unaffiliated user!"));
-        return String.valueOf(linkToDKMH.getExpires());
+        return new LinkToDKMHResponse().builder()
+                .mssv(linkToDKMH.getMssv())
+                .expires(linkToDKMH.getExpires())
+                .build();
     }
 }

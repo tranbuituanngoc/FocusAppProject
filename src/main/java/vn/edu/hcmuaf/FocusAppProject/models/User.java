@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ public class User implements UserDetails {
     private long id;
     @Column(name = "email", length = 300, nullable = false)
     private String email;
-    @Column(name = "name",length = 300)
+    @Column(name = "name", length = 300)
     private String name;
     @Column(name = "password", length = 200, nullable = false)
     private String password;
@@ -50,25 +51,33 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
-    @Column(name = "faculty")
-    private String faculty;
     @Column(name = "major")
     private String major;
     @Column(name = "desired_score")
     private double desiredScore;
+    @ManyToOne
+    @JoinColumn(name = "training_program_id")
+    private TrainingProgram trainingProgram;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "users")
     List<Note> notes;
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
-    List<Semesters> semesters;
+    List<UserSemesters> semesters;
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     List<Achivement> achivements;
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     List<Todo> todos;
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     List<Project> projects;
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     List<UserCourse> userCourses;
+    @JsonBackReference
     @OneToOne(mappedBy = "user")
     LinkToDKMH linkToDKMH;
 
@@ -77,6 +86,7 @@ public class User implements UserDetails {
         this.password = password;
         this.roles = roles;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();

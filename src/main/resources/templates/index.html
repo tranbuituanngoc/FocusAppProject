@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -20,6 +20,8 @@
     <link th:href="@{'https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap'}"
           rel="stylesheet"
     />
+    <!--    Toastify-->
+    <link rel="stylesheet" type="text/css" th:href="@{'https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css'}">
     <!-- MDB -->
     <link rel="stylesheet" th:href="@{/user_style/css/mdb.min.css}"/>
     <link rel="stylesheet" th:href="@{/user_style/css/style.css}"/>
@@ -28,17 +30,24 @@
 <body>
 <h1>Spring Boot Thymeleaf Example</h1>
 <a th:href="@{auth/login}">Đăng nhập</a>
-<a  th:href="@{auth/register}" >Đăng ký</a>
-<button class="button-link-dkmh" >Liên kết tài khoản</button>
-<button class="button-reload-data" >Cập nhật dữ liệu</button>
+<a th:href="@{auth/register}">Đăng ký</a>
+<button class="button-link-dkmh">Liên kết tài khoản</button>
+<button class="button-reload-data">Cập nhật dữ liệu</button>
 
 <script th:inline="javascript">
     /*<![CDATA[*/
     var user = /*[[${session.user}]]*/ 'default';
     /*]]>*/
 </script>
+<!--Toastify-->
+<script type="text/javascript" th:src="@{'https://cdn.jsdelivr.net/npm/toastify-js'}"></script>
+<!--Axios-->
+<script th:src="@{'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'}"></script>
+<!--JQuery-->
 <script type="text/javascript" th:src="@{/user_style/js/jquery.js}"></script>
+<!--Sweet Alert-->
 <script th:src="@{'https://cdn.jsdelivr.net/npm/sweetalert2@11'}"></script>
+<!--Custom Script-->
 <script type="text/javascript" th:src="@{/user_style/js/script.js}"></script>
 </body>
 </html>

@@ -10,25 +10,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 
-@Entity(name = "department")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class Department {
+@Entity(name = "semester")
+public class Semester {
     @Id
-    private long id;
-    @Column(name = "department_name")
-    private String departmentName;
+    @Column(name = "semester_id")
+    private int semesterId;
+    @Column(name = "semester_name")
+    private String semesterName;
     @JsonBackReference
-    @OneToMany(mappedBy = "department")
-    private Set<Course> courses;
+    @OneToMany(mappedBy = "semester")
+    private List<SemesterCourse> semesterCourses;
     @JsonBackReference
-    @OneToMany(mappedBy = "department")
-    private Set<TrainingProgram> trainingPrograms;
-    @JsonBackReference
-    @OneToMany(mappedBy = "department")
-    private Set<User> users;
+    @OneToMany(mappedBy = "semester")
+    private List<TrainingProgramSemesters> trainingProgramSemesters;
 }

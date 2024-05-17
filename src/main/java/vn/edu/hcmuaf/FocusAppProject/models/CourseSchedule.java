@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +32,7 @@ public class CourseSchedule {
     private LocalDate startDate;
     @Column(name = "end_date")
     private LocalDate endDate;
-
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;

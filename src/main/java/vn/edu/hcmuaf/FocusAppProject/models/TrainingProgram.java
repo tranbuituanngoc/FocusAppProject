@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,9 +20,17 @@ public class TrainingProgram {
     private long id;
     @Column(name = "year")
     private int year;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
+    @JsonBackReference
     @OneToMany(mappedBy = "trainingProgram")
     Set<CourseGroup> courseGroups;
+    @JsonBackReference
+    @OneToMany(mappedBy = "trainingProgram")
+    Set<User> users;
+    @JsonBackReference
+    @OneToMany(mappedBy = "trainingProgram")
+    Set<TrainingProgramSemesters> trainingProgramSemesters;
 }

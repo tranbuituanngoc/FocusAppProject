@@ -6,21 +6,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vn.edu.hcmuaf.FocusAppProject.models.keys.KeyCourseGroupCourses;
+import vn.edu.hcmuaf.FocusAppProject.models.keys.KeySemesterCourse;
 
-@Entity(name = "course_group_courses")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class CourseGroupCourses {
+@Entity(name = "semester_course")
+public class SemesterCourse {
     @EmbeddedId
-    private KeyCourseGroupCourses id;
+    private KeySemesterCourse id;
     @JsonBackReference
-    @MapsId("courseGroupId")
+    @MapsId("semesterId")
     @ManyToOne
-    @JoinColumn(name = "course_group_id")
-    private CourseGroup group;
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
     @JsonBackReference
     @MapsId("courseId")
     @ManyToOne

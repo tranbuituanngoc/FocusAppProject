@@ -28,15 +28,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthService implements AuthServiceImp {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     @Autowired
-    SaltStringUtil saltString;
+    private SaltStringUtil saltString;
     @Autowired
-    EmailUtil emailUtil;
+    private EmailUtil emailUtil;
 
     @Override
     public boolean checkLogin(String email, String password) {

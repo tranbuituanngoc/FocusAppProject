@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hcmuaf.FocusAppProject.dto.LinkToDKMHDTO;
+import vn.edu.hcmuaf.FocusAppProject.response.LinkToDKMHResponse;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.LinkToDKMHImp;
 
 @RestController
@@ -22,7 +23,7 @@ public class LinkToDKMHController {
     }
     @GetMapping("/get-expire/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<String> getExpire(@PathVariable Long id) throws Exception {
+    public ResponseEntity<LinkToDKMHResponse> getExpire(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(linkToDKMHImp.getExpire(id));
     }
 }

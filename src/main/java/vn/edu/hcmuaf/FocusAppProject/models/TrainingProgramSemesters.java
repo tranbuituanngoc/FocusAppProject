@@ -6,27 +6,24 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vn.edu.hcmuaf.FocusAppProject.models.keys.KeyTrainingProgramSemester;
 
-import java.util.Set;
-
-@Entity(name = "course_groups")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class CourseGroup {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "min_credits")
-    private int minCredits;
+@Entity(name = "training_program_semesters")
+public class TrainingProgramSemesters {
+    @EmbeddedId
+    private KeyTrainingProgramSemester id;
+    @MapsId("trainingProgramId")
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "training_program_id")
     private TrainingProgram trainingProgram;
+    @MapsId("semesterId")
     @JsonBackReference
-    @OneToMany(mappedBy = "group")
-    Set<CourseGroupCourses> courseGroupCourses;
+    @ManyToOne
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
 }

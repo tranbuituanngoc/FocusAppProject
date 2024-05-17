@@ -9,19 +9,15 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
-@Entity(name = "semesters")
+@Entity(name = "user_semesters")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Semesters {
+public class UserSemesters {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "semester_id")
-    private String semesterId;
-    @Column(name = "semester_name")
-    private String semesterName;
     @Column(name = "gpa_4")
     private double gpa4;
     @Column(name = "cumulative_gpa_4")
@@ -38,7 +34,15 @@ public class Semesters {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "semesters")
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
+    @JsonBackReference
+    @OneToMany(mappedBy = "userSemesters")
     Set<Score> scores;
+    @JsonBackReference
+    @OneToMany(mappedBy = "userSemesters")
+    Set<UserCourse> userCourses;
 
 }

@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.FocusAppProject.models.key;
+package vn.edu.hcmuaf.FocusAppProject.models.keys;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@Embeddable
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Embeddable
 public class KeyCourseGroupCourses implements Serializable {
     @Column(name = "course_group_id")
     private long courseGroupId;

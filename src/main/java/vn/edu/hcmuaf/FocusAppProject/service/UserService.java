@@ -25,7 +25,6 @@ public class UserService implements UserServiceImp {
             userDTO.setVerify(u.isVerify());
             userDTO.setVerificationCode(u.getVerificationCode());
             userDTO.setRole_id(u.getRoles().getId());
-            userDTO.setFaculty(u.getFaculty());
             userDTO.setMajor(u.getMajor());
             userDTO.setDesiredScore(u.getDesiredScore());
 
