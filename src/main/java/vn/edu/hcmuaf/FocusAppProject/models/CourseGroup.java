@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +23,7 @@ public class CourseGroup {
     private String name;
     @Column(name = "min_credits")
     private int minCredits;
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "training_program_id")
     private TrainingProgram trainingProgram;

@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,10 +29,11 @@ public class Course {
     private int credits;
     @Column(name = "is_mandatory")
     private boolean isMandatory;
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(
             name = "prerequisites",
@@ -42,12 +44,6 @@ public class Course {
     @JsonBackReference
     @OneToMany(mappedBy = "course")
     List<UserCourse> userCourses;
-    @JsonBackReference
-    @OneToMany(mappedBy = "course")
-    List<TestSchedule> testSchedules;
-    @JsonBackReference
-    @OneToMany(mappedBy = "course")
-    List<CourseSchedule> courseSchedules;
     @JsonBackReference
     @OneToMany(mappedBy = "course")
     Set<CourseGroupCourses> courseGroupCourses;

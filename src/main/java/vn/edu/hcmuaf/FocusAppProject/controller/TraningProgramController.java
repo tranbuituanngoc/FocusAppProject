@@ -38,7 +38,6 @@ public class TraningProgramController {
     @PostMapping("/create")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> createTrainingProgram(@RequestBody @Valid TrainingProgramDTO trainingProgramDTO) throws Exception {
-        System.out.println(1);
         try {
             Department department = departmentService.createDepartment(trainingProgramDTO.getDepartment().getDepartmentID(), trainingProgramDTO.getDepartment().getDepartmentName());
             TrainingProgram trainingProgram = traningProgramService.createTrainingProgram(trainingProgramDTO, department);

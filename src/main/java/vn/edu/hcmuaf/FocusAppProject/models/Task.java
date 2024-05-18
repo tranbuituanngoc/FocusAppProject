@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class Task {
     private String subtitle;
     @Column(name = "status")
     private int status;
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;

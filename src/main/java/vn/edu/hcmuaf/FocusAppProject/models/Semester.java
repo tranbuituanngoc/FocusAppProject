@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -23,6 +24,10 @@ public class Semester {
     private int semesterId;
     @Column(name = "semester_name")
     private String semesterName;
+    @Column(name = "start_date")
+    private LocalDate startDate;
+    @Column(name = "end_date")
+    private LocalDate endDate;
     @JsonBackReference
     @OneToMany(mappedBy = "semester")
     private List<SemesterCourse> semesterCourses;

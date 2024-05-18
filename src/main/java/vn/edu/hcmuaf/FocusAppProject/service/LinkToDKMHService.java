@@ -46,6 +46,7 @@ public class LinkToDKMHService implements LinkToDKMHImp {
         return new LinkToDKMHResponse().builder()
                 .mssv(linkToDKMH.getMssv())
                 .expires(linkToDKMH.getExpires())
+                .accessToken(linkToDKMH.getAccessToken())
                 .build();
     }
 }

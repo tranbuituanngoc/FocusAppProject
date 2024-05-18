@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,17 +31,14 @@ public class UserSemesters {
     private int cumulativeCredit;
     @Column(name = "credit_hours")
     private int creditHours;
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
-    @JsonBackReference
+    @JsonManagedReference
     @JoinColumn(name = "semester_id")
     private Semester semester;
-    @JsonBackReference
-    @OneToMany(mappedBy = "userSemesters")
-    Set<Score> scores;
     @JsonBackReference
     @OneToMany(mappedBy = "userSemesters")
     Set<UserCourse> userCourses;

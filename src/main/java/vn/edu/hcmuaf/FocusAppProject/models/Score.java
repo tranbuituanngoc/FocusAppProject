@@ -1,6 +1,6 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,15 +24,11 @@ public class Score {
     private double finalScore10;
     @Column(name = "final_score_4")
     private double finalScore4;
-    @Column(name = "final_score_char")
-    private double finalScoreChar;
+    @Column(name = "final_score_char", length = 10)
+    private String finalScoreChar;
     @Column(name = "result")
     private boolean result;
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "user_semester_id")
-    private UserSemesters userSemesters;
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user_course_id")
     UserCourse userCourse;

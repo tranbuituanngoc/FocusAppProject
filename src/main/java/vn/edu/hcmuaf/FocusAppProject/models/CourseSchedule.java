@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,7 @@ public class CourseSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "practice")
+    @Column(name = "is_practice")
     private boolean practice;
     @Column(name = "study_slot")
     private int studySlot;
@@ -26,15 +27,15 @@ public class CourseSchedule {
     private int dateNumType;
     @Column(name = "course_room")
     private String courseRoom;
-    @Column(name = "study_week")
-    private int study_week;
-    @Column(name = "start_date")
-    private LocalDate startDate;
-    @Column(name = "end_date")
-    private LocalDate endDate;
-    @JsonBackReference
+    @Column(name = "num_of_lession")
+    private int numOfLession;
+    @JsonManagedReference
     @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
+    @JoinColumn(name = "user_course_id")
+    private UserCourse userCourse;
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "week_id")
+    private Week week;
 
 }

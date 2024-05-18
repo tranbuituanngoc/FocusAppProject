@@ -30,16 +30,12 @@ public class SermesterCourseService implements SemesterCourseServiceImp {
                 .id(courseDTO.getCourseId())
                 .courseName(courseDTO.getCourseName())
                 .isMandatory(courseDTO.isMandatory())
-                .theoryHours(courseDTO.getTheoryHours())
-                .practiceHours(courseDTO.getPracticeHours())
-                .credits(courseDTO.getCredits())
+                .theoryHours(courseDTO.getTheoryHours() == null ? 0 : courseDTO.getTheoryHours())
+                .practiceHours(courseDTO.getPracticeHours() == null ? 0 : courseDTO.getPracticeHours())
+                .credits(courseDTO.getCredits() == null ? 0 : courseDTO.getCredits())
                 .department(department)
                 .build());
-        Semester semester = semesterRepository.findById(semesterId).orElseThrow(() -> new Exception("Semester not found"));
-//        semesterCourseRepository.save(new SemesterCourse().builder()
-//                .course(course)
-//                .semester(semester)
-//                .build());
+        Semester semester = semesterRepository.findById(semesterId).orElseThrow(() -> new Exception("Semester " + semesterId + " not found"));
         KeySemesterCourse id = new KeySemesterCourse();
         id.setCourseId(course.getId());
         id.setSemesterId(semester.getSemesterId());

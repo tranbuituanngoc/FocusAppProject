@@ -1,3 +1,7 @@
+let infoColor = getComputedStyle(document.documentElement).getPropertyValue('--Primary-Blue').trim();
+let errorColor = getComputedStyle(document.documentElement).getPropertyValue('--Primary-LightRed').trim();
+
+
 $(".button-link-dkmh").click(function () {
     const proxyUrl = 'http://127.0.0.1:5300/';
     Swal.fire({
@@ -92,6 +96,8 @@ $(".button-link-dkmh").click(function () {
                 data: JSON.stringify(linkData),
                 contentType: 'application/json',
                 success: function (message) {
+                    //get semester
+                    getSemester(result.value.accessToken, proxyUrl);
                     $.ajax({
                         url: 'api/ctdt/isExist',
                         type: 'GET',
@@ -114,7 +120,7 @@ $(".button-link-dkmh").click(function () {
                                     },
                                     data: JSON.stringify({
                                         "filter": {
-                                            "loai_chuong_trinh_dao_tao": 2
+                                            "loai_chuong_trinh_dao_tao": 1
                                         },
                                         "additional": {
                                             "paging": {
@@ -138,6 +144,7 @@ $(".button-link-dkmh").click(function () {
                                             data: JSON.stringify(trainingProgramDTO),
                                             contentType: 'application/json',
                                             success: function (message) {
+                                                getScore(access_token, proxyUrl);
                                                 console.log(message);
                                             },
                                             error: function (error) {
@@ -204,14 +211,18 @@ $(".button-reload-data").click(async function () {
     });
     const data = await response.json();
     const mssv = data.mssv;
-    const expiresGMT = new Date(data.expires + 'Z'); // append 'Z' to indicate it's in GMT
-    const now = new Date(); // get current date and time
+    const now = new Date();
     const nowGMT = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
-    console.log(mssv);
-    console.log(expiresGMT);
-    console.log(nowGMT);
-    if (expiresGMT > nowGMT) {
+    const expires = new Date(data.expires);
+    let access_token;
+    console.log("Expire Date: " + expires);
+    console.log("Current Date: " + nowGMT);
+    if (expires > nowGMT) {
         console.log("Not expired");
+        console.log(data.access_token)
+        access_token = data.access_token;
+        getSemester(access_token, proxyUrl);
+        getScore(access_token, proxyUrl);
     } else {
         console.log("Expired");
         Swal.fire({
@@ -288,15 +299,15 @@ $(".button-reload-data").click(async function () {
                     token_type: result.value.tokenType,
                     user_id: user.id
                 };
-                const access_token = result.value.accessToken;
                 $.ajax({
                     url: '/api/dkmh/link',
                     type: 'POST',
                     data: JSON.stringify(linkData),
                     contentType: 'application/json',
                     success: function (message) {
-
-
+                        access_token = result.value.accessToken;
+                        getSemester(access_token, proxyUrl);
+                        getScore(access_token, proxyUrl);
                         Swal.fire({
                             icon: "success",
                             title: message,
@@ -325,7 +336,7 @@ $(".button-reload-data").click(async function () {
             } else {
                 Swal.fire({
                     icon: "error",
-                    title: "Liên kết thất bại",
+                    title: "Cập nhật dữ liệu thất bại",
                     text: "Lỗi, vui lòng thử lại!",
                     customClass: {
                         confirmButton: 'confirm-button-class',
@@ -337,6 +348,213 @@ $(".button-reload-data").click(async function () {
         });
     }
 });
+
+function getSemester(accessToken, proxyUrl) {
+    //get semesters
+    const targetUrl = 'https://dkmh.hcmuaf.edu.vn/api/sch/w-locdshockytkbuser';
+    const finalUrl = proxyUrl + targetUrl;
+    $.ajax({
+        url: finalUrl,
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        },
+        data: JSON.stringify({
+            "filter": {"is_tieng_anh": null},
+            "additional": {
+                "paging": {
+                    "limit": 100,
+                    "page": 1
+                },
+                "ordering": [{
+                    "name": "hoc_ky",
+                    "order_type": 1
+                }
+                ]
+            },
+        }),
+        success: function (response) {
+            const semesters = convertToSemesterDTO(response);
+            console.log(semesters);
+            $.ajax({
+                url: '/api/hocki/create',
+                type: 'POST',
+                data: JSON.stringify(semesters),
+                contentType: 'application/json',
+                success: function (message) {
+                    Toastify({
+                        text: message,
+                        duration: 3000,
+                        close: true,
+                        gravity: "bottom", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "toast",
+                        style: {
+                            background: `${infoColor}`,
+                        },
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                },
+                error: function (error) {
+                    Toastify({
+                        text: error,
+                        duration: 3000,
+                        close: true,
+                        gravity: "bottom", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "toast",
+                        style: {
+                            background: `${errorColor}`,
+                        },
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                    console.error(error);
+                }
+            });
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
+}
+
+function getSchedule(accessToken, proxyUrl, semesterId) {
+    //get schedules
+    const targetUrl = 'https://dkmh.hcmuaf.edu.vn/api/sch/w-locdstkbtuanusertheohocky';
+    const finalUrl = proxyUrl + targetUrl;
+    $.ajax({
+        url: finalUrl,
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        },
+        data: JSON.stringify({
+            "filter": {
+                "hoc_ky": semesterId,
+                "ten_hoc_ky": ""
+            },
+            "additional": {
+                "paging": {
+                    "limit": 100,
+                    "page": 1
+                },
+                "ordering": [{
+                    "name": null,
+                    "order_type": null
+                }]
+            }
+        }),
+        success: function (response) {
+            const userScheduleDTO = convertToUserScheduleDTO(response, user.id, semesterId);
+            console.log(userScheduleDTO);
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
+}
+
+function getTestSchedule(accessToken, proxyUrl, semesterId) {
+    //get test schedules
+    const targetUrl = 'https://dkmh.hcmuaf.edu.vn/api/epm/w-locdslichthisvtheohocky';
+    const finalUrl = proxyUrl + targetUrl;
+    $.ajax({
+        url: finalUrl,
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        },
+        data: JSON.stringify({
+            "filter": {
+                "hoc_ky": semesterId
+            },
+            "additional": {
+                "paging": {
+                    "limit": 100,
+                    "page": 1
+                },
+                "ordering": [{
+                    "name": null, "order_type": null
+                }
+                ]
+            }
+        }),
+        success: function (response) {
+            const userTestScheduleDTO = convertToUserTestScheduleDTO(response, user.id, semesterId);
+            console.log(userTestScheduleDTO);
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
+}
+
+function getScore(accessToken, proxyUrl) {
+    //get scores
+    const targetUrl = 'https://dkmh.hcmuaf.edu.vn/api/srm/w-locdsdiemsinhvien?hien_thi_mon_theo_hkdk=false';
+    const finalUrl = proxyUrl + targetUrl;
+    $.ajax({
+        url: finalUrl,
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        },
+        success: function (response) {
+            const userSemesterDTO = convertToUserSemesterDTO(response, user.id);
+            console.log(userSemesterDTO);
+            $.ajax({
+                url: '/api/diem/create',
+                type: 'POST',
+                data: JSON.stringify(userSemesterDTO),
+                contentType: 'application/json',
+                success: function (message) {
+                    Toastify({
+                        text: message,
+                        duration: 3000,
+                        close: true,
+                        gravity: "bottom", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "toast",
+                        style: {
+                            background: `${infoColor}`,
+                        },
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                },
+                error: function (error) {
+                    Toastify({
+                        text: error,
+                        duration: 3000,
+                        close: true,
+                        gravity: "bottom", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "toast",
+                        style: {
+                            background: `${errorColor}`,
+                        },
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                    console.error(error);
+                }
+            });
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
+}
 
 function convertToTrainingProgramDTO(response, mssv) {
     // create a DepartmentDTO object from the API data
@@ -352,12 +570,12 @@ function convertToTrainingProgramDTO(response, mssv) {
         // create a CourseDTO array from the API data
         const courses = hocKy.ds_CTDT_mon_hoc.map(monHoc => {
             return {
-                course_id: monHoc.ma_mon,
+                course_id: monHoc.ma_mon === 'TH' ? 1 : monHoc.ma_mon === 'NN' ? 2 : monHoc.ma_mon,
                 course_name: monHoc.ten_mon,
                 is_mandatory: monHoc.mon_bat_buoc === 'x',
                 theory_hours: monHoc.ly_thuyet ? parseInt(monHoc.ly_thuyet) : null,
                 practice_hours: monHoc.thuc_hanh ? parseInt(monHoc.thuc_hanh) : null,
-                credits: parseInt(monHoc.so_tin_chi)
+                credits: parseInt(monHoc.so_tin_chi) ? parseInt(monHoc.so_tin_chi) : null,
             };
         });
 
@@ -377,4 +595,94 @@ function convertToTrainingProgramDTO(response, mssv) {
     };
 
     return trainingProgramDTO;
+}
+
+function convertToUserTestScheduleDTO(response, userid, semesterid) {
+    const testSchedules = response.data.ds_lich_thi.map(lichThi => {
+        return {
+            course_id: lichThi.ma_mon,
+            test_room: lichThi.ma_phong,
+            test_date: lichThi.ngay_thi,
+            test_time: lichThi.gio_bat_dau,
+            start_slot: lichThi.tiet_bat_dau
+        };
+    });
+    const userTestScheduleDTO = {
+        user_id: userid,
+        semester_id: semesterid,
+        list_test_schedules: testSchedules
+    };
+    return userTestScheduleDTO;
+}
+
+function convertToSemesterDTO(response) {
+    const semesters = response.data.ds_hoc_ky.map(hocKy => {
+        return {
+            semester_id: hocKy.hoc_ky,
+            semester_name: hocKy.ten_hoc_ky,
+            start_date: hocKy.ngay_bat_dau_hk,
+            end_date: hocKy.ngay_ket_thuc_hk
+        };
+    });
+    return semesters;
+}
+
+function convertToUserScheduleDTO(response, userid, semesterid) {
+    const weeks = response.data.ds_tuan_tkb.map(tuan => {
+        const course_schedules = tuan.ds_thoi_khoa_bieu.map(tkb => {
+            return {
+                course_id: tkb.ma_mon,
+                is_practice: tkb.ma_to_th !== "",
+                study_slot: parseInt(tkb.tiet_bat_dau),
+                date_num_type: parseInt(tkb.thu_kieu_so),
+                course_room: tkb.ma_phong,
+                num_of_lession: parseInt(tkb.so_tiet)
+            };
+        });
+
+        return {
+            semester_week: tuan.tuan_hoc_ky,
+            start_date: tuan.ngay_bat_dau,
+            end_date: tuan.ngay_ket_thuc,
+            course_schedules
+        };
+    });
+    const userScheduleDTO = {
+        user_id: userid,
+        semester_id: semesterid,
+        list_weeks: weeks
+    };
+    return userScheduleDTO;
+}
+
+function convertToUserSemesterDTO(response, userid) {
+    const semesters = response.data.ds_diem_hocky.map(hocKy => {
+        const scores = hocKy.ds_diem_mon_hoc.map(monHoc => {
+            return {
+                course_id: monHoc.ma_mon,
+                component_score: parseFloat(monHoc.diem_giua_ky),
+                score: parseFloat(monHoc.diem_thi),
+                final_score_10: parseFloat(monHoc.diem_tk),
+                final_score_4: parseFloat(monHoc.diem_tk_so),
+                final_score_char: monHoc.diem_tk_chu,
+                result: monHoc.ket_qua === 1
+            };
+        });
+
+        return {
+            semester_id: hocKy.hoc_ky,
+            gpa_4: parseFloat(hocKy.dtb_hk_he4),
+            cumulative_gpa_4: parseFloat(hocKy.dtb_tich_luy_he_4),
+            gpa_10: parseFloat(hocKy.dtb_hk_he10),
+            cumulative_gpa_10: parseFloat(hocKy.dtb_tich_luy_he_10),
+            cumulative_credit: parseInt(hocKy.so_tin_chi_dat_tich_luy),
+            credit_hours: parseInt(hocKy.so_tin_chi_dat_hk),
+            list_scores: scores
+        };
+    });
+    const userSemesterDTO = {
+        user_id: userid,
+        list_semesters: semesters
+    };
+    return userSemesterDTO;
 }

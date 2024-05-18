@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,12 +17,12 @@ import vn.edu.hcmuaf.FocusAppProject.models.keys.KeySemesterCourse;
 public class SemesterCourse {
     @EmbeddedId
     private KeySemesterCourse id;
-    @JsonBackReference
+    @JsonManagedReference
     @MapsId("semesterId")
     @ManyToOne
     @JoinColumn(name = "semester_id")
     private Semester semester;
-    @JsonBackReference
+    @JsonManagedReference
     @MapsId("courseId")
     @ManyToOne
     @JoinColumn(name = "course_id")

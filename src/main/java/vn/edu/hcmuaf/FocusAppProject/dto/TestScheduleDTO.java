@@ -7,21 +7,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CourseDTO {
+public class TestScheduleDTO {
     @JsonProperty("course_id")
     private int courseId;
-    @JsonProperty("course_name")
-    private String courseName;
-    @JsonProperty("is_mandatory")
-    private boolean isMandatory;
-    @JsonProperty("theory_hours")
-    private Integer theoryHours;
-    @JsonProperty("practice_hours")
-    private Integer practiceHours;
-    @JsonProperty("credits")
-    private Integer credits;
+    @JsonProperty("test_room")
+    private String testRoom;
+    @JsonProperty("test_time")
+    private String testTime;
+    @JsonProperty("test_date")
+    private String testDate;
+    @JsonProperty("start_slot")
+    private int startSlot;
 }

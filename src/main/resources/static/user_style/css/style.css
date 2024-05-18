@@ -343,3 +343,18 @@ div:where(.swal2-container) .swal2-html-container {
     padding: 5px !important;
     margin: 5px !important;
 }
+.toast{
+    font-family: var(--primary-raleway-body-font-family);
+    font-weight: var(--primary-raleway-body-font-weight);
+    font-size: var(--primary-raleway-body-font-size);
+    letter-spacing: var(--primary-raleway-body-letter-spacing);
+    line-height: var(--primary-raleway-body-line-height);
+    white-space: nowrap;
+    border-radius: 10px;
+}
+.info-toast{
+    background-color: var(--Primary-Blue);
+}
+.error-toast{
+    background-color: var(--Primary-LightRed);
+}
