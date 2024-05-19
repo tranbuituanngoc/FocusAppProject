@@ -25,10 +25,6 @@ public class CourseScheduleService implements CourseScheduleServiceImp {
     @Autowired
     private UserSemesterRepository userSemesterRepository;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private SemesterRepository semesterRepository;
-    @Autowired
     private UserCourseRepository userCourseRepository;
 
     @Override

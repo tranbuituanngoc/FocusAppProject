@@ -567,8 +567,51 @@ function getTestSchedule(accessToken, proxyUrl, semesterId) {
             }
         }),
         success: function (response) {
-            const userTestScheduleDTO = convertToUserTestScheduleDTO(response, user.id, semesterId);
-            console.log(userTestScheduleDTO);
+            if(response.data.ds_lich_thi.length !== 0){
+                const userTestScheduleDTO = convertToUserTestScheduleDTO(response, user.id, semesterId);
+                console.log(userTestScheduleDTO);
+                $.ajax({
+                    url: '/api/lich-thi/create',
+                    type: 'POST',
+                    data: JSON.stringify(userTestScheduleDTO),
+                    contentType: 'application/json',
+                    success: function (message) {
+                        Toastify({
+                            text: message,
+                            duration: 3000,
+                            close: true,
+                            gravity: "bottom", // `top` or `bottom`
+                            position: "right", // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "toast",
+                            style: {
+                                background: `${infoColor}`,
+                            },
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+                    },
+                    error: function (error) {
+                        Toastify({
+                            text: error,
+                            duration: 3000,
+                            close: true,
+                            gravity: "bottom", // `top` or `bottom`
+                            position: "right", // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "toast",
+                            style: {
+                                background: `${errorColor}`,
+                            },
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+                        console.error(error);
+                    }
+                });
+            }else{
+                console.log("No test schedule");
+            }
         },
         error: function (error) {
             console.error(error);
