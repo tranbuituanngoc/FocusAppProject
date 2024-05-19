@@ -42,4 +42,12 @@ public class SemesterService implements SemesterServiceImp {
                     .build());
         }
     }
+
+    @Override
+    public Integer getCurrentSemester() {
+        LocalDate currentDate = LocalDate.now();
+        System.out.println(currentDate);
+        Integer semesterId = semesterRepository.findSemesterIdsByDate(currentDate);
+        return semesterId;
+    }
 }

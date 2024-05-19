@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -22,9 +23,9 @@ public class Week {
     @Column(name="semester_week")
     private int semesterWeek;
     @Column(name="start_date")
-    private Date startDate;
+    private LocalDate startDate;
     @Column(name="end_date")
-    private Date endDate;
+    private LocalDate endDate;
     @JsonBackReference
     @OneToMany(mappedBy = "week")
     private List<CourseSchedule> courseSchedules;

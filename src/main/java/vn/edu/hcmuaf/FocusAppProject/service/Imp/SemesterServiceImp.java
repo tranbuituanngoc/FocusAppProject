@@ -5,6 +5,9 @@ import vn.edu.hcmuaf.FocusAppProject.dto.SemesterDetailDTO;
 import vn.edu.hcmuaf.FocusAppProject.exception.DataNotFoundException;
 import vn.edu.hcmuaf.FocusAppProject.models.Semester;
 
+import java.time.LocalDate;
+
 public interface SemesterServiceImp {
     Semester createOrUpdateSemester(SemesterDetailDTO semesterDetailDTO);
+    Integer getCurrentSemester();
 }

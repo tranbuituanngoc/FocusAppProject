@@ -98,6 +98,21 @@ $(".button-link-dkmh").click(function () {
                 success: function (message) {
                     //get semester
                     getSemester(result.value.accessToken, proxyUrl);
+                    //get score
+                    getScore(result.value.accessToken, proxyUrl);
+                    $.ajax({
+                        url: 'api/hocki/current',
+                        type: 'GET',
+                        contentType: 'application/json',
+                        success: function (response) {
+                            console.log(response);
+                            getSchedule(result.value.accessToken, proxyUrl, response);
+                            getTestSchedule(result.value.accessToken, proxyUrl, response);
+                        },
+                        error: function (error) {
+                            console.error(error);
+                        }
+                    });
                     $.ajax({
                         url: 'api/ctdt/isExist',
                         type: 'GET',
@@ -223,6 +238,19 @@ $(".button-reload-data").click(async function () {
         access_token = data.access_token;
         getSemester(access_token, proxyUrl);
         getScore(access_token, proxyUrl);
+        $.ajax({
+            url: 'api/hocki/current',
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+                console.log(response);
+                getSchedule(access_token, proxyUrl, response);
+                getTestSchedule(access_token, proxyUrl, response);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
     } else {
         console.log("Expired");
         Swal.fire({
@@ -308,6 +336,19 @@ $(".button-reload-data").click(async function () {
                         access_token = result.value.accessToken;
                         getSemester(access_token, proxyUrl);
                         getScore(access_token, proxyUrl);
+                        $.ajax({
+                            url: 'api/hocki/current',
+                            type: 'GET',
+                            contentType: 'application/json',
+                            success: function (response) {
+                                console.log(response);
+                                getSchedule(access_token, proxyUrl, response);
+                                getTestSchedule(access_token, proxyUrl, response);
+                            },
+                            error: function (error) {
+                                console.error(error);
+                            }
+                        });
                         Swal.fire({
                             icon: "success",
                             title: message,
@@ -453,6 +494,45 @@ function getSchedule(accessToken, proxyUrl, semesterId) {
         success: function (response) {
             const userScheduleDTO = convertToUserScheduleDTO(response, user.id, semesterId);
             console.log(userScheduleDTO);
+            $.ajax({
+               url: '/api/tkb/create',
+                type: 'POST',
+                data: JSON.stringify(userScheduleDTO),
+                contentType: 'application/json',
+                success: function (message) {
+                    Toastify({
+                        text: message,
+                        duration: 3000,
+                        close: true,
+                        gravity: "bottom", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "toast",
+                        style: {
+                            background: `${infoColor}`,
+                        },
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                },
+                error: function (error) {
+                    Toastify({
+                        text: error,
+                        duration: 3000,
+                        close: true,
+                        gravity: "bottom", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        className: "toast",
+                        style: {
+                            background: `${errorColor}`,
+                        },
+                        onClick: function () {
+                        } // Callback after click
+                    }).showToast();
+                    console.error(error);
+                }
+            });
         },
         error: function (error) {
             console.error(error);
