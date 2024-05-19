@@ -6,5 +6,6 @@ import vn.edu.hcmuaf.FocusAppProject.dto.WeekDTO;
 import java.util.List;
 
 public interface CourseScheduleServiceImp {
-    void createOrUpdateUserSchedule(UserScheduleDTO userScheduleDTO) throws Exception;
+    void createUserSchedule(UserScheduleDTO userScheduleDTO) throws Exception;
+
 }

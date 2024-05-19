@@ -6,4 +6,5 @@ import vn.edu.hcmuaf.FocusAppProject.models.CourseSchedule;
 
 @Repository
 public interface CourseScheduleRepository extends JpaRepository<CourseSchedule,Long> {
+    boolean existsByUserCourseIdAndWeekId(Long userCourseId, Long weekId);
 }

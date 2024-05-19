@@ -10,7 +10,10 @@ import vn.edu.hcmuaf.FocusAppProject.models.CourseSchedule;
 import vn.edu.hcmuaf.FocusAppProject.models.UserCourse;
 import vn.edu.hcmuaf.FocusAppProject.models.UserSemesters;
 import vn.edu.hcmuaf.FocusAppProject.models.Week;
-import vn.edu.hcmuaf.FocusAppProject.repository.*;
+import vn.edu.hcmuaf.FocusAppProject.repository.CourseScheduleRepository;
+import vn.edu.hcmuaf.FocusAppProject.repository.UserCourseRepository;
+import vn.edu.hcmuaf.FocusAppProject.repository.UserSemesterRepository;
+import vn.edu.hcmuaf.FocusAppProject.repository.WeekRepository;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.CourseScheduleServiceImp;
 
 import java.time.LocalDate;
@@ -29,17 +32,18 @@ public class CourseScheduleService implements CourseScheduleServiceImp {
 
     @Override
     @Transactional
-    public void createOrUpdateUserSchedule(UserScheduleDTO userScheduleDTO) throws Exception {
+    public void createUserSchedule(UserScheduleDTO userScheduleDTO) throws Exception {
         for (WeekDTO week : userScheduleDTO.getWeeks()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate startDate = LocalDate.parse(week.getStartDate(), formatter);
             LocalDate endDate = LocalDate.parse(week.getEndDate(), formatter);
-            Week weekEntity = Week.builder()
-                    .semesterWeek(week.getSemesterWeek())
-                    .startDate(startDate)
-                    .endDate(endDate)
-                    .build();
-            weekRepository.save(weekEntity);
+            if (!weekRepository.existsBySemesterWeekAndStartDateAndEndDate(week.getSemesterWeek(), startDate, endDate)) {
+                weekRepository.save(new Week().builder()
+                        .semesterWeek(week.getSemesterWeek())
+                        .startDate(startDate)
+                        .endDate(endDate)
+                        .build());
+            }
             if (!week.getCourseSchedules().isEmpty()) {
                 for (CourseScheduleDTO courseScheduleDTO : week.getCourseSchedules()) {
                     UserSemesters userSemesters = userSemesterRepository.findByUserIdAndSemesterSemesterId(userScheduleDTO.getUserId(), userScheduleDTO.getSemesterId()).orElseThrow(() -> new Exception("Semester " + userScheduleDTO.getSemesterId() + " and user " + userScheduleDTO.getUserId() + " not found"));
@@ -47,15 +51,19 @@ public class CourseScheduleService implements CourseScheduleServiceImp {
                     if (userCourse == null) {
                         throw new Exception("Course " + courseScheduleDTO.getCourseId() + " not found");
                     } else {
-                        courseScheduleRepository.save(new CourseSchedule().builder()
-                                .userCourse(userCourse)
-                                .week(weekEntity)
-                                .courseRoom(courseScheduleDTO.getCourseRoom())
-                                .dateNumType(courseScheduleDTO.getDateNumType())
-                                .studySlot(courseScheduleDTO.getStudySlot())
-                                .numOfLession(courseScheduleDTO.getNumOfLession())
-                                .practice(courseScheduleDTO.isPractice())
-                                .build());
+                        Week weekEntity = weekRepository.findBySemesterWeekAndStartDateAndEndDate(week.getSemesterWeek(), startDate, endDate);
+                        if (!courseScheduleRepository.existsByUserCourseIdAndWeekId(userCourse.getId(), weekEntity.getId())) {
+                            System.out.println("Insert CourseSchedule -----------------------------------------------------------------------------------");
+                            courseScheduleRepository.save(new CourseSchedule().builder()
+                                    .userCourse(userCourse)
+                                    .week(weekEntity)
+                                    .courseRoom(courseScheduleDTO.getCourseRoom())
+                                    .dateNumType(courseScheduleDTO.getDateNumType())
+                                    .studySlot(courseScheduleDTO.getStudySlot())
+                                    .numOfLession(courseScheduleDTO.getNumOfLession())
+                                    .practice(courseScheduleDTO.isPractice())
+                                    .build());
+                        }
                     }
                 }
             }

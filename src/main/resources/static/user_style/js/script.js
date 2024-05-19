@@ -105,7 +105,6 @@ $(".button-link-dkmh").click(function () {
                         type: 'GET',
                         contentType: 'application/json',
                         success: function (response) {
-                            console.log(response);
                             getSchedule(result.value.accessToken, proxyUrl, response);
                             getTestSchedule(result.value.accessToken, proxyUrl, response);
                         },
@@ -152,7 +151,6 @@ $(".button-link-dkmh").click(function () {
                                     }),
                                     success: function (response) {
                                         const trainingProgramDTO = convertToTrainingProgramDTO(response, mssv);
-                                        console.log(trainingProgramDTO);
                                         $.ajax({
                                             url: '/api/ctdt/create',
                                             type: 'POST',
@@ -160,7 +158,6 @@ $(".button-link-dkmh").click(function () {
                                             contentType: 'application/json',
                                             success: function (message) {
                                                 getScore(access_token, proxyUrl);
-                                                console.log(message);
                                             },
                                             error: function (error) {
                                                 console.error(error);
@@ -174,7 +171,7 @@ $(".button-link-dkmh").click(function () {
                             }
                         },
                         error: function (error) {
-                            console.log(error);
+                            console.error(error);
                         }
                     })
                     Swal.fire({
@@ -230,11 +227,7 @@ $(".button-reload-data").click(async function () {
     const nowGMT = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
     const expires = new Date(data.expires);
     let access_token;
-    console.log("Expire Date: " + expires);
-    console.log("Current Date: " + nowGMT);
     if (expires > nowGMT) {
-        console.log("Not expired");
-        console.log(data.access_token)
         access_token = data.access_token;
         getSemester(access_token, proxyUrl);
         getScore(access_token, proxyUrl);
@@ -243,7 +236,6 @@ $(".button-reload-data").click(async function () {
             type: 'GET',
             contentType: 'application/json',
             success: function (response) {
-                console.log(response);
                 getSchedule(access_token, proxyUrl, response);
                 getTestSchedule(access_token, proxyUrl, response);
             },
@@ -252,7 +244,6 @@ $(".button-reload-data").click(async function () {
             }
         });
     } else {
-        console.log("Expired");
         Swal.fire({
             title: 'Submit your information',
             html:
@@ -341,7 +332,6 @@ $(".button-reload-data").click(async function () {
                             type: 'GET',
                             contentType: 'application/json',
                             success: function (response) {
-                                console.log(response);
                                 getSchedule(access_token, proxyUrl, response);
                                 getTestSchedule(access_token, proxyUrl, response);
                             },
@@ -417,7 +407,6 @@ function getSemester(accessToken, proxyUrl) {
         }),
         success: function (response) {
             const semesters = convertToSemesterDTO(response);
-            console.log(semesters);
             $.ajax({
                 url: '/api/hocki/create',
                 type: 'POST',
@@ -493,7 +482,6 @@ function getSchedule(accessToken, proxyUrl, semesterId) {
         }),
         success: function (response) {
             const userScheduleDTO = convertToUserScheduleDTO(response, user.id, semesterId);
-            console.log(userScheduleDTO);
             $.ajax({
                url: '/api/tkb/create',
                 type: 'POST',
@@ -569,7 +557,6 @@ function getTestSchedule(accessToken, proxyUrl, semesterId) {
         success: function (response) {
             if(response.data.ds_lich_thi.length !== 0){
                 const userTestScheduleDTO = convertToUserTestScheduleDTO(response, user.id, semesterId);
-                console.log(userTestScheduleDTO);
                 $.ajax({
                     url: '/api/lich-thi/create',
                     type: 'POST',
@@ -632,7 +619,6 @@ function getScore(accessToken, proxyUrl) {
         },
         success: function (response) {
             const userSemesterDTO = convertToUserSemesterDTO(response, user.id);
-            console.log(userSemesterDTO);
             $.ajax({
                 url: '/api/diem/create',
                 type: 'POST',

@@ -21,7 +21,7 @@ public class ScheduleController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> createOrUpdateSchedules(@RequestBody @Valid UserScheduleDTO userScheduleDTO) throws Exception {
         try {
-            courseScheduleService.createOrUpdateUserSchedule(userScheduleDTO);
+            courseScheduleService.createUserSchedule(userScheduleDTO);
             return ResponseEntity.ok("Update Schedule successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
