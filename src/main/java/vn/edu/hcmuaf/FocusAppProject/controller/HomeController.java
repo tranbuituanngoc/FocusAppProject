@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vn.edu.hcmuaf.FocusAppProject.models.User;
@@ -19,8 +20,8 @@ public class HomeController {
     AuthServiceImp authServiceImp;
     @Autowired
     UserRepository userRepository;
-    @GetMapping("/home")
-    public String home( HttpSession session) {
+    @GetMapping("/trang-chu")
+    public String home( HttpSession session,Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -28,6 +29,12 @@ public class HomeController {
             User user = userRepository.findByEmail(username);
             session.setAttribute("user",user);
         }
+        model.addAttribute("title", "Trang chủ");
         return "index";
+    }
+    @GetMapping("/de-xuat-mon-hoc")
+    public String CourseSuggest(Model model) {
+        model.addAttribute("title", "Đề xuất môn học");
+        return "courseSuggest";
     }
 }

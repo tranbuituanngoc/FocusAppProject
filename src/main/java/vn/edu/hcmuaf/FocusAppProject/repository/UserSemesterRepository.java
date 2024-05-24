@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface UserSemesterRepository extends JpaRepository<UserSemesters, Long> {
    Optional<UserSemesters> findByUserIdAndSemesterSemesterId(long userId, int semesterId);
+   
 }

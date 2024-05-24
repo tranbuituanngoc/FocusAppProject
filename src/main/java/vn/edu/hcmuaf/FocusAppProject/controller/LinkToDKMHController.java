@@ -14,7 +14,11 @@ public class LinkToDKMHController {
 
     @Autowired
     LinkToDKMHImp linkToDKMHImp;
-
+    @GetMapping("/is-linked/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Boolean> isLinked(@PathVariable Long id) throws Exception {
+        return ResponseEntity.ok(linkToDKMHImp.isLinked(id));
+    }
     @PostMapping("/link")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> linkToDKMH(@RequestBody @Valid LinkToDKMHDTO linkToDKMHDTO) throws Exception {

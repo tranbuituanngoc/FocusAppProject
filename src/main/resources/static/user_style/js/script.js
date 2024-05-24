@@ -1,11 +1,49 @@
-let infoColor = getComputedStyle(document.documentElement).getPropertyValue('--Primary-Blue').trim();
-let errorColor = getComputedStyle(document.documentElement).getPropertyValue('--Primary-LightRed').trim();
+window.addEventListener('scroll', function () {
+    var header = document.querySelector('.header');
+    if (window.pageYOffset > 100) {
+        header.classList.add('header-sticky');
+    } else {
+        header.classList.remove('header-sticky');
+    }
+});
+$(document).ready(function () {
+    // Lấy URL hiện tại
+    var currentUrl = window.location.href;
+
+// Kiểm tra các đường link của thẻ a trong .header-menu a
+    var isHeaderMenuActive = false;
+    $('.header-menu a').each(function () {
+        if (this.href === currentUrl) {
+            $('.header-menu').removeClass('header-menu-active');
+            $('.header-title').removeClass('title-active');
+
+            $(this).parent('.header-menu').addClass('header-menu-active');
+            $(this).parent('.header-menu').find('.header-title').addClass('title-active');
+            isHeaderMenuActive = true;
+        }
+    });
+
+// Nếu không tìm thấy khớp với URL hiện tại trong .header-menu a, kiểm tra trong .child-menu a
+    if (!isHeaderMenuActive) {
+        $('.child-menu a').each(function () {
+            if (this.href === currentUrl) {
+                // Xóa class 'header-menu-active' và 'title-active' khỏi tất cả các phần tử menu
+                $('.header-menu').removeClass('header-menu-active');
+                $('.header-title').removeClass('title-active');
+
+                // Thêm class 'header-menu-active' và 'title-active' vào phần tử cha của dropdown
+                $(this).closest(".study-dropdown, .user-dropdown").prev(".header-menu").addClass("header-menu-active");
+                $(this).closest(".study-dropdown, .user-dropdown").prev(".header-menu").find('.header-title').addClass('title-active');
+            }
+        });
+    }
+});
 
 
 $(".button-link-dkmh").click(function () {
     const proxyUrl = 'http://127.0.0.1:5300/';
     Swal.fire({
-        title: 'Submit your information',
+        title: 'Liên kết với trang ĐKMH',
         html:
             '<input id="mssv-input" class="swal2-input input-alert-class" placeholder="MSSV" type="number" require>' +
             '<input id="password-input" class="swal2-input input-alert-class" placeholder="Password" type="password" require>',
@@ -98,28 +136,15 @@ $(".button-link-dkmh").click(function () {
                 success: function (message) {
                     //get semester
                     getSemester(result.value.accessToken, proxyUrl);
-                    //get score
-                    getScore(result.value.accessToken, proxyUrl);
-                    $.ajax({
-                        url: 'api/hocki/current',
-                        type: 'GET',
-                        contentType: 'application/json',
-                        success: function (response) {
-                            getSchedule(result.value.accessToken, proxyUrl, response);
-                            getTestSchedule(result.value.accessToken, proxyUrl, response);
-                        },
-                        error: function (error) {
-                            console.error(error);
-                        }
-                    });
                     $.ajax({
                         url: 'api/ctdt/isExist',
                         type: 'GET',
                         data: {
                             year: parseInt('20' + mssv.substring(0, 2)),
-                            departmentID: user.department.id
+                            departmentID: user.department.id,
+                            userId: user.id
                         },
-                        success: function (response) {
+                        success: async function (response) {
                             if (!response) {
                                 //get training program
                                 const access_token = result.value.accessToken;
@@ -156,13 +181,40 @@ $(".button-link-dkmh").click(function () {
                                             type: 'POST',
                                             data: JSON.stringify(trainingProgramDTO),
                                             contentType: 'application/json',
-                                            success: function (message) {
-                                                getScore(access_token, proxyUrl);
+                                            success: async function (message) {
+                                                await getScore(access_token, proxyUrl);
+                                                $.ajax({
+                                                    url: 'api/hocki/current',
+                                                    type: 'GET',
+                                                    contentType: 'application/json',
+                                                    success: function (response) {
+                                                        getSchedule(access_token, proxyUrl, response);
+                                                        getTestSchedule(access_token, proxyUrl, response);
+                                                    },
+                                                    error: function (error) {
+                                                        console.error(error);
+                                                    }
+                                                });
                                             },
                                             error: function (error) {
                                                 console.error(error);
                                             }
                                         });
+                                    },
+                                    error: function (error) {
+                                        console.error(error);
+                                    }
+                                });
+                            } else {
+                                //get score
+                                await getScore(result.value.accessToken, proxyUrl);
+                                $.ajax({
+                                    url: 'api/hocki/current',
+                                    type: 'GET',
+                                    contentType: 'application/json',
+                                    success: function (response) {
+                                        getSchedule(result.value.accessToken, proxyUrl, response);
+                                        getTestSchedule(result.value.accessToken, proxyUrl, response);
                                     },
                                     error: function (error) {
                                         console.error(error);
@@ -230,7 +282,7 @@ $(".button-reload-data").click(async function () {
     if (expires > nowGMT) {
         access_token = data.access_token;
         getSemester(access_token, proxyUrl);
-        getScore(access_token, proxyUrl);
+        await getScore(access_token, proxyUrl);
         $.ajax({
             url: 'api/hocki/current',
             type: 'GET',
@@ -323,10 +375,10 @@ $(".button-reload-data").click(async function () {
                     type: 'POST',
                     data: JSON.stringify(linkData),
                     contentType: 'application/json',
-                    success: function (message) {
+                    success: async function (message) {
                         access_token = result.value.accessToken;
                         getSemester(access_token, proxyUrl);
-                        getScore(access_token, proxyUrl);
+                        await getScore(access_token, proxyUrl);
                         $.ajax({
                             url: 'api/hocki/current',
                             type: 'GET',
@@ -420,9 +472,9 @@ function getSemester(accessToken, proxyUrl) {
                         gravity: "bottom", // `top` or `bottom`
                         position: "right", // `left`, `center` or `right`
                         stopOnFocus: true, // Prevents dismissing of toast on hover
-                        className: "toast",
+                        className: "my-toast",
                         style: {
-                            background: `${infoColor}`,
+                            background: '#59D5E0',
                         },
                         onClick: function () {
                         } // Callback after click
@@ -436,9 +488,9 @@ function getSemester(accessToken, proxyUrl) {
                         gravity: "bottom", // `top` or `bottom`
                         position: "right", // `left`, `center` or `right`
                         stopOnFocus: true, // Prevents dismissing of toast on hover
-                        className: "toast",
+                        className: "my-toast",
                         style: {
-                            background: `${errorColor}`,
+                            background: '#F4538A',
                         },
                         onClick: function () {
                         } // Callback after click
@@ -483,7 +535,7 @@ function getSchedule(accessToken, proxyUrl, semesterId) {
         success: function (response) {
             const userScheduleDTO = convertToUserScheduleDTO(response, user.id, semesterId);
             $.ajax({
-               url: '/api/tkb/create',
+                url: '/api/tkb/create',
                 type: 'POST',
                 data: JSON.stringify(userScheduleDTO),
                 contentType: 'application/json',
@@ -495,9 +547,9 @@ function getSchedule(accessToken, proxyUrl, semesterId) {
                         gravity: "bottom", // `top` or `bottom`
                         position: "right", // `left`, `center` or `right`
                         stopOnFocus: true, // Prevents dismissing of toast on hover
-                        className: "toast",
+                        className: "my-toast",
                         style: {
-                            background: `${infoColor}`,
+                            background: '#59D5E0',
                         },
                         onClick: function () {
                         } // Callback after click
@@ -511,9 +563,9 @@ function getSchedule(accessToken, proxyUrl, semesterId) {
                         gravity: "bottom", // `top` or `bottom`
                         position: "right", // `left`, `center` or `right`
                         stopOnFocus: true, // Prevents dismissing of toast on hover
-                        className: "toast",
+                        className: "my-toast",
                         style: {
-                            background: `${errorColor}`,
+                            background: '#F4538A',
                         },
                         onClick: function () {
                         } // Callback after click
@@ -555,7 +607,7 @@ function getTestSchedule(accessToken, proxyUrl, semesterId) {
             }
         }),
         success: function (response) {
-            if(response.data.ds_lich_thi.length !== 0){
+            if (response.data.ds_lich_thi.length !== 0) {
                 const userTestScheduleDTO = convertToUserTestScheduleDTO(response, user.id, semesterId);
                 $.ajax({
                     url: '/api/lich-thi/create',
@@ -570,9 +622,9 @@ function getTestSchedule(accessToken, proxyUrl, semesterId) {
                             gravity: "bottom", // `top` or `bottom`
                             position: "right", // `left`, `center` or `right`
                             stopOnFocus: true, // Prevents dismissing of toast on hover
-                            className: "toast",
+                            className: "my-toast",
                             style: {
-                                background: `${infoColor}`,
+                                background: '#59D5E0',
                             },
                             onClick: function () {
                             } // Callback after click
@@ -586,9 +638,9 @@ function getTestSchedule(accessToken, proxyUrl, semesterId) {
                             gravity: "bottom", // `top` or `bottom`
                             position: "right", // `left`, `center` or `right`
                             stopOnFocus: true, // Prevents dismissing of toast on hover
-                            className: "toast",
+                            className: "my-toast",
                             style: {
-                                background: `${errorColor}`,
+                                background: '#F4538A',
                             },
                             onClick: function () {
                             } // Callback after click
@@ -596,7 +648,7 @@ function getTestSchedule(accessToken, proxyUrl, semesterId) {
                         console.error(error);
                     }
                 });
-            }else{
+            } else {
                 console.log("No test schedule");
             }
         },
@@ -607,70 +659,75 @@ function getTestSchedule(accessToken, proxyUrl, semesterId) {
 }
 
 function getScore(accessToken, proxyUrl) {
-    //get scores
-    const targetUrl = 'https://dkmh.hcmuaf.edu.vn/api/srm/w-locdsdiemsinhvien?hien_thi_mon_theo_hkdk=false';
-    const finalUrl = proxyUrl + targetUrl;
-    $.ajax({
-        url: finalUrl,
-        type: 'POST',
-        contentType: 'application/json',
-        headers: {
-            'Authorization': 'Bearer ' + accessToken
-        },
-        success: function (response) {
-            const userSemesterDTO = convertToUserSemesterDTO(response, user.id);
-            $.ajax({
-                url: '/api/diem/create',
-                type: 'POST',
-                data: JSON.stringify(userSemesterDTO),
-                contentType: 'application/json',
-                success: function (message) {
-                    Toastify({
-                        text: message,
-                        duration: 3000,
-                        close: true,
-                        gravity: "bottom", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        className: "toast",
-                        style: {
-                            background: `${infoColor}`,
-                        },
-                        onClick: function () {
-                        } // Callback after click
-                    }).showToast();
-                },
-                error: function (error) {
-                    Toastify({
-                        text: error,
-                        duration: 3000,
-                        close: true,
-                        gravity: "bottom", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        className: "toast",
-                        style: {
-                            background: `${errorColor}`,
-                        },
-                        onClick: function () {
-                        } // Callback after click
-                    }).showToast();
-                    console.error(error);
-                }
-            });
-        },
-        error: function (error) {
-            console.error(error);
-        }
+    return new Promise((resolve, reject) => {
+        //get scores
+        const targetUrl = 'https://dkmh.hcmuaf.edu.vn/api/srm/w-locdsdiemsinhvien?hien_thi_mon_theo_hkdk=false';
+        const finalUrl = proxyUrl + targetUrl;
+        $.ajax({
+            url: finalUrl,
+            type: 'POST',
+            contentType: 'application/json',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            },
+            success: function (response) {
+                const userSemesterDTO = convertToUserSemesterDTO(response, user.id);
+                $.ajax({
+                    url: '/api/diem/create',
+                    type: 'POST',
+                    data: JSON.stringify(userSemesterDTO),
+                    contentType: 'application/json',
+                    success: function (message) {
+                        Toastify({
+                            text: message,
+                            duration: 3000,
+                            close: true,
+                            gravity: "bottom", // `top` or `bottom`
+                            position: "right", // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "my-toast",
+                            style: {
+                                background: '#59D5E0',
+                            },
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+                        resolve(message);
+                    },
+                    error: function (error) {
+                        Toastify({
+                            text: error,
+                            duration: 3000,
+                            close: true,
+                            gravity: "bottom", // `top` or `bottom`
+                            position: "right", // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            className: "my-toast",
+                            style: {
+                                background: '#F4538A',
+                            },
+                            onClick: function () {
+                            } // Callback after click
+                        }).showToast();
+                        console.error(error);
+                        reject(error);
+                    }
+                });
+            },
+            error: function (error) {
+                reject(error);
+            }
+        });
     });
 }
+
 
 function convertToTrainingProgramDTO(response, mssv) {
     // create a DepartmentDTO object from the API data
     const item = response.data.ds_nganh_sinh_vien[0];
 
     const department = {
-        department_id: item.ma_nganh,
+        department_id: item.ma_nganh === 'DT22' ? 52480201 : item.ma_nganh,
         department_name: item.ten_nganh
     };
 
@@ -700,7 +757,8 @@ function convertToTrainingProgramDTO(response, mssv) {
     const trainingProgramDTO = {
         year: year,
         department: department,
-        list_semesters: semesters
+        list_semesters: semesters,
+        user_id: user.id
     };
 
     return trainingProgramDTO;

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -35,4 +36,8 @@ public class Project {
     @JsonBackReference
     @OneToMany(mappedBy = "project")
     List<Task> tasks;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security6" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta
@@ -28,6 +28,7 @@
     <!-- MDB -->
     <link rel="stylesheet" th:href="@{/user_style/css/mdb.min.css}"/>
     <link rel="stylesheet" th:href="@{/user_style/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/user_style/css/style_guide.css}"/>
     <style>
         body {
             width: 100vw;
@@ -63,24 +64,32 @@
         </div>
         <form th:action="@{/auth/login}" method="post">
             <div class="login-field">
-                <div class="form-outline" data-mdb-input-init>
-                    <input
-                            type="text"
-                            id="typeText"
-                            class="form-control input-form"
-                            name="email"
-                            th:value="${email}"
-                    />
-                    <label class="form-label" for="typeText">Email</label>
+                <div class="email-input mb-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        <input
+                                type="text"
+                                id="email"
+                                class="form-control input-form"
+                                name="email"
+                                required
+                                th:value="${email}"
+                        />
+                        <label class="form-label" for="email">Email</label>
+                    </div>
+                    <div id="error-email" class="error-message ps-2"></div>
                 </div>
-                <div class="form-outline mb-2" data-mdb-input-init>
-                    <input
-                            type="password"
-                            id="typePassword"
-                            class="input-form form-control"
-                            name="password"
-                    />
-                    <label class="form-label" for="typePassword">Password</label>
+                <div class="password-input mb-3">
+                    <div class="form-outline mb-2" data-mdb-input-init>
+                        <input
+                                type="password"
+                                id="password"
+                                class="input-form form-control"
+                                name="password"
+                                required
+                        />
+                        <label class="form-label" for="password">Password</label>
+                    </div>
+                    <div id="error-password" class="error-message ps-2"></div>
                 </div>
                 <div class="float-end">
                     <a href="#" class="Primary-Raleway_Body Origin-MidGray"
@@ -117,6 +126,7 @@
 <script type="text/javascript" th:src="@{/user_style/js/mdb.umd.min.js}"></script>
 <script th:src="@{'https://cdn.jsdelivr.net/npm/sweetalert2@11'}"></script>
 <!-- Custom scripts -->
-<script type="text/javascript"></script>
+<script th:src="@{/user_style/js/jquery.js}"></script>
+<script th:src="@{/user_style/js/script.js}"></script>
 </body>
 </html>

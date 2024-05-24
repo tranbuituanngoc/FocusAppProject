@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -28,5 +29,9 @@ public class Role {
     @JsonBackReference
     @OneToMany(mappedBy = "roles")
     Set<User> listUser;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
 }

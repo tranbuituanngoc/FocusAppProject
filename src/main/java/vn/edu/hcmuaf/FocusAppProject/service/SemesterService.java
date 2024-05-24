@@ -47,7 +47,7 @@ public class SemesterService implements SemesterServiceImp {
     public Integer getCurrentSemester() {
         LocalDate currentDate = LocalDate.now();
         System.out.println(currentDate);
-        Integer semesterId = semesterRepository.findSemesterIdsByDate(currentDate);
+        Integer semesterId = semesterRepository.findCurrentSemesterIdsByDate(currentDate);
         return semesterId;
     }
 }

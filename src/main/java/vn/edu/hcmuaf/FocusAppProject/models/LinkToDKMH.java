@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity(name = "link_to_dkmh")
 @Data
@@ -30,4 +31,8 @@ public class LinkToDKMH extends BaseEntity{
     @JsonBackReference
     @JoinColumn(name = "user_id")
     private User user;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

@@ -8,4 +8,5 @@ public interface TrainingProgramServiceImp {
     TrainingProgram createTrainingProgram(TrainingProgramDTO trainingProgram, Department department);
     boolean isExist(int year, String departmentID);
 
+    TrainingProgram findTrainingProgram(int year, String departmentID);
 }

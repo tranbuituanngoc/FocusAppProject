@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.FocusAppProject.models.keys.KeySemesterCourse;
 
+import java.util.Objects;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,4 +29,8 @@ public class SemesterCourse {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

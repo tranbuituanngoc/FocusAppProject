@@ -1,21 +1,16 @@
 package vn.edu.hcmuaf.FocusAppProject.controller;
 
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hcmuaf.FocusAppProject.dto.CourseDTO;
-import vn.edu.hcmuaf.FocusAppProject.dto.LinkToDKMHDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.SemesterDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.TrainingProgramDTO;
 import vn.edu.hcmuaf.FocusAppProject.models.Department;
 import vn.edu.hcmuaf.FocusAppProject.models.TrainingProgram;
-import vn.edu.hcmuaf.FocusAppProject.service.Imp.DepartmentServiceImp;
-import vn.edu.hcmuaf.FocusAppProject.service.Imp.SemesterCourseServiceImp;
-import vn.edu.hcmuaf.FocusAppProject.service.Imp.TrainingProgramSemesterServiceImp;
-import vn.edu.hcmuaf.FocusAppProject.service.Imp.TrainingProgramServiceImp;
+import vn.edu.hcmuaf.FocusAppProject.service.Imp.*;
 
 @RestController
 @RequestMapping("/api/ctdt")
@@ -28,11 +23,18 @@ public class TraningProgramController {
     private TrainingProgramSemesterServiceImp traningProgramSemesterService;
     @Autowired
     private SemesterCourseServiceImp semesterCourseService;
+    @Autowired
+    private UserServiceImp userService;
 
     @GetMapping("/isExist")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Boolean> isExistTrainingProgram(@RequestParam int year, @RequestParam String departmentID) {
-        return ResponseEntity.ok(traningProgramService.isExist(year, departmentID));
+    public ResponseEntity<Boolean> isExistTrainingProgram(@RequestParam int year, @RequestParam String departmentID, @RequestParam long userId) {
+        if (traningProgramService.isExist(year, departmentID)) {
+            TrainingProgram trainingProgram = traningProgramService.findTrainingProgram(year, departmentID);
+            userService.updateTrainingProgram(userId, trainingProgram.getId());
+            return ResponseEntity.ok(true);
+        }
+        return ResponseEntity.ok(false);
     }
 
     @PostMapping("/create")
@@ -41,6 +43,7 @@ public class TraningProgramController {
         try {
             Department department = departmentService.createDepartment(trainingProgramDTO.getDepartment().getDepartmentID(), trainingProgramDTO.getDepartment().getDepartmentName());
             TrainingProgram trainingProgram = traningProgramService.createTrainingProgram(trainingProgramDTO, department);
+            userService.updateTrainingProgram(trainingProgramDTO.getUserId(), trainingProgram.getId());
             for (SemesterDTO semesterDTO : trainingProgramDTO.getSemesters()) {
                 traningProgramSemesterService.createTrainingProgramSemester(semesterDTO, trainingProgram.getId());
                 for (CourseDTO courseDTO : semesterDTO.getCourses()) {

@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import vn.edu.hcmuaf.FocusAppProject.models.keys.KeyCourseGroupCourses;
 
+import java.util.Objects;
+
 @Entity(name = "course_group_courses")
 @Data
 @NoArgsConstructor
@@ -27,4 +29,8 @@ public class CourseGroupCourses {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

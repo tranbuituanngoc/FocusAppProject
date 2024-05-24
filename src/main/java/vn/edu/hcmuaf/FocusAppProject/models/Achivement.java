@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -28,4 +29,8 @@ public class Achivement {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

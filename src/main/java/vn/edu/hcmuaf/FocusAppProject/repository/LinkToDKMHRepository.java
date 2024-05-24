@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface LinkToDKMHRepository extends JpaRepository<LinkToDKMH,Long> {
     boolean existsByMssv(String mssv);
-
+    boolean existsByUserId(long userId);
     Optional<LinkToDKMH> findByUserId(long userId);
 }

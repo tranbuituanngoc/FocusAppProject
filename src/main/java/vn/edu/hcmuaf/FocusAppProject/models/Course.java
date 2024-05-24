@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -50,5 +51,8 @@ public class Course {
     @JsonBackReference
     @OneToMany(mappedBy = "course")
     Set<SemesterCourse> semesterCourses;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

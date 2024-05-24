@@ -1,15 +1,15 @@
 :root {
-    --primaryblue: rgba(89, 213, 224, 1);
-    --primaryyellow: rgba(245, 221, 97, 1);
-    --primaryorange: rgba(250, 163, 0, 1);
-    --primarylightred: rgba(244, 83, 138, 1);
-    --originblack: rgba(55, 55, 55, 1);
-    --origindarkgrey: rgba(76, 76, 76, 1);
-    --originmidgrey: rgba(104, 104, 104, 1);
-    --origingrey: rgba(168, 168, 168, 1);
-    --originlightgrey: rgba(240, 240, 240, 1);
-    --originwhite: rgba(255, 255, 255, 1);
-    --primary-raleway-big-font-family: "Raleway", Helvetica;
+    --primary-blue: rgba(89, 213, 224, 1);
+    --primary-yellow: rgba(245, 221, 97, 1);
+    --primary-orange: rgba(250, 163, 0, 1);
+    --primary-lightred: rgba(244, 83, 138, 1);
+    --origin-black: rgba(55, 55, 55, 1);
+    --origin-darkgrey: rgba(76, 76, 76, 1);
+    --origin-midgrey: rgba(104, 104, 104, 1);
+    --origin-grey: rgba(168, 168, 168, 1);
+    --origin-lightgrey: rgba(240, 240, 240, 1);
+    --origin-white: rgba(255, 255, 255, 1);
+    --primary-raleway-big-font-family: "Raleway Black", Helvetica;
     --primary-raleway-big-font-weight: 900;
     --primary-raleway-big-font-size: 48px;
     --primary-raleway-big-letter-spacing: 0px;

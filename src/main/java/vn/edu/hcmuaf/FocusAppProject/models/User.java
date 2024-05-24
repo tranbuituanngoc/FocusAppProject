@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Builder
 @Data
@@ -51,14 +52,16 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
-    @Column(name = "major")
-    private String major;
     @Column(name = "desired_score")
     private double desiredScore;
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "training_program_id")
     private TrainingProgram trainingProgram;
-
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "major_id")
+    private Major major;
     @JsonBackReference
     @OneToMany(mappedBy = "users")
     List<Note> notes;
@@ -80,7 +83,10 @@ public class User implements UserDetails {
     @JsonBackReference
     @OneToOne(mappedBy = "user")
     LinkToDKMH linkToDKMH;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
     public User(String email, String password, Role roles) {
         this.email = email;
         this.password = password;

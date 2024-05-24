@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "user_semesters")
@@ -42,5 +43,8 @@ public class UserSemesters {
     @JsonBackReference
     @OneToMany(mappedBy = "userSemesters")
     Set<UserCourse> userCourses;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

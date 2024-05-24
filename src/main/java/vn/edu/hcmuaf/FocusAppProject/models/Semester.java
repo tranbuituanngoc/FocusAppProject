@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -34,4 +35,8 @@ public class Semester {
     @JsonBackReference
     @OneToMany(mappedBy = "semester")
     private List<TrainingProgramSemesters> trainingProgramSemesters;
+    @Override
+    public int hashCode() {
+        return Objects.hash(semesterId);
+    }
 }

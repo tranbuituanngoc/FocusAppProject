@@ -15,6 +15,7 @@ import vn.edu.hcmuaf.FocusAppProject.models.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.edu.hcmuaf.FocusAppProject.repository.RoleRepository;
+import vn.edu.hcmuaf.FocusAppProject.repository.TrainingProgramRepository;
 import vn.edu.hcmuaf.FocusAppProject.repository.UserRepository;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.AuthServiceImp;
 
@@ -37,6 +38,8 @@ public class AuthService implements AuthServiceImp {
     private SaltStringUtil saltString;
     @Autowired
     private EmailUtil emailUtil;
+    @Autowired
+    private TrainingProgramRepository trainingProgramRepository;
 
     @Override
     public boolean checkLogin(String email, String password) {
@@ -64,7 +67,6 @@ public class AuthService implements AuthServiceImp {
         Timestamp timeValid = new Timestamp(c.getTimeInMillis());
         //Create salt string(random string)
         String verificationCode = saltString.getSaltString();
-        System.out.println(userDTO.getPassword());
         //Create new user
         User user = User.builder().email(userDTO.getEmail())
                 .name(userDTO.getName())
@@ -84,7 +86,7 @@ public class AuthService implements AuthServiceImp {
         }
         User savedUser = userRepository.save(user);
 
-        emailUtil.sendMail(userDTO.getEmail(),"Đây là email xác thực","Xác thực tài khoản");
+//        emailUtil.sendMail(userDTO.getEmail(),"Đây là email xác thực","Xác thực tài khoản");
 
         return savedUser;
     }

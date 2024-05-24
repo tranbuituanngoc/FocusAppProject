@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -32,4 +33,8 @@ public class TestSchedule {
     private LocalDate testDate;
     @Column(name = "start_slot")
     private int startSlot;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

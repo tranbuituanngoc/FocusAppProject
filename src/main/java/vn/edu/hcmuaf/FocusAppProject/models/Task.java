@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,5 +28,8 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

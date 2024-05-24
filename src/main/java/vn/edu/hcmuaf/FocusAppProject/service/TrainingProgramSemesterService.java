@@ -14,6 +14,8 @@ import vn.edu.hcmuaf.FocusAppProject.repository.TrainingProgramRepository;
 import vn.edu.hcmuaf.FocusAppProject.repository.TrainingProgramSemesterRepository;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.TrainingProgramSemesterServiceImp;
 
+import java.util.Optional;
+
 @Service
 public class TrainingProgramSemesterService implements TrainingProgramSemesterServiceImp {
     @Autowired
@@ -26,7 +28,16 @@ public class TrainingProgramSemesterService implements TrainingProgramSemesterSe
     @Override
     @Transactional // This annotation is used to indicate that the method should be run in a transaction.
     public void createTrainingProgramSemester(SemesterDTO semesterDTO, long trainingProgramID) throws DataNotFoundException {
-        Semester semester = semesterRepository.findById(semesterDTO.getSemesterId()).orElseThrow(() -> new DataNotFoundException("Semester " + semesterDTO.getSemesterId() + " not found"));
+        Optional<Semester> semesterOptional = semesterRepository.findById(semesterDTO.getSemesterId());
+        Semester semester;
+        if (!semesterOptional.isPresent()) {
+            semester = semesterRepository.save(new Semester().builder()
+                    .semesterName(semesterDTO.getSemesterName())
+                    .semesterId(semesterDTO.getSemesterId())
+                    .build());
+        } else {
+            semester = semesterOptional.get();
+        }
         TrainingProgram trainingProgram = trainingProgramRepository.findById(trainingProgramID).orElseThrow(() -> new DataNotFoundException("Training Program " + trainingProgramID + " not found"));
 
         KeyTrainingProgramSemester id = new KeyTrainingProgramSemester();

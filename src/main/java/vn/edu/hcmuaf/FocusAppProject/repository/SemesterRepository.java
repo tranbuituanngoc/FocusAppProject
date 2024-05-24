@@ -11,5 +11,5 @@ import java.time.LocalDate;
 @Repository
 public interface SemesterRepository extends JpaRepository<Semester, Integer> {
     @Query("SELECT s.semesterId FROM semester s WHERE :date BETWEEN s.startDate AND s.endDate")
-    Integer findSemesterIdsByDate(@Param("date") LocalDate date);
+    Integer findCurrentSemesterIdsByDate(@Param("date") LocalDate date);
 }

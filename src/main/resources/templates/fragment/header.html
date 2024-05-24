@@ -1,0 +1,68 @@
+<div class="header" th:fragment="header">
+  <div class="ellipse-1"></div>
+  <div class="menu">
+    <div class="header-menu">
+      <a th:href="@{/trang-chu}" class="header-title">Trang Chủ</a>
+    </div>
+    <div class="header-menu">
+      <a href="#" class="header-title">Nhật Ký</a>
+    </div>
+    <div class="header-menu">
+      <a href="#" class="header-title">To-do</a>
+    </div>
+    <div class="header-menu">
+      <a href="#" class="header-title">Dự Án</a>
+    </div>
+    <div class="header-menu study-menu">
+      <div class="header-title ">Học Tập</div>
+    </div>
+    <div class="study-dropdown">
+      <div class="popup-menu">
+        <div class="child-menu">
+          <a th:href="@{/de-xuat-mon-hoc}">Đề xuất môn học</a>
+        </div>
+        <div class="child-menu">
+          <a href="#">Xem điểm</a>
+        </div>
+        <div class="child-menu">
+          <a href="#">Xem thời khóa biểu</a>
+        </div>
+        <div class="child-menu">
+          <a href="#">Xem điểm cần thiết</a>
+        </div>
+        <div class="child-menu">
+          <a href="#">Xem lịch thi</a>
+        </div>
+      </div>
+    </div>
+    <div class="header-menu user-menu">
+      <div class="header-title">Tài Khoản</div>
+    </div>
+    <div class="user-dropdown">
+      <div class="account-pop-up">
+        <div class="welcome-tag">
+          <div class="username">
+            <div class="username2" th:text="${session.user.name}"></div>
+          </div>
+          <div class="title">
+            <div class="solar-user-broken">
+              <img class="grop-user" th:src="@{/user_style/img/icon/solar_user-broken.svg}"/>
+            </div>
+            <div class="welcome-title">Xin chào</div>
+          </div>
+        </div>
+        <div class="user-feature">
+          <div class="child-menu">
+            <a href="#">Đổi mật khẩu</a>
+          </div>
+          <div class="child-menu button-link-dkmh">
+            <a href="#">Liên kết tài khoản DKMH</a>
+          </div>
+          <div class="child-menu">
+            <a th:href="@{/auth/logout}">Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

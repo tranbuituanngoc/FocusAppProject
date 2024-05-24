@@ -19,4 +19,6 @@ public class TrainingProgramDTO {
     private DepartmentDTO department;
     @JsonProperty("list_semesters")
     List<SemesterDTO> semesters;
+    @JsonProperty("user_id")
+    private long userId;
 }

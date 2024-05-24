@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -29,4 +30,8 @@ public class Week {
     @JsonBackReference
     @OneToMany(mappedBy = "week")
     private List<CourseSchedule> courseSchedules;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

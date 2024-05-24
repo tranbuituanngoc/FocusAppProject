@@ -8,4 +8,5 @@ import vn.edu.hcmuaf.FocusAppProject.response.LinkToDKMHResponse;
 public interface LinkToDKMHImp {
     LinkToDKMH createOrUpdateLinkToDKMH(LinkToDKMHDTO linkToDKMHDTO) throws DataNotFoundException, Exception;
     LinkToDKMHResponse getExpire(Long userId) throws DataNotFoundException;
+    boolean isLinked(Long userId) throws DataNotFoundException;
 }

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,4 +34,8 @@ public class Score {
     @ManyToOne
     @JoinColumn(name = "user_course_id")
     UserCourse userCourse;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

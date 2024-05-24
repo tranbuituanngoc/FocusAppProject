@@ -36,4 +36,10 @@ public class TrainingProgramService implements TrainingProgramServiceImp {
         if (departmentID.equals("DT22")) departmentID = "52480201";
         return trainingProgramRepository.existsByYearAndDepartmentId(year, Long.parseLong(departmentID));
     }
+
+    @Override
+    public TrainingProgram findTrainingProgram(int year, String departmentID) {
+        if (departmentID.equals("DT22")) departmentID = "52480201";
+        return trainingProgramRepository.findByYearAndDepartmentId(year, Long.parseLong(departmentID));
+    }
 }

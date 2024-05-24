@@ -1,0 +1,17 @@
+<div th:fragment="script">
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    var user = /*[[${session.user}]]*/ 'default';
+    /*]]>*/
+  </script>
+  <!--Toastify-->
+  <script th:src="@{'https://cdn.jsdelivr.net/npm/toastify-js'}"></script>
+  <!--Axios-->
+  <script th:src="@{'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'}"></script>
+  <!--JQuery-->
+  <script type="text/javascript" th:src="@{/user_style/js/jquery.js}"></script>
+  <!--Sweet Alert-->
+  <script th:src="@{'https://cdn.jsdelivr.net/npm/sweetalert2@11'}"></script>
+  <!--Custom Script-->
+  <script type="text/javascript" th:src="@{/user_style/js/script.js}"></script>
+</div>

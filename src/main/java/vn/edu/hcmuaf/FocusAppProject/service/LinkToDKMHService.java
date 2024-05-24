@@ -49,4 +49,10 @@ public class LinkToDKMHService implements LinkToDKMHImp {
                 .accessToken(linkToDKMH.getAccessToken())
                 .build();
     }
+
+    @Override
+    public boolean isLinked(Long userId) throws DataNotFoundException {
+        User user = userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException("User not found!"));
+        return linkToDKMHRepository.existsByUserId(user.getId());
+    }
 }
