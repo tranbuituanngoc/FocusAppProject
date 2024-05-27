@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.FocusAppProject.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +31,10 @@ public class Week {
     @JsonBackReference
     @OneToMany(mappedBy = "week")
     private List<CourseSchedule> courseSchedules;
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
     @Override
     public int hashCode() {
         return Objects.hash(id);

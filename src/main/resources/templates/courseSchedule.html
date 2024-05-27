@@ -4,7 +4,211 @@
 <body>
 <div class="view" id="view">
     <div th:replace="fragment/header :: header"></div>
+    <div class="content">
+        <div class="header-schedule">
+            <div class="schedule-main-title">Lịch học</div>
+            <div class="date-select">
+                <div class="week-details" id="current-week" data-value=""></div>
+                <div class="icon-park-outline-drop-down-list">
+                    <img class="schedule-group" th:src="@{/user_style/img/icon/Group.svg}"/>
+                </div>
+            </div>
+            <div class="calendar-dropdown">
+                <div class="popup-calendar">
+                    <div class="popup-calendar-content" id="list-weeks">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="schedule">
+            <div class="course-schedule">
+                <div class="board">
+                    <div class="board-frame">
+                        <div class="rectangle-52"></div>
+                        <div class="rectangle-59"></div>
+                        <div class="rectangle-60"></div>
+                        <div class="rectangle-61"></div>
+                        <div class="rectangle-62"></div>
+                        <div class="rectangle-63"></div>
+                        <div class="rectangle-64"></div>
+                        <div class="rectangle-65"></div>
+                        <div class="rectangle-66"></div>
+                    </div>
+                    <div class="week-subject" id="week-subject">
+                        <div class="monday-subject" id="thu-2">
+                            <div class=" subject not-study" id="t2-slot1">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t2-slot4">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t2-slot7">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t2-slot10">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tuesday-subject" id="thu-3">
+                            <div class=" subject  not-study" id="t3-slot1">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject  not-study" id="t3-slot4">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject  not-study" id="t3-slot7">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject  not-study" id="t3-slot10">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wednessday-subject" id="thu-4">
+                            <div class=" subject  not-study" id="t4-slot1">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject  not-study" id="t4-slot4">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t4-slot7">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t4-slot10">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="thursday-subject" id="thu-5">
+                            <div class=" subject  not-study" id="t5-slot1">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject  not-study" id="t5-slot4">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t5-slot7">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t5-slot10">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="friday-subject" id="thu-6">
+                            <div class=" subject  not-study" id="t6-slot1">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject  not-study" id="t6-slot4">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject  not-study" id="t6-slot7">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject  not-study" id="t6-slot10">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="saturday-subject" id="thu-7">
+                            <div class=" subject not-study" id="t7-slot1">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t7-slot4">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t7-slot7">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t7-slot10">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sunday-subject" id="thu-8">
+                            <div class=" subject not-study" id="t8-slot1">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t8-slot4">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t8-slot7">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                            <div class=" subject not-study" id="t8-slot10">
+                                <div class="subject-details">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="week" id="week">
+                    <!--                    list days of week-->
+                </div>
+            </div>
+            <div class="timeline-course">
+                <div class="timeline">
+                    <div class="slot">
+                        14:30
+                        <br/>
+                        -
+                        <br/>
+                        16:45
+                    </div>
+                </div>
+                <div class="timeline2">
+                    <div class="slot">
+                        7:00
+                        <br/>
+                        -
+                        <br/>
+                        9:15
+                    </div>
+                </div>
+                <div class="timeline3">
+                    <div class="slot">
+                        9:30
+                        <br/>
+                        -
+                        <br/>
+                        11:45
+                    </div>
+                </div>
+                <div class="timeline4">
+                    <div class="slot">
+                        12:15
+                        <br/>
+                        -
+                        <br/>
+                        14:30
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div th:replace="fragment/script :: script"></div>
+<script th:src="@{/user_style/js/course-schedule.js}"></script>
 </body>
 </html>

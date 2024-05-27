@@ -10,13 +10,13 @@
     --origin-lightgrey: rgba(240, 240, 240, 1);
     --origin-white: rgba(255, 255, 255, 1);
     --primary-raleway-big-font-family: "Raleway Black", Helvetica;
-    --primary-raleway-big-font-weight: 900;
+    --primary-raleway-big-font-weight: 700;
     --primary-raleway-big-font-size: 48px;
     --primary-raleway-big-letter-spacing: 0px;
     --primary-raleway-big-line-height: normal;
     --primary-raleway-big-font-style: normal;
     --primary-raleway-medium-font-family: "Raleway", Helvetica;
-    --primary-raleway-medium-font-weight: 700;
+    --primary-raleway-medium-font-weight: 600;
     --primary-raleway-medium-font-size: 24px;
     --primary-raleway-medium-letter-spacing: 0px;
     --primary-raleway-medium-line-height: normal;

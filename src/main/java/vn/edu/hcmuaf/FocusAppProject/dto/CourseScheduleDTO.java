@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 public class CourseScheduleDTO {
     @JsonProperty("course_id")
     private int courseId;
+    @JsonProperty("course_name")
+    private String courseName;
     @JsonProperty("is_practice")
     private boolean practice;
     @JsonProperty("study_slot")

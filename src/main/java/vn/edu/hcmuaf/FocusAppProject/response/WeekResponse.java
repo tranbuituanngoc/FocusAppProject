@@ -1,28 +1,25 @@
-package vn.edu.hcmuaf.FocusAppProject.dto;
+package vn.edu.hcmuaf.FocusAppProject.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vn.edu.hcmuaf.FocusAppProject.dto.WeekDTO;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class WeekDTO {
+public class WeekResponse {
     @JsonProperty("week_id")
     private long weekId;
-    @JsonProperty("semester_week")
-    private int semesterWeek;
     @JsonProperty("start_date")
     private String startDate;
     @JsonProperty("end_date")
     private String endDate;
-    @JsonProperty("course_schedules")
-    private List<CourseScheduleDTO> courseSchedules;
+    @JsonProperty("list_weeks")
+    private List<WeekDTO> listWeek;
 }

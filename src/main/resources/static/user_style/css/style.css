@@ -938,11 +938,12 @@ h5,
 
 .study-dropdown {
     position: absolute;
-    right: 180px;
+    right: 225px;
     top: 40px;
     z-index: 1;
     display: none;
 }
+
 .user-dropdown {
     position: absolute;
     right: -5px;
@@ -981,13 +982,21 @@ h5,
     );
 }
 
-.study-menu:hover + .study-dropdown,
-.study-dropdown:hover {
+.popup-menu div, .user-feature div, .popup-calendar-content div {
+    padding: 12px 16px;
+    text-decoration: none;
     display: block;
 }
 
-.popup-menu div:hover, .user-feature div:hover {
+.popup-menu div:hover, .user-feature div:hover, .popup-calendar-content div:hover {
     background-color: var(--origin-lightgrey);
+}
+.date-select:hover + .calendar-dropdown,
+.calendar-dropdown:hover {
+    display: block;
+    transition-duration: 2s;
+    transition-timing-function: linear;
+    transition-delay: 1s;
 }
 
 .study-menu:hover + .study-dropdown,
@@ -1099,13 +1108,15 @@ h5,
 .header-menu-active:hover .header-title, .title-active:hover .header-title {
     color: var(--origin-white);
 }
+
 .notify-user {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
-.not-linked{
+
+.not-linked {
     color: var(--origin-black);
     text-align: center;
     font-family: var(
@@ -1116,15 +1127,18 @@ h5,
     position: relative;
     flex: 1;
 }
+
 /* Course Schedule CSS*/
 .calendar-dropdown {
     position: absolute;
     right: 55px;
     top: 42px;
     z-index: 1;
-    display: flex;
+    display: none;
+    padding-top: 20px;
 }
-.popup-calendar{
+
+.popup-calendar {
     background: var(--origin-white);
     border-radius: 0px 0px 10px 10px;
     padding: 10px 5px;
@@ -1134,7 +1148,587 @@ h5,
     align-items: center;
     justify-content: center;
     position: relative;
-    box-shadow: var(
-            --shadow-textfield
-    );
+    box-shadow: var(--shadow-textfield);
+    max-height: 300px;
 }
+
+.popup-calendar-content {
+    overflow-y: auto;
+    border-radius: 0px 0px 10px 10px;
+    height: 100%;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 83.89%;
+    height: 5.47%;
+    position: absolute;
+    right: 8.06%;
+    left: 8.06%;
+    bottom: 84.67%;
+    top: 9.86%;
+}
+.header-schedule {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-self: stretch;
+    flex-shrink: 0;
+    height: 56px;
+    position: relative;
+}
+.schedule-main-title {
+    color: var(--origin-black);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-big-font-family
+    );
+    font-size: var(--primary-raleway-big-font-size);
+    font-weight: var(--primary-raleway-big-font-weight);
+    position: relative;
+    flex: 1;
+    z-index: 1;
+}
+.date-select {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+    justify-content: flex-end;
+    align-self: stretch;
+    flex-shrink: 0;
+    width: 485px;
+    position: relative;
+}
+.week-details {
+    color: var(--origin-black);
+    text-align: right;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    align-self: stretch;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.icon-park-outline-drop-down-list {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    position: relative;
+}
+.schedule-group {
+    width: 66.67%;
+    height: 25%;
+    position: absolute;
+    right: 16.67%;
+    left: 16.67%;
+    bottom: 16.67%;
+    top: 58.33%;
+    overflow: visible;
+}
+.schedule {
+    display: flex;
+    flex-direction: row;
+    gap: 38px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 99.34%;
+    height: 1469.64%;
+    position: absolute;
+    right: 0.33%;
+    left: 0.33%;
+    bottom: -1507.14%;
+    top: 137.5%;
+}
+.course-schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 88.18%;
+    height: 100%;
+    position: absolute;
+    right: 0%;
+    left: 11.82%;
+    bottom: 0%;
+    top: 0%;
+}
+.board {
+    flex-shrink: 0;
+    width: 100%;
+    height: 88.82%;
+    position: absolute;
+    right: 0%;
+    left: 0%;
+    bottom: 0%;
+    top: 11.18%;
+}
+.board-frame {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    right: 0%;
+    left: 0%;
+    bottom: 0%;
+    top: 0%;
+}
+.rectangle-52 {
+    background: var(--origin-lightgrey);
+    width: 0.1%;
+    height: 100%;
+    position: absolute;
+    right: 86.04%;
+    left: 13.86%;
+    bottom: 0%;
+    top: 0%;
+}
+.rectangle-59 {
+    background: var(--origin-lightgrey);
+    width: 0.1%;
+    height: 100%;
+    position: absolute;
+    right: 71.6%;
+    left: 28.3%;
+    bottom: 0%;
+    top: 0%;
+}
+.rectangle-60 {
+    background: var(--origin-lightgrey);
+    width: 0.1%;
+    height: 100%;
+    position: absolute;
+    right: 57.17%;
+    left: 42.73%;
+    bottom: 0%;
+    top: 0%;
+}
+.rectangle-61 {
+    background: var(--origin-lightgrey);
+    width: 0.1%;
+    height: 100%;
+    position: absolute;
+    right: 42.73%;
+    left: 57.17%;
+    bottom: 0%;
+    top: 0%;
+}
+.rectangle-62 {
+    background: var(--origin-lightgrey);
+    width: 0.1%;
+    height: 100%;
+    position: absolute;
+    right: 28.29%;
+    left: 71.6%;
+    bottom: 0%;
+    top: 0%;
+}
+.rectangle-63 {
+    background: var(--origin-lightgrey);
+    width: 0.1%;
+    height: 100%;
+    position: absolute;
+    right: 13.86%;
+    left: 86.04%;
+    bottom: 0%;
+    top: 0%;
+}
+.rectangle-64 {
+    background: var(--origin-lightgrey);
+    width: 100%;
+    height: 0.14%;
+    position: absolute;
+    right: 0%;
+    left: 0%;
+    bottom: 74.97%;
+    top: 24.9%;
+}
+.rectangle-65 {
+    background: var(--origin-lightgrey);
+    width: 100%;
+    height: 0.14%;
+    position: absolute;
+    right: 0%;
+    left: 0%;
+    bottom: 49.93%;
+    top: 49.93%;
+}
+.rectangle-66 {
+    background: var(--origin-lightgrey);
+    width: 100%;
+    height: 0.14%;
+    position: absolute;
+    right: 0%;
+    left: 0%;
+    bottom: 24.9%;
+    top: 74.97%;
+}
+.frame-36 {
+    width: 9.45%;
+    height: 13.68%;
+    position: absolute;
+    right: 88.93%;
+    left: 1.62%;
+    bottom: 82.22%;
+    top: 4.1%;
+    overflow: hidden;
+}
+.week-subject {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 99.14%;
+    height: 98.5%;
+    position: absolute;
+    right: 0.34%;
+    left: 0.52%;
+    bottom: 0.82%;
+    top: 0.68%;
+}
+.monday-subject {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 12.98%;
+    height: 100%;
+    position: absolute;
+    right: 87.02%;
+    left: 0%;
+    bottom: 0%;
+    top: 0%;
+}
+
+.subject-details {
+    color: var(--origin-lightgrey);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-small-font-family
+    );
+    font-size: var(--primary-raleway-small-font-size);
+    font-weight: var(--primary-raleway-small-font-weight);
+    position: relative;
+    align-self: stretch;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.tuesday-subject {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 12.98%;
+    height: 100%;
+    position: absolute;
+    right: 72.52%;
+    left: 14.5%;
+    bottom: 0%;
+    top: 0%;
+}
+.wednessday-subject {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 12.98%;
+    height: 100%;
+    position: absolute;
+    right: 58.01%;
+    left: 29.01%;
+    bottom: 0%;
+    top: 0%;
+}
+.thursday-subject {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 12.98%;
+    height: 100%;
+    position: absolute;
+    right: 43.51%;
+    left: 43.51%;
+    bottom: 0%;
+    top: 0%;
+}
+.friday-subject {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 12.98%;
+    height: 100%;
+    position: absolute;
+    right: 29.01%;
+    left: 58.01%;
+    bottom: 0%;
+    top: 0%;
+}
+.saturday-subject {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 12.98%;
+    height: 99.58%;
+    position: absolute;
+    right: 14.5%;
+    left: 72.52%;
+    bottom: 0.42%;
+    top: 0%;
+}
+.theory {
+    background: var(--primary-blue);
+}
+.subject{
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex: 1;
+    position: relative;
+    box-shadow: var(--shadow-todo);
+}
+.subject-disable {
+    mix-blend-mode: darken;
+    opacity: 0.30000001192092896;
+}
+.practice {
+    background: var(--primary-lightred);
+}
+.sunday-subject {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 12.98%;
+    height: 99.58%;
+    position: absolute;
+    right: 0%;
+    left: 87.02%;
+    bottom: 0.42%;
+    top: 0%;
+}
+.week {
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 100%;
+    height: 7.53%;
+    position: absolute;
+    right: 0%;
+    left: 0%;
+    bottom: 92.47%;
+    top: 0%;
+}
+.todo-date-unit {
+    background: var(--origin-white);
+    flex: 1;
+    height: 62px;
+    position: relative;
+    overflow: hidden;
+}
+.day {
+    color: var(--origin-midgrey);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-body-font-family
+    );
+    font-size: var(--primary-raleway-body-font-size);
+    font-weight: var(--primary-raleway-body-font-weight);
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    top: calc(50% - 28px);
+}
+.day-disable {
+    color: var(--origin-lightgrey);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-body-font-family
+    );
+    font-size: var(--primary-raleway-body-font-size);
+    font-weight: var(--primary-raleway-body-font-weight);
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    top: calc(50% - 28px);
+}
+.date-bottom-line {
+    height: 2px;
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+}
+.date-bottom-line-active {
+    background: var(--primary-blue);
+}
+.date-bottom-line-normal {
+    background: var(--origin-grey);
+}
+.date{
+    text-align: center;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    top: calc(50% - 6px);
+}
+.date-active {
+    color: var(--primary-blue);
+}
+.date-disable {
+    color: var(--origin-lightgrey);
+}
+.date-coming {
+    color: var(--origin-midgrey);
+}
+.timeline-course {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 7.47%;
+    height: 89.19%;
+    position: absolute;
+    right: 92.53%;
+    left: 0%;
+    bottom: 0%;
+    top: 10.81%;
+}
+.timeline {
+    background: var(--primary-yellow);
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 100%;
+    height: 24.8%;
+    position: absolute;
+    right: 0%;
+    left: 0%;
+    bottom: 0%;
+    top: 75.2%;
+    box-shadow: var(--shadow-todo);
+}
+.timeline2 {
+    background: var(--primary-yellow);
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 100%;
+    height: 24.8%;
+    position: absolute;
+    right: 0%;
+    left: 0%;
+    bottom: 75.2%;
+    top: 0%;
+    box-shadow: var(--shadow-todo);
+}
+.slot {
+    color: var(--origin-black);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.timeline3 {
+    background: var(--primary-yellow);
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 100%;
+    height: 24.8%;
+    position: absolute;
+    right: 0%;
+    left: 0%;
+    bottom: 50.14%;
+    top: 25.07%;
+    box-shadow: var(--shadow-todo);
+}
+.timeline4 {
+    background: var(--primary-yellow);
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 100%;
+    height: 24.8%;
+    position: absolute;
+    right: 0%;
+    left: 0%;
+    bottom: 25.07%;
+    top: 50.14%;
+    box-shadow: var(--shadow-todo);
+}
+.active{
+    background-color: var(--primary-blue);
+}
+.not-study{
+    visibility: hidden;
+}
+/* End Course Schedule CSS*/

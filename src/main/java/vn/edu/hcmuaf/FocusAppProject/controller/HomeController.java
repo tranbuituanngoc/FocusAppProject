@@ -32,6 +32,11 @@ public class HomeController {
         model.addAttribute("title", "Trang chủ");
         return "index";
     }
+    @GetMapping("/thoi-khoa-bieu")
+    public String viewScore(Model model) {
+        model.addAttribute("title", "Thời khóa biểu");
+        return "courseSchedule";
+    }
     @GetMapping("/de-xuat-mon-hoc")
     public String CourseSuggest(Model model) {
         model.addAttribute("title", "Đề xuất môn học");

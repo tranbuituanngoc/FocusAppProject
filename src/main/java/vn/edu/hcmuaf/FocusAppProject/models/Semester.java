@@ -35,6 +35,9 @@ public class Semester {
     @JsonBackReference
     @OneToMany(mappedBy = "semester")
     private List<TrainingProgramSemesters> trainingProgramSemesters;
+    @JsonBackReference
+    @OneToMany(mappedBy = "semester")
+    private List<Week> weeks;
     @Override
     public int hashCode() {
         return Objects.hash(semesterId);
