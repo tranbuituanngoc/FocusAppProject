@@ -290,6 +290,7 @@ $(".button-reload-data").click(async function () {
             success: function (response) {
                 getSchedule(access_token, proxyUrl, response);
                 getTestSchedule(access_token, proxyUrl, response);
+                location.reload();
             },
             error: function (error) {
                 console.error(error);
@@ -386,6 +387,7 @@ $(".button-reload-data").click(async function () {
                             success: function (response) {
                                 getSchedule(access_token, proxyUrl, response);
                                 getTestSchedule(access_token, proxyUrl, response);
+                                location.reload();
                             },
                             error: function (error) {
                                 console.error(error);

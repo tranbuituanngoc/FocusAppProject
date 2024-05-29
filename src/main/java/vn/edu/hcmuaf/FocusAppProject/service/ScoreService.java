@@ -8,8 +8,12 @@ import vn.edu.hcmuaf.FocusAppProject.dto.SemesterScoreDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserSemesterDTO;
 import vn.edu.hcmuaf.FocusAppProject.models.*;
 import vn.edu.hcmuaf.FocusAppProject.repository.*;
+import vn.edu.hcmuaf.FocusAppProject.response.ScoreResponse;
+import vn.edu.hcmuaf.FocusAppProject.response.SemesterScoreResponse;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.ScoreServiceImp;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -71,6 +75,49 @@ public class ScoreService implements ScoreServiceImp {
                 }
             }
         }
+    }
+
+    @Override
+    public List<SemesterScoreResponse> getScore(long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User " + userId + " not found"));
+        List<UserSemesters> userSemesters = userSemesterRepository.findByUserId(user.getId());
+        List<SemesterScoreResponse> semesterScoreResponses = new ArrayList<>();
+        for (UserSemesters userSemester : userSemesters) {
+            if (userSemester.getSemester() != null) {
+                List<UserCourse> userCourses = userCourseRepository.findByUserSemestersId(userSemester.getId());
+                List<ScoreResponse> scoreDTOS = new ArrayList<>();
+                for (UserCourse userCourse : userCourses) {
+                    Score scores = scoreRepository.findByUserCourseId(userCourse.getId());
+                    ScoreResponse scoreResponse = ScoreResponse.builder()
+                            .courseId(userCourse.getCourse().getId())
+                            .courseName(userCourse.getCourse().getCourseName())
+                            .credit(userCourse.getCourse().getCredits())
+                            .componentScore(scores.getComponentScore())
+                            .score(scores.getScore())
+                            .finalScore10(scores.getFinalScore10())
+                            .finalScore4(scores.getFinalScore4())
+                            .finalScoreChar(scores.getFinalScoreChar())
+                            .result(scores.isResult())
+                            .build();
+                    scoreDTOS.add(scoreResponse);
+                }
+                SemesterScoreResponse semesterScoreResponse = SemesterScoreResponse.builder()
+                        .semesterId(userSemester.getSemester().getSemesterId())
+                        .semesterName(userSemester.getSemester().getSemesterName())
+                        .gpa4(userSemester.getGpa4())
+                        .cumulativeGpa4(userSemester.getCumulativeGpa4())
+                        .gpa10(userSemester.getGpa10())
+                        .cumulativeGpa10(userSemester.getCumulativeGpa10())
+                        .cumulativeCredit(userSemester.getCumulativeCredit())
+                        .creditHours(userSemester.getCreditHours())
+                        .scores(scoreDTOS)
+                        .build();
+                semesterScoreResponses.add(semesterScoreResponse);
+            } else {
+                throw new RuntimeException("Semester not found");
+            }
+        }
+        return semesterScoreResponses;
     }
 
 }

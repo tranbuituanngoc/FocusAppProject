@@ -938,7 +938,7 @@ h5,
 
 .study-dropdown {
     position: absolute;
-    right: 225px;
+    right: 182px;
     top: 40px;
     z-index: 1;
     display: none;
@@ -1732,3 +1732,379 @@ h5,
     visibility: hidden;
 }
 /* End Course Schedule CSS*/
+/* View Score Css*/
+.score-title {
+    color: var(--origin-black);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-big-font-family
+    );
+    font-size: var(--primary-raleway-big-font-size);
+    font-weight: var(--primary-raleway-big-font-weight);
+    position: absolute;
+    left: 69px;
+    top: 122px;
+}
+.grade-board {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 86.04%;
+    position: absolute;
+    right: 5.62%;
+    left: 8.33%;
+    top: 209px;
+    bottom: 10px;
+    overflow-y: auto;
+}
+.semester {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 1239px;
+    position: relative;
+}
+.table-title {
+    background: var(--primary-blue);
+    border-radius: 7px 7px 0px 0px;
+    padding: 20px 10px 20px 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 34px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+.course-id-header {
+    white-space: nowrap;
+    color: var(--origin-lightgrey);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+}
+.course-name-header {
+    white-space: nowrap;
+    color: var(--origin-lightgrey);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    width: 382px;
+}
+.credit-header {
+    white-space: nowrap;
+    color: var(--origin-lightgrey);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+}
+.test-score-header {
+    white-space: nowrap;
+    color: var(--origin-lightgrey);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+}
+.fin10-header {
+    white-space: nowrap;
+    color: var(--origin-lightgrey);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+}
+.fin4-header {
+    white-space: nowrap;
+    color: var(--origin-lightgrey);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+}
+.result-header {
+    white-space: nowrap;
+    color: var(--origin-lightgrey);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+}
+.frame-21 {
+    background: var(--primary-yellow);
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    height: 54px;
+    position: relative;
+}
+.semester-title {
+    color: var(--origin-black);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+}
+.score-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    position: relative;
+}
+.course-score {
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    position: relative;
+}
+.course-id-text {
+    border-style: solid;
+    border-color: var(--origin-lightgrey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 106px;
+    position: relative;
+    align-self: stretch;
+}
+.col-text {
+    color: var(--origin-darkgrey);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+}
+.course-name-text {
+    border-style: solid;
+    border-color: var(--origin-lightgrey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 416px;
+    position: relative;
+    align-self: stretch;
+}
+.credit-text {
+    border-style: solid;
+    border-color: var(--origin-lightgrey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 139px;
+    position: relative;
+    align-self: stretch;
+}
+
+.test-score-text {
+    border-style: solid;
+    border-color: var(--origin-lightgrey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 130px;
+    position: relative;
+    align-self: stretch;
+}
+.fin10-text {
+    border-style: solid;
+    border-color: var(--origin-lightgrey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 172px;
+    position: relative;
+    align-self: stretch;
+}
+.fin4-text {
+    border-style: solid;
+    border-color: var(--origin-lightgrey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 159px;
+    position: relative;
+    align-self: stretch;
+}
+.res-text {
+    border-style: solid;
+    border-color: var(--origin-lightgrey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 117px;
+    position: relative;
+    align-self: stretch;
+}
+.semester-detail {
+    background: var(--origin-lightgrey);
+    border-radius: 0px 0px 12px 12px;
+    padding: 20px 30px 30px 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+.cumulative-score {
+    display: flex;
+    flex-direction: column;
+    gap: 33px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    position: relative;
+}
+.semester-subtext {
+    color: var(--origin-darkgrey);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    align-self: stretch;
+}
+.overall-score {
+    display: flex;
+    flex-direction: column;
+    gap: 33px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    /*width: fit-content;*/
+    position: relative;
+}
+.semester-subtext-normal {
+    color: var(--origin-darkgrey);
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+}
+.semester-subtext-predict {
+    color: var(--primary-lightred);
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+}
+
+.button-reload {
+    background: var(--primary-blue);
+    border-radius: 7px;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 98px;
+    top: 131px;
+    box-shadow: var(--shadow-todo);
+}
+.uiw-reload {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    overflow: visible;
+}
+.reload-text-button {
+    color: var(--origin-white);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+}
+/* End View Score Css*/

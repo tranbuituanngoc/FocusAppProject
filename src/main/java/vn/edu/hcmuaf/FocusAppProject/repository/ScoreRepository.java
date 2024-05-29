@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ScoreRepository extends JpaRepository<Score,Long> {
+    Score findByUserCourseId(long userCourseId);
 }

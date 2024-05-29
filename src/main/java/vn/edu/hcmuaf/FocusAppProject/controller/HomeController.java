@@ -33,7 +33,7 @@ public class HomeController {
         return "index";
     }
     @GetMapping("/thoi-khoa-bieu")
-    public String viewScore(Model model) {
+    public String viewSchedule(Model model) {
         model.addAttribute("title", "Thời khóa biểu");
         return "courseSchedule";
     }
@@ -41,5 +41,10 @@ public class HomeController {
     public String CourseSuggest(Model model) {
         model.addAttribute("title", "Đề xuất môn học");
         return "courseSuggest";
+    }
+    @GetMapping("/xem-diem")
+    public String viewScore(Model model) {
+        model.addAttribute("title", "Xem điểm");
+        return "viewScore";
     }
 }
