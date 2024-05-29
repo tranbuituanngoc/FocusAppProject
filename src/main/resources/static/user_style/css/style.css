@@ -2108,3 +2108,243 @@ h5,
     position: relative;
 }
 /* End View Score Css*/
+/* View Test CSS*/
+.test-title {
+    color: var(--origin-black);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-big-font-family
+    );
+    font-size: var(--primary-raleway-big-font-size);
+    font-weight: var(--primary-raleway-big-font-weight);
+    position: absolute;
+    left: 128px;
+    top: 121px;
+}
+.test-schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 84.65%;
+    position: absolute;
+    right: 6.46%;
+    left: 8.89%;
+    top: 227px;
+}
+.test-header {
+    background: var(--primary-blue);
+    border-radius: 12px 12px 0px 0px;
+    padding: 20px 10px 20px 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+.test-course {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+    overflow: auto;
+    max-height: calc(100vh - 227px - 150px);
+}
+.test-title-cid {
+    color: var(--origin-white);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    width: 129px;
+}
+.test-title-cname {
+    color: var(--origin-white);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    width: 362px;
+}
+.test-title-test-date {
+    color: var(--origin-white);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    width: 222px;
+}
+.test-title-troom {
+    color: var(--origin-white);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    width: 173px;
+}
+.test-title-cstart {
+    color: var(--origin-white);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    width: 157px;
+}
+.test-title-ctime {
+    color: var(--origin-white);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    flex: 1;
+}
+
+.subject-test {
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+.test-course-id {
+    border-style: solid;
+    border-color: var(--origin-grey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    width: 138px;
+    position: relative;
+}
+.test-course-name {
+    border-style: solid;
+    border-color: var(--origin-grey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 401px;
+    position: relative;
+}
+.test-date {
+    border-style: solid;
+    border-color: var(--origin-grey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    width: 204px;
+    position: relative;
+}
+.test-col {
+    color: var(--origin-black);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    align-self: stretch;
+    flex: 1;
+}
+.test-course-name-col {
+    color: var(--origin-black);
+    text-align: left;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    align-self: stretch;
+    flex: 1;
+}
+.test-room {
+    border-style: solid;
+    border-color: var(--origin-grey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    width: 169px;
+    position: relative;
+}
+.test-slot {
+    border-style: solid;
+    border-color: var(--origin-grey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    width: 164px;
+    position: relative;
+}
+.test-time {
+    border-style: solid;
+    border-color: var(--origin-grey);
+    border-width: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex: 1;
+    position: relative;
+}
+/*End View Test Css*/

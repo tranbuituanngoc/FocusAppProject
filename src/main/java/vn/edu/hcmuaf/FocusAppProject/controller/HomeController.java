@@ -47,4 +47,9 @@ public class HomeController {
         model.addAttribute("title", "Xem điểm");
         return "viewScore";
     }
+    @GetMapping("/xem-lich-thi")
+    public String viewTestSchedule(Model model) {
+        model.addAttribute("title", "Xem lịch thi");
+        return "viewTestSchedule";
+    }
 }
