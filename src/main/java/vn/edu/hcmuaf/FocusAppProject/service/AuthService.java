@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.util.StringUtils;
 import vn.edu.hcmuaf.FocusAppProject.Util.EmailUtil;
 import vn.edu.hcmuaf.FocusAppProject.Util.SaltStringUtil;
+import vn.edu.hcmuaf.FocusAppProject.dto.PasswordDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserDTO;
 import vn.edu.hcmuaf.FocusAppProject.exception.DataNotFoundException;
 import vn.edu.hcmuaf.FocusAppProject.exception.PermissionDenyException;
@@ -122,6 +123,17 @@ public class AuthService implements AuthServiceImp {
 
         return roleRepository.findRoleNameById(users.getRoles().getId());
     }
-
+    @Override
+    public boolean updatePassword(PasswordDTO passwordDTO, long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        if (passwordEncoder.matches(passwordDTO.getOldPassword(), user.getPassword())) {
+            String encodedPassword = passwordEncoder.encode(passwordDTO.getNewPassword());
+            user.setPassword(encodedPassword);
+            userRepository.save(user);
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 }

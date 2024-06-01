@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.hcmuaf.FocusAppProject.dto.PasswordDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserStudentInfoDTO;
+import vn.edu.hcmuaf.FocusAppProject.service.Imp.AuthServiceImp;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.DepartmentServiceImp;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.MajorServiceImp;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.UserServiceImp;
@@ -19,6 +21,8 @@ public class UserController {
     private DepartmentServiceImp departmentService;
     @Autowired
     private MajorServiceImp majorService;
+    @Autowired
+    private AuthServiceImp authService;
 
     @GetMapping("/isUpdate/{userId}")
     @PreAuthorize("isAuthenticated()")
@@ -57,6 +61,16 @@ public class UserController {
         try {
             userService.updateStudentInfo(data);
             return ResponseEntity.ok("Cập nhật thông tin thành công");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping("/changePassword/{userId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> changePassword(@PathVariable long userId, @RequestBody @Valid PasswordDTO data) {
+        try {
+            return ResponseEntity.ok(authService.updatePassword(data, userId));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());

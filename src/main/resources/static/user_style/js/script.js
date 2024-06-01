@@ -6,6 +6,8 @@ window.addEventListener('scroll', function () {
         header.classList.remove('header-sticky');
     }
 });
+
+// Toggle menu
 $(document).ready(function () {
     // Lấy URL hiện tại
     var currentUrl = window.location.href;
@@ -39,7 +41,7 @@ $(document).ready(function () {
     }
 });
 
-
+// Link with DKMH
 $(".button-link-dkmh").click(function () {
     const proxyUrl = 'http://127.0.0.1:5300/';
     Swal.fire({
@@ -265,6 +267,7 @@ $(".button-link-dkmh").click(function () {
     });
 });
 
+// Reload data
 $(".button-reload-data").click(async function () {
     const proxyUrl = 'http://127.0.0.1:5300/';
     const response = await fetch('/api/dkmh/get-expire/' + user.id, {
@@ -432,6 +435,109 @@ $(".button-reload-data").click(async function () {
             }
         });
     }
+});
+// Change password
+$(".change-password").click(function () {
+    Swal.fire({
+        title: "Đổi Mật Khẩu",
+        html:
+            '<input id="old-password" class="swal2-input  input-alert-class" placeholder="Mật khẩu cũ" type="password" required>' +
+            '<input id="new-password" class="swal2-input  input-alert-class" placeholder="Mật khẩu mới" type="password" required>' +
+            '<input id="confirm-password" class="swal2-input  input-alert-class" placeholder="Xác nhận mật khẩu mới" type="password" required>',
+        focusConfirm: false,
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonText: 'Đổi mật khẩu',
+        cancelButtonText: 'Hủy',
+        inputAttributes: {
+            autocapitalize: "off"
+        },
+        customClass: {
+            confirmButton: 'confirm-button-class',
+            cancelButton: 'cancel-button-class',
+            title: 'title-alert-class',
+            validationMessage: 'my-validation-message',
+        },
+        onOpen: () => {
+            const passwordInput = Swal.getInput();
+            passwordInput.addEventListener('input', () => {
+                Swal.resetValidationMessage();
+            });
+        },
+        preConfirm: () => {
+            const oldPassword = document.getElementById('old-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z\d]).{8,}$/gm;
+
+            if (!oldPassword || !newPassword || !confirmPassword) {
+                return Swal.showValidationMessage('Vui lòng nhập đầy đủ thông tin!');
+            }
+            if(oldPassword === newPassword){
+                return Swal.showValidationMessage('Mật khẩu mới không được trùng với mật khẩu cũ!');
+            }
+
+            if (newPassword !== confirmPassword) {
+                return Swal.showValidationMessage('Mật khẩu mới không khớp!');
+            }
+            if (!passwordRegex.test(newPassword)) {
+                return Swal.showValidationMessage('Mật khẩu mới phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số!');
+            }
+            return {
+                oldPassword: oldPassword,
+                newPassword: newPassword,
+            };
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        $.ajax({
+            url: '/api/nguoi-dung/changePassword/' + user.id,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                old_password: result.value.oldPassword,
+                new_password: result.value.newPassword
+            }),
+            success: function (response) {
+                if(response){
+                    Swal.fire({
+                        icon: "success",
+                        title: "Thành công",
+                        text: "Đổi mật khẩu thành công!",
+                        customClass: {
+                            confirmButton: 'confirm-button-class',
+                            cancelButton: 'cancel-button-class',
+                            title: 'title-alert-class',
+                        },
+                        confirmButtonText: 'OK!'
+                    });
+                }else{
+                    Swal.fire({
+                        icon: "error",
+                        title: "Thất bại",
+                        text: "Mật khẩu cũ không đúng!",
+                        customClass: {
+                            confirmButton: 'confirm-button-class',
+                            cancelButton: 'cancel-button-class',
+                            title: 'title-alert-class',
+                        },
+                    });
+                }
+            },
+            error: function (response) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Thất bại",
+                    text: response.responseText,
+                    customClass: {
+                        confirmButton: 'confirm-button-class',
+                        cancelButton: 'cancel-button-class',
+                        title: 'title-alert-class',
+                    },
+                });
+            }
+        });
+    })
 });
 
 function getSemester(accessToken, proxyUrl) {

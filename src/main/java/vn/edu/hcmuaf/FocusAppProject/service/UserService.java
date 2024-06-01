@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.FocusAppProject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vn.edu.hcmuaf.FocusAppProject.dto.PasswordDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserStudentInfoDTO;
 import vn.edu.hcmuaf.FocusAppProject.models.Department;
@@ -83,5 +84,7 @@ public class UserService implements UserServiceImp {
         user.setTrainingProgram(trainingProgram);
         userRepository.save(user);
     }
+
+
 
 }

@@ -2,15 +2,15 @@ $(document).ready(function () {
     $('form').on('submit', function (e) {
         e.preventDefault();
 
-        var email = $('#email').val();
-        var password = $('#password').val();
-        var fullName = $('#full-name').val();
-        var rePassword = $('#re-password').val();
+        const email = $('#email').val();
+        const password = $('#password').val();
+        const fullName = $('#full-name').val();
+        const rePassword = $('#re-password').val();
 
-        var emailRegex = /^[1-9][0-9]{7}@st\.hcmuaf\.edu\.vn$/;
-        var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z\d]).{8,}$/gm;
+        const emailRegex = /^[1-9][0-9]{7}@st\.hcmuaf\.edu\.vn$/;
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z\d]).{8,}$/gm;
 
-        var isValid = true;
+        let isValid = true;
 
         if (!emailRegex.test(email)) {
             $('#error-email').text('Email không hợp lệ');
