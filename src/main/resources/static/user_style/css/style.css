@@ -488,7 +488,6 @@ h5,
     border-style: solid;
     border-color: var(--origin-lightgrey);
     border-width: 0px 0px 1px 0px;
-    padding: 10px;
     display: flex;
     flex-direction: row;
     gap: 311px;
@@ -516,12 +515,17 @@ h5,
 }
 
 .ellipse-1 {
-    background: var(--primary-blue);
     border-radius: 50%;
     align-self: stretch;
     flex-shrink: 0;
-    width: 44px;
+    width: 150px;
+    height: auto;
     position: relative;
+    margin: 10px 0;
+}
+.ellipse-1 img{
+    width: 100%;
+    height: auto;
 }
 
 .menu {
@@ -938,8 +942,8 @@ h5,
 
 .study-dropdown {
     position: absolute;
-    right: 182px;
-    top: 40px;
+    right: 165px;
+    top: 55px;
     z-index: 1;
     display: none;
 }
@@ -947,7 +951,7 @@ h5,
 .user-dropdown {
     position: absolute;
     right: -5px;
-    top: 40px;
+    top: 55px;
     z-index: 1;
     display: none;
 }
