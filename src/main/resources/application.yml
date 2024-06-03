@@ -19,6 +19,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 668553925343-met3vqnbsb1msmtoo0l2hop9usq12md9.apps.googleusercontent.com
+            client-secret: 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
 email:
-  from: tilemarket2022@gmail.com
-  password: auogzmiqdjuyxbji
+  from: wealthuring@gmail.com
+  password: oaunszrvljseonid
+  link: http://localhost:8081

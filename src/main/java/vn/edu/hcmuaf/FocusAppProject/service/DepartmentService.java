@@ -18,7 +18,7 @@ public class DepartmentService implements DepartmentServiceImp {
 
     @Override
     public Department createDepartment(String departmentID, String departmentName) {
-        Optional<Department> existingDepartment = departmentRepository.findById(Long.parseLong(departmentID));
+        Optional<Department> existingDepartment = departmentRepository.findByDepartmentName(departmentName);    ;
         if (!existingDepartment.isPresent()) {
             Department department = Department.builder()
                     .id(Long.parseLong(departmentID))

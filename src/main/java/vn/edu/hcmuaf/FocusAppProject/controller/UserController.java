@@ -1,9 +1,11 @@
 package vn.edu.hcmuaf.FocusAppProject.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hcmuaf.FocusAppProject.dto.PasswordDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserStudentInfoDTO;
@@ -11,6 +13,9 @@ import vn.edu.hcmuaf.FocusAppProject.service.Imp.AuthServiceImp;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.DepartmentServiceImp;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.MajorServiceImp;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.UserServiceImp;
+
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/nguoi-dung")

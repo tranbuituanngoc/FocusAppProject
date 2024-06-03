@@ -30,7 +30,7 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "name", length = 300)
     private String name;
-    @Column(name = "password", length = 200, nullable = false)
+    @Column(name = "password", length = 200)
     private String password;
     @Column(name = "provider")
     private String provider;
@@ -38,7 +38,7 @@ public class User implements UserDetails {
     private String token;
     @Column(name = "is_verify")
     private boolean isVerify;
-    @Column(name = "verification_code", length = 10, nullable = false)
+    @Column(name = "verification_code", length = 10)
     private String verificationCode;
     @Column(name = "time_valid")
     private Timestamp timeValid;

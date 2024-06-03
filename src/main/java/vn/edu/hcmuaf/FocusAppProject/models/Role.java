@@ -20,7 +20,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "role_name")
+    @Column(name = "role_name",nullable = false, unique = true)
     private String roleName;
     @Column(name = "user_permission")
     private boolean userPermission;

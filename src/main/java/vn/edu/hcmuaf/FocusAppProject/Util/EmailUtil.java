@@ -1,30 +1,42 @@
 package vn.edu.hcmuaf.FocusAppProject.Util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import vn.edu.hcmuaf.FocusAppProject.FocusAppProjectApplication;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 import java.util.Properties;
 
 @Component
 public class EmailUtil {
-    //    String pass="auogzmiqdjuyxbji";
     @Value("${email.from}")
     private String from;
     @Value("${email.password}")
     private String password;
+    @Autowired
+    private EmailTemplateUtil emailTemplateUtil ;
+//    private String from = "wealthuring@gmail.com";
+//    private String password = "oaunszrvljseonid";
+//
+//    private EmailTemplateUtil emailTemplateUtil = new EmailTemplateUtil();
 
     @Async
-    public void sendMail(String to, String content, String subject) {
+    public void sendMail(String to, String subject, String templateName, Map<String, String> values) throws Exception {
+        String content = emailTemplateUtil.getEmailTemplate(templateName, values);
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.ssl.protocols", "TLSv1.2"); //TLS 587 SSL 465
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.port", "587");
 
         //create Authentication
         Authenticator auth = new Authenticator() {
@@ -58,6 +70,15 @@ public class EmailUtil {
         }
     }
 
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(FocusAppProjectApplication.class, args);
+        EmailUtil emailUtil = context.getBean(EmailUtil.class);
+        try {
+            emailUtil.sendMail("tranbuituanngoc@gmail.com", "Test", "verification-email", Map.of("user-name", "Trần Bùi Tuấn Ngọc"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 

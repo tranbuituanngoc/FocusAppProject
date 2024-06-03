@@ -21,7 +21,7 @@ import java.util.Set;
 public class Department {
     @Id
     private long id;
-    @Column(name = "department_name")
+    @Column(name = "department_name", nullable = false)
     private String departmentName;
     @JsonBackReference
     @OneToMany(mappedBy = "department")

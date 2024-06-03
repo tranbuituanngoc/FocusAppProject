@@ -219,7 +219,38 @@
     gap: 10px;
     display: flex;
 }
-
+.google-button {
+    background: var(--origin-white);
+    border-radius: 7px;
+    border-style: solid;
+    border-color: var(--primary-blue);
+    border-width: 1px;
+    padding: 0px 10px 0px 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    position: relative;
+    box-shadow: var(--shadow-todo);
+    overflow: hidden;
+}
+.flat-color-icons-google {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    overflow: visible;
+}
+.text-login-button {
+    color: var(--origin-black);
+    text-align: left;
+    font-family: var(--primary-raleway-body-font-family);
+    font-size: var(--primary-raleway-body-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+}
 .right-eclipse1-register {
     width: 585px;
     height: 710px;

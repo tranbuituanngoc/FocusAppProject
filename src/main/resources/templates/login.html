@@ -103,18 +103,16 @@
                 </button>
                 <div class="subtext-login">
                     <p class="Primary-Raleway_Small Origin-Black">
-                        hoặc đăng nhập với
+                        bằng Email sinh viên
                     </p>
                 </div>
                 <div class="other-login">
-                    <a class="socialButton" href="#">
-                        <img th:src="@{/user_style/img/icon/flat-color-icons_google.svg}"
-                             alt=""
-                             srcset=""
+                    <a class="google-button" th:href="@{/auth/login-google}">
+                        <img
+                                class="flat-color-icons-google"
+                                th:src="@{/user_style/img/icon/flat-color-icons_google.svg}"
                         />
-                    </a>
-                    <a class="socialButton" href="#">
-                        <img th:src="@{/user_style/img/icon/bxl_facebook.svg}" alt="" srcset=""/>
+                        <div class="text-login-button">Đăng nhập với Google</div>
                     </a>
                 </div>
             </div>

@@ -1,7 +1,11 @@
 package vn.edu.hcmuaf.FocusAppProject.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import vn.edu.hcmuaf.FocusAppProject.Util.EmailUtil;
 import vn.edu.hcmuaf.FocusAppProject.Util.SaltStringUtil;
@@ -10,11 +14,8 @@ import vn.edu.hcmuaf.FocusAppProject.dto.UserDTO;
 import vn.edu.hcmuaf.FocusAppProject.exception.DataNotFoundException;
 import vn.edu.hcmuaf.FocusAppProject.exception.PermissionDenyException;
 import vn.edu.hcmuaf.FocusAppProject.exception.VerifyDenyException;
-import lombok.RequiredArgsConstructor;
 import vn.edu.hcmuaf.FocusAppProject.models.Role;
 import vn.edu.hcmuaf.FocusAppProject.models.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 import vn.edu.hcmuaf.FocusAppProject.repository.RoleRepository;
 import vn.edu.hcmuaf.FocusAppProject.repository.TrainingProgramRepository;
 import vn.edu.hcmuaf.FocusAppProject.repository.UserRepository;
@@ -23,12 +24,15 @@ import vn.edu.hcmuaf.FocusAppProject.service.Imp.AuthServiceImp;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService implements AuthServiceImp {
+    @Value("${email.link}")
+    private String link;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -87,7 +91,11 @@ public class AuthService implements AuthServiceImp {
         }
         User savedUser = userRepository.save(user);
 
-//        emailUtil.sendMail(userDTO.getEmail(),"Đây là email xác thực","Xác thực tài khoản");
+        //Send email
+        String verifyLink = link + "/auth/verify?userId=" + savedUser.getId() + "&verificationCode=" + savedUser.getVerificationCode();
+        Map<String, String> values = Map.of("user-name", user.getName(), "verify-link", verifyLink);
+
+        emailUtil.sendMail(user.getEmail(), "Xác thực tài khoản tại Focus App", "verification-email", values);
 
         return savedUser;
     }
@@ -123,6 +131,7 @@ public class AuthService implements AuthServiceImp {
 
         return roleRepository.findRoleNameById(users.getRoles().getId());
     }
+
     @Override
     public boolean updatePassword(PasswordDTO passwordDTO, long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
@@ -131,9 +140,36 @@ public class AuthService implements AuthServiceImp {
             user.setPassword(encodedPassword);
             userRepository.save(user);
             return true;
-        }else{
+        } else {
             return false;
         }
+    }
+
+    @Override
+    public User createUserGoogle(Map<String, Object> data) throws Exception {
+        String email = (String) data.get("email");
+        if (userRepository.existsByEmail(email)) {
+            throw new DataIntegrityViolationException("Email is already exists");
+        }
+        User user = User.builder().email(email)
+                .name((String) data.get("name"))
+                .provider("google")
+                .token((String) data.get("sub"))
+                .isVerify(true)
+                .status(true)
+                .roles(roleRepository.findRoleByRoleName("User"))
+                .provider("google")
+                .build();
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return null;
+        }
+        return user;
     }
 
 }

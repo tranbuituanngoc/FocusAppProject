@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +26,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers("/auth/login","/auth/register").permitAll()
+                                .requestMatchers("/auth/login",
+                                        "/auth/register",
+                                        "/auth/login-google",
+                                        "/oauth2/authorization/google")
+                                .permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                                 .anyRequest().authenticated()).formLogin(
                         login -> login.loginPage("/auth/login")
@@ -34,7 +39,9 @@ public class SecurityConfig {
                                 .passwordParameter("password")
                                 .successHandler(new CustomAuthenticationSuccessHandler())
                                 .failureHandler(new CustomAuthenticationFailureHandler()).permitAll())
-                        .logout(logout -> logout.logoutUrl("/auth/logout").logoutSuccessUrl("/auth/login").permitAll());
+                .oauth2Login(oauth2 -> oauth2.defaultSuccessUrl("/auth/oauth2-login-success", true))
+                .logout(logout -> logout.logoutUrl("/auth/logout").logoutSuccessUrl("/auth/login").permitAll()
+                );
 
         return http.build();
     }

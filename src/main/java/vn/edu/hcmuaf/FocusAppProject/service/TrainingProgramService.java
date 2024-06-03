@@ -33,13 +33,17 @@ public class TrainingProgramService implements TrainingProgramServiceImp {
 
     @Override
     public boolean isExist(int year, String departmentID) {
-        if (departmentID.equals("DT22")) departmentID = "52480201";
+        if (departmentID.equals("DT22") || departmentID.equals("7480201")) departmentID = "52480201";
+        if (year == 2021) year = 2020;
+        if (year >= 2022) year = 2022;
         return trainingProgramRepository.existsByYearAndDepartmentId(year, Long.parseLong(departmentID));
     }
 
     @Override
     public TrainingProgram findTrainingProgram(int year, String departmentID) {
-        if (departmentID.equals("DT22")) departmentID = "52480201";
+        if (departmentID.equals("DT22") || departmentID.equals("7480201")) departmentID = "52480201";
+        if (year == 2021) year = 2020;
+        if (year >= 2022) year = 2022;
         return trainingProgramRepository.findByYearAndDepartmentId(year, Long.parseLong(departmentID));
     }
 }

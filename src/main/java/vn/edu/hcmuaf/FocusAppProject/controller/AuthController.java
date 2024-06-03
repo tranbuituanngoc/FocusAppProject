@@ -1,8 +1,11 @@
 package vn.edu.hcmuaf.FocusAppProject.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserDTO;
+import vn.edu.hcmuaf.FocusAppProject.models.User;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.AuthServiceImp;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("/auth")
@@ -37,7 +43,7 @@ public class AuthController {
             UserDTO userDTO = (UserDTO) model.getAttribute("userDTO");
             model.addAttribute("message", message);
             model.addAttribute("userDTO", userDTO != null ? userDTO : new UserDTO());
-        }else {
+        } else {
             model.addAttribute("userDTO", new UserDTO());
         }
         return "register";
@@ -61,4 +67,32 @@ public class AuthController {
             return "redirect:/auth/register?fail";
         }
     }
+
+    @GetMapping("/login-google")
+    public String redirectToGoogleLogin() {
+        return "redirect:/oauth2/authorization/google";
+    }
+
+    @GetMapping("/oauth2-login-success")
+public String handleGoogleLogin(OAuth2AuthenticationToken token, Model model, HttpSession session) throws Exception {
+    if (token != null) {
+        OAuth2User principal = token.getPrincipal();
+        Map<String, Object> attributes = principal.getAttributes();
+        try {
+            String email = (String) attributes.get("email");
+            User user = authServiceImp.findByEmail(email);
+            if (user == null) {
+                user = authServiceImp.createUserGoogle(attributes);
+            }
+            session.setAttribute("user", user);
+            return "redirect:/trang-chu";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "redirect:/auth/login?fail";
+        }
+    } else {
+        model.addAttribute("error", "Đăng nhập bằng google thất bại");
+        return "redirect:/auth/login?fail";
+    }
+}
 }
