@@ -119,12 +119,20 @@
         </form>
     </div>
 </div>
-
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var info = /*[[${info}]]*/ 'default';
+    var error = /*[[${error}]]*/ 'default';
+    var success = /*[[${success}]]*/ 'default';
+    /*]]>*/
+</script>
 <!-- MDB -->
 <script type="text/javascript" th:src="@{/user_style/js/mdb.umd.min.js}"></script>
 <script th:src="@{'https://cdn.jsdelivr.net/npm/sweetalert2@11'}"></script>
 <!-- Custom scripts -->
 <script th:src="@{/user_style/js/jquery.js}"></script>
 <script th:src="@{/user_style/js/script.js}"></script>
+<script th:src="@{/user_style/js/login-script.js}"></script>
+
 </body>
 </html>

@@ -29,7 +29,9 @@ public class SecurityConfig {
                                 .requestMatchers("/auth/login",
                                         "/auth/register",
                                         "/auth/login-google",
-                                        "/oauth2/authorization/google")
+                                        "/oauth2/authorization/google",
+                                        "/auth/re-verify",
+                                        "/auth/verify")
                                 .permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                                 .anyRequest().authenticated()).formLogin(

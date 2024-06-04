@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.FocusAppProject.service;
 
+import com.nimbusds.jose.util.Pair;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,6 @@ import vn.edu.hcmuaf.FocusAppProject.dto.PasswordDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserDTO;
 import vn.edu.hcmuaf.FocusAppProject.exception.DataNotFoundException;
 import vn.edu.hcmuaf.FocusAppProject.exception.PermissionDenyException;
-import vn.edu.hcmuaf.FocusAppProject.exception.VerifyDenyException;
 import vn.edu.hcmuaf.FocusAppProject.models.Role;
 import vn.edu.hcmuaf.FocusAppProject.models.User;
 import vn.edu.hcmuaf.FocusAppProject.repository.RoleRepository;
@@ -25,7 +25,6 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -101,7 +100,7 @@ public class AuthService implements AuthServiceImp {
     }
 
     @Override
-    public User updateVerify(long userId, String verificationCode) throws Exception {
+    public Pair<String, String> updateVerify(long userId, String verificationCode) throws Exception {
         Optional<User> existingUser = userRepository.findById(userId);
         User user = null;
         if (existingUser.isPresent()) {
@@ -115,14 +114,50 @@ public class AuthService implements AuthServiceImp {
                 if (timestamp.before(user.getTimeValid()) && !user.isVerify()) {
                     user.setVerify(true);
                     userRepository.save(user);
-                } else {
-                    throw new VerifyDenyException("Account verification failed");
+                    return Pair.of("success", "Xác thực tài khoản thành công!");
+                } else if (!timestamp.before(user.getTimeValid()) && !user.isVerify()) {
+                    return Pair.of("error", "Xác thực tài khoản không thành công vì đã quá thời gian cho phép.");
+                } else if (user.isVerify()) {
+                    return Pair.of("error", "Xác thực không thành công do tài khoản của bạn đã được xác thực trước đó!");
                 }
+            } else {
+                return Pair.of("error", "Mã xác thực không chính xác!");
             }
-        } else {
-            throw new NoSuchElementException("User not found");
         }
-        return user;
+        return Pair.of("error", "Không tìm thấy tài khoản!");
+    }
+
+    @Override
+    public Pair<String, String> reVerifyAccount(long userId) throws Exception {
+        Optional<User> existingUser = userRepository.findById(userId);
+        User user = null;
+        if (existingUser.isPresent()) {
+            user = existingUser.get();
+            //Create salt string(random string)
+            String verificationCode = saltString.getSaltString();
+
+            //Set timevalid
+            Date todaysDate = new Date(new java.util.Date().getTime());
+            Calendar c = Calendar.getInstance();
+            c.setTime(todaysDate);
+            //set time valid is 5 minute
+            c.add(Calendar.MINUTE, 5);
+            Timestamp timeValid = new Timestamp(c.getTimeInMillis());
+            if (!user.isVerify()) {
+                user.setVerificationCode(verificationCode);
+                user.setTimeValid(timeValid);
+                userRepository.save(user);
+
+                String verifyLink = link + "/auth/verify?userId=" + user.getId() + "&verificationCode=" + verificationCode;
+                Map<String, String> values = Map.of("user-name", user.getName(), "verify-link", verifyLink);
+
+                emailUtil.sendMail(user.getEmail(), "Xác thực tài khoản tại Focus App", "verification-email", values);
+                return Pair.of("success", "Email xác thực đã được gửi lại đến email của bạn. Vui lòng xác thực lại!");
+            } else {
+                return Pair.of("error", "Xác thực không thành công do tài khoản của bạn đã được xác thực trước đó!");
+            }
+        }
+        return Pair.of("error", "Không tìm thấy tài khoản!");
     }
 
     @Override
