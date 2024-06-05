@@ -16,4 +16,6 @@ public interface AuthServiceImp {
     boolean updatePassword(PasswordDTO passwordDTO, long userId) throws Exception;
     User createUserGoogle(Map<String, Object> data) throws Exception;
     User findByEmail(String email);
+    Pair<String, String> forgotPassword(String email) throws Exception;
+    Pair<String, String> resetPassword(String newPassword, String token) throws Exception;
 }

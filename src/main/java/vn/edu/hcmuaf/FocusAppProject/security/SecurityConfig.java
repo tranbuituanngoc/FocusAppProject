@@ -23,15 +23,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers("/auth/login",
+                                .requestMatchers(
+                                        "/auth/login",
                                         "/auth/register",
                                         "/auth/login-google",
                                         "/oauth2/authorization/google",
                                         "/auth/re-verify",
-                                        "/auth/verify")
+                                        "/auth/verify",
+                                        "/auth/forgot-password",
+                                        "/auth/handle-forgot-password",
+                                        "/auth/reset-password",
+                                        "/auth/handle-reset-password")
                                 .permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                                 .anyRequest().authenticated()).formLogin(

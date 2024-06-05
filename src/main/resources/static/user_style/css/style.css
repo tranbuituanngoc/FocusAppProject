@@ -2383,3 +2383,280 @@ h5,
     position: relative;
 }
 /*End View Test Css*/
+/* forgot password */
+.forgot-pass-view {
+    width: 127.15%;
+    position: absolute;
+    right: -6.45%;
+    left: -20.69%;
+    bottom: -475.91px;
+    top: 0px;
+}
+.ellipse-31 {
+    background: var(--primary-blue);
+    border-radius: 50%;
+    height: 840px;
+    width: 595px;
+    position: absolute;
+    right: -190.3px;
+    bottom: 83.91px;
+    transform-origin: 0 0;
+    transform: rotate(45deg) scale(1, 1);
+}
+.rectangle-67 {
+    position: absolute;
+    height: auto;
+    width: 800px;
+    right: 92.91px;
+    bottom: 475.91px;
+    object-fit: cover;
+}
+.ellipse-32 {
+    background: var(--primary-blue);
+    border-radius: 50%;
+    height: 215px;
+    width: 510px;
+    position: absolute;
+    left: 397.7px;
+    top: -164px;
+    transform-origin: 0 0;
+    transform: rotate(77deg) scale(1, 1);
+}
+.ellipse-33 {
+    background: var(--primary-blue);
+    border-radius: 50%;
+    height: 250px;
+    width: 560px;
+    position: absolute;
+    right: -636.54px;
+    top: 432.98px;
+    transform-origin: 0 0;
+    transform: rotate(-135deg) scale(1, 1);
+}
+.forgot-pass-content {
+    display: flex;
+    flex-direction: column;
+    gap: 33px;
+    align-items: center;
+    justify-content: flex-start;
+    position: absolute;
+    right: 521.91px;
+    left: 50vw;
+    top: 5vh;
+    height: fit-content;
+    width: fit-content;
+}
+.frame-29 {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 600px;
+    position: relative;
+}
+.forgot-pass-title {
+    color: var(--origin-black);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-big-font-family
+    );
+    font-size: var(--primary-raleway-big-font-size);
+    font-weight: var(--primary-raleway-big-font-weight);
+    position: relative;
+}
+.forgot-pass-subtitle {
+    color: var(--origin-black);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    align-self: stretch;
+}
+.forgot-pass-subtitle-body {
+    color: var(--origin-black);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-body-font-family
+    );
+    font-size: var(--primary-raleway-body-font-size);
+    font-weight: var(--primary-raleway-body-font-weight);
+    position: relative;
+    align-self: stretch;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex-shrink: 0;
+    width: 422px;
+    position: relative;
+}
+.rectangle-68 {
+    border-radius: 12px;
+    border-style: solid;
+    border-color: var(--primary-blue);
+    border-width: 3px;
+    align-self: stretch;
+    flex-shrink: 0;
+    height: 66px;
+    position: relative;
+    box-shadow: var(--shadow-textfield);
+}
+.frame-28 {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    position: relative;
+}
+.forgot-back {
+    color: var(--origin-black);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-medium-font-family
+    );
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
+    position: relative;
+    white-space: nowrap;
+}
+.button-register {
+    background: var(--primary-blue);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 153px;
+    position: relative;
+    box-shadow: var(--shadow-textfield);
+}
+.forgot-input-form{
+    width: 25vw !important;
+    height: 7vh !important;
+    box-shadow: var(--shadow-textfield) !important;
+    border-color: var(--primary-blue) !important;
+
+}
+.button-forgot{
+    color: var(--origin-white);
+    width: 10vw;
+    min-width: fit-content;
+    border: none;
+    height: 54px;
+    background: var(--primary-blue);
+    box-shadow: var(--shadow-textfield);
+    border-radius: 15px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    display: flex;
+}
+/* End forgot Password Css*/
+/* Reset Password Css*/
+.reset-pass-view {
+    width: fit-content;
+    background: var(--origin-white);
+    padding: 30px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    align-items: center;
+    justify-content: flex-start;
+    position: absolute;
+    left: 42vw;
+    right: 20vw;
+    top: 15vh;
+    box-shadow: var(--shadow-todo);
+}
+
+.reset-pass-title {
+    color: var(--origin-black);
+    text-align: center;
+    font-family: var(
+            --primary-raleway-big-font-family
+    );
+    font-size: var(--primary-raleway-big-font-size);
+    font-weight: var(--primary-raleway-big-font-weight);
+    position: relative;
+}
+.change-pass-form {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    position: relative;
+}
+.reset-pass-control {
+    display: flex;
+    flex-direction: row;
+    gap: 17px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 252px;
+    position: relative;
+}
+
+.ellipse-34 {
+    border-radius: 50%;
+    width: 886.69px;
+    height: 438.04px;
+    position: absolute;
+    left: -435px;
+    top: 761.63px;
+    transform-origin: 0 0;
+    transform: rotate(-46deg) scale(1, 1);
+    background: var(--primary-blue);
+}
+.reset-pass-pic {
+    position: absolute;
+    height: auto;
+    width: 445px;
+    left: -70px;
+    top: 290px;
+    object-fit: cover;
+}
+
+.ellipse-342 {
+    border-radius: 50%;
+    width: 700px;
+    height: 290px;
+    position: absolute;
+    right: -1133.39px;
+    top: -130.01px;
+    transform-origin: 0 0;
+    transform: rotate(131deg) scale(1, 1);
+    background: var(--primary-blue);
+}
+.button-reset{
+    color: var(--origin-white);
+    width: 10vw;
+    min-width: fit-content;
+    border: none;
+    height: 54px;
+    background: var(--primary-blue);
+    box-shadow: var(--shadow-textfield);
+    border-radius: 15px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    display: flex;
+    padding: 10px;
+}
+/* End Reset Password Css*/

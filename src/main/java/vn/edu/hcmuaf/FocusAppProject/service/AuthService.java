@@ -14,8 +14,10 @@ import vn.edu.hcmuaf.FocusAppProject.dto.PasswordDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserDTO;
 import vn.edu.hcmuaf.FocusAppProject.exception.DataNotFoundException;
 import vn.edu.hcmuaf.FocusAppProject.exception.PermissionDenyException;
+import vn.edu.hcmuaf.FocusAppProject.models.PasswordResetToken;
 import vn.edu.hcmuaf.FocusAppProject.models.Role;
 import vn.edu.hcmuaf.FocusAppProject.models.User;
+import vn.edu.hcmuaf.FocusAppProject.repository.PasswordResetTokenReponsitory;
 import vn.edu.hcmuaf.FocusAppProject.repository.RoleRepository;
 import vn.edu.hcmuaf.FocusAppProject.repository.TrainingProgramRepository;
 import vn.edu.hcmuaf.FocusAppProject.repository.UserRepository;
@@ -23,6 +25,7 @@ import vn.edu.hcmuaf.FocusAppProject.service.Imp.AuthServiceImp;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Optional;
@@ -44,6 +47,8 @@ public class AuthService implements AuthServiceImp {
     private EmailUtil emailUtil;
     @Autowired
     private TrainingProgramRepository trainingProgramRepository;
+    @Autowired
+    private PasswordResetTokenReponsitory passwordResetTokenReponsitory;
 
     @Override
     public boolean checkLogin(String email, String password) {
@@ -207,4 +212,51 @@ public class AuthService implements AuthServiceImp {
         return user;
     }
 
+    @Override
+    public Pair<String, String> forgotPassword(String email) throws Exception {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return Pair.of("error", "Email không tồn tại!");
+        } else {
+            if (!user.isVerify()) {
+                Calendar c = Calendar.getInstance();
+                Date todayDate = new Date(new java.util.Date().getTime());
+                c.setTime(todayDate);
+                Timestamp timestamp = new Timestamp(c.getTimeInMillis());
+                if (timestamp.after(user.getTimeValid())) {
+                    return reVerifyAccount(user.getId());
+                } else {
+                    return Pair.of("error", "Tài khoản chưa được xác thực. Vui lòng xác thực tài khoản trước khi đặt lại mật khẩu!");
+                }
+            }
+        }
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime timeValid = now.plusMinutes(5);
+        String verificationCode = saltString.getSaltString();
+        PasswordResetToken passwordResetToken = PasswordResetToken.builder()
+                .token(verificationCode)
+                .expiryDate(timeValid)
+                .user(user)
+                .build();
+
+        passwordResetTokenReponsitory.save(passwordResetToken);
+        String resetLink = link + "/auth/reset-password?token=" + verificationCode + "&userId=" + user.getId();
+        Map<String, String> values = Map.of("user-name", user.getName(), "reset-link", resetLink);
+        emailUtil.sendMail(user.getEmail(), "Quên mật khẩu tài khoản tại Focus App", "forgot-password", values);
+        return Pair.of("success", "Link đặt lại mật khẩu đã được gửi đến email của bạn! Vui lòng tiến hành đặt lại mật khẩu trong vòng 5 phút!");
+    }
+
+    @Override
+    public Pair<String, String> resetPassword(String newPassword, String token) throws Exception {
+        PasswordResetToken passwordResetToken = passwordResetTokenReponsitory.findByToken(token);
+        if (passwordResetToken == null || passwordResetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+            return Pair.of("error", "Token không hợp lệ hoặc đã hết hạn! Vui lòng gửi lại yêu cầu đặt lại mật khẩu!");
+        }
+        User user = passwordResetToken.getUser();
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+        passwordResetTokenReponsitory.delete(passwordResetToken);
+        return Pair.of("success", "Mật khẩu đã được đặt lại thành công! Bạn sẽ được chuyển về trang đăng nhập sau 5 giây!");
+    }
 }

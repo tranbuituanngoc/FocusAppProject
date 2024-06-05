@@ -7,7 +7,7 @@
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title>Login Page</title>
+    <title>Đăng Nhập</title>
     <!-- MDB icon -->
     <link rel="icon" th:href="@{/user_style/img/mdb-favicon.ico}" type="image/x-icon"/>
     <!-- Font Awesome -->
@@ -92,7 +92,7 @@
                     <div id="error-password" class="error-message ps-2"></div>
                 </div>
                 <div class="float-end">
-                    <a href="#" class="Primary-Raleway_Body Origin-MidGray"
+                    <a th:href="@{/auth/forgot-password}" class="Primary-Raleway_Body Origin-MidGray"
                     >Quên mật khẩu?</a
                     >
                 </div>

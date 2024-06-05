@@ -1,7 +1,5 @@
 $(document).ready(function () {
-    console.log(info)
     if (info != null) {
-        console.log(info)
         Swal.fire({
             icon: "warning",
             title: "Xác thực tài khoản không thành công!",
@@ -32,7 +30,6 @@ $(document).ready(function () {
                    },
                    success: function (data) {
                        const type= data.left;
-                       console.log(data)
                        if (type === "success") {
                            Swal.fire({
                                icon: "success",
@@ -81,7 +78,7 @@ $(document).ready(function () {
             console.log(success)
             Swal.fire({
                 icon: "success",
-                title: "Xác thực tài khoản thành công!",
+                title: "Thành công!",
                 text: success,
                 customClass: {
                     confirmButton: 'confirm-button-class',

@@ -76,6 +76,9 @@ public class User implements UserDetails {
     List<Todo> todos;
     @JsonBackReference
     @OneToMany(mappedBy = "user")
+    List<PasswordResetToken> passwordResetTokens;
+    @JsonBackReference
+    @OneToMany(mappedBy = "user")
     List<Project> projects;
     @JsonBackReference
     @OneToMany(mappedBy = "user")

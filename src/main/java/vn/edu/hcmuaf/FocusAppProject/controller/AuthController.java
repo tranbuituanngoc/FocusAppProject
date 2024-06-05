@@ -130,6 +130,7 @@ public class AuthController {
         }
         return "login";
     }
+
     @GetMapping("/re-verify")
     @ResponseBody
     public ResponseEntity<?> reVerify(@RequestParam long userId) {
@@ -139,4 +140,38 @@ public class AuthController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/forgot-password")
+    public String forgotPassword( Model model) {
+        model.addAttribute("title", "Quên mật khẩu");
+
+        return "forgot-password";
+    }
+
+    @GetMapping("/handle-forgot-password")
+    @ResponseBody
+    public ResponseEntity<?> handleForgotPassword(@RequestParam String email) {
+        try {
+            return ResponseEntity.ok(authServiceImp.forgotPassword(email));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("/reset-password")
+    public String resetPassword(@RequestParam String token, Model model) {
+        model.addAttribute("title", "Đặt lại mật khẩu");
+        model.addAttribute("token", token);
+        return "reset-password";
+    }
+
+    @GetMapping("/handle-reset-password")
+    @ResponseBody
+    public ResponseEntity<?> handleResetPassword(@RequestParam String newPassword, @RequestParam String token) {
+        try {
+            return ResponseEntity.ok(authServiceImp.resetPassword(newPassword, token));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
