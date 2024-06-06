@@ -2,7 +2,9 @@ package vn.edu.hcmuaf.FocusAppProject.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import vn.edu.hcmuaf.FocusAppProject.Util.EmailUtil;
 import vn.edu.hcmuaf.FocusAppProject.dto.CourseScheduleDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserScheduleDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.WeekDTO;
@@ -13,11 +15,13 @@ import vn.edu.hcmuaf.FocusAppProject.response.CourseScheduleResponse;
 import vn.edu.hcmuaf.FocusAppProject.response.WeekResponse;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.CourseScheduleServiceImp;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @Service
 public class CourseScheduleService implements CourseScheduleServiceImp {
@@ -35,6 +39,8 @@ public class CourseScheduleService implements CourseScheduleServiceImp {
     private UserRepository userRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private EmailUtil emailUtil;
 
     @Override
     @Transactional
@@ -162,5 +168,64 @@ public class CourseScheduleService implements CourseScheduleServiceImp {
                 .dates(dates)
                 .listCourse(courseScheduleDTOS)
                 .build();
+    }
+
+    @Override
+    public void sendCourseNotifications(int studySlot) throws Exception {
+        LocalDate currentDate = LocalDate.now();
+        DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
+        int dayOfWeekNumber = dayOfWeek.getValue() + 1;
+        if (dayOfWeekNumber == 8) {
+            dayOfWeekNumber = 1;
+        }
+        List<CourseSchedule> courseSchedules = courseScheduleRepository.findCoursesByStudySlotAndDate(studySlot, currentDate, dayOfWeekNumber);
+        for (CourseSchedule courseSchedule : courseSchedules) {
+            String time = "";
+            switch (courseSchedule.getStudySlot()) {
+                case 1:
+                    time = "7:00 - 9:30";
+                    break;
+                case 4:
+                    time = "9:35 - 11:55";
+                    break;
+                case 7:
+                    time = "12:15 - 14:45";
+                    break;
+                case 10:
+                    time = "14:50 - 17:00";
+                    break;
+                default:
+                    break;
+            }
+            User user = courseSchedule.getUserCourse().getUser();
+            Course course = courseSchedule.getUserCourse().getCourse();
+            Map<String, String> values = Map.of(
+                    "user-name", user.getName(),
+                    "course-name", course.getCourseName(),
+                    "time", time,
+                    "course-room", courseSchedule.getCourseRoom());
+            String subject = courseSchedule.getCourseRoom() + " - " + course.getCourseName() + " - " + time;
+            emailUtil.sendMail(user.getEmail(), subject, "announcement-course", values);
+        }
+    }
+
+    @Scheduled(cron = "0 30 6 * * ?") // Run at 6:30AM
+    public void sendCourseNotificationsSlot1() throws Exception {
+        sendCourseNotifications(1);
+    }
+
+    @Scheduled(cron = "0 0 9 * * ?") // Run at 9:00AM
+    public void sendCourseNotificationsSlot2() throws Exception {
+        sendCourseNotifications(2);
+    }
+
+    @Scheduled(cron = "0 45 11 * * ?") // Run at 11:45AM
+    public void sendCourseNotificationsSlot3() throws Exception {
+        sendCourseNotifications(3);
+    }
+
+    @Scheduled(cron = "0 20 14 * * ?") // Run at 2:20PM
+    public void sendCourseNotificationsSlot4() throws Exception {
+        sendCourseNotifications(4);
     }
 }

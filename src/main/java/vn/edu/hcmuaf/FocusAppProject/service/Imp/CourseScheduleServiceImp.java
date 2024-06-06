@@ -12,4 +12,5 @@ public interface CourseScheduleServiceImp {
     void createUserSchedule(UserScheduleDTO userScheduleDTO) throws Exception;
     WeekResponse getWeeksByCurrentSemester() throws DataNotFoundException;
     CourseScheduleResponse getCourseSchedulesByWeekIdAndUserId(Long weekId, Long userId) throws DataNotFoundException;
+    void sendCourseNotifications(int studySlot) throws Exception;
 }

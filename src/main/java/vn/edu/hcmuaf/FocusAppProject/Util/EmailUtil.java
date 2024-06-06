@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import vn.edu.hcmuaf.FocusAppProject.FocusAppProjectApplication;
+import vn.edu.hcmuaf.FocusAppProject.service.CourseScheduleService;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -72,9 +73,9 @@ public class EmailUtil {
 
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(FocusAppProjectApplication.class, args);
-        EmailUtil emailUtil = context.getBean(EmailUtil.class);
+        CourseScheduleService courseScheduleService = context.getBean(CourseScheduleService.class);
         try {
-            emailUtil.sendMail("tranbuituanngoc@gmail.com", "Test", "verification-email", Map.of("user-name", "Trần Bùi Tuấn Ngọc"));
+            courseScheduleService.sendCourseNotifications(4);
         } catch (Exception e) {
             e.printStackTrace();
         }
