@@ -58,10 +58,6 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "training_program_id")
     private TrainingProgram trainingProgram;
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "major_id")
-    private Major major;
     @JsonBackReference
     @OneToMany(mappedBy = "users")
     List<Note> notes;

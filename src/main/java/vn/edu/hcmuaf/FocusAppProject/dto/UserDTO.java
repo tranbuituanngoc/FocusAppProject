@@ -35,7 +35,6 @@ public class UserDTO {
     @JsonProperty("role_id")
     private int role_id;
     private String faculty;
-    private String major;
     @JsonProperty("desired_score")
     private double desiredScore;
 }

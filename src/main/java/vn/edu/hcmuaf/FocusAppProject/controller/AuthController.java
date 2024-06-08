@@ -103,11 +103,7 @@ public class AuthController {
             OAuth2User principal = token.getPrincipal();
             Map<String, Object> attributes = principal.getAttributes();
             try {
-                String email = (String) attributes.get("email");
-                User user = authServiceImp.findByEmail(email);
-                if (user == null) {
-                    user = authServiceImp.createUserGoogle(attributes);
-                }
+                User user = authServiceImp.createUserGoogle(attributes);
                 session.setAttribute("user", user);
                 return "redirect:/trang-chu";
             } catch (Exception e) {

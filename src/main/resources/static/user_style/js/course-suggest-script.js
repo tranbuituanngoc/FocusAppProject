@@ -8,7 +8,7 @@ $(document).ready(function () {
                 $('#view').append(
                     `<div class="notify-user">
                     <div class="not-linked">
-                      Bạn chưa liên kết tài khoản đăng ký môn học
+                      Bạn chưa liên kết tài khoản đăng ký môn học. Vui lòng liên kết tài khoản trước để sử dụng chức năng này.
                     </div>
                   </div>`
                 );

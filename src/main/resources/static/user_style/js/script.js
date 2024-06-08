@@ -44,10 +44,11 @@ $(document).ready(function () {
 // Link with DKMH
 $(".button-link-dkmh").click(function () {
     const proxyUrl = 'http://127.0.0.1:5300/';
+    const mssv = user.email.substring(0, 8);
     Swal.fire({
         title: 'Liên kết với trang ĐKMH',
         html:
-            '<input id="mssv-input" class="swal2-input input-alert-class" placeholder="MSSV" type="number" require>' +
+            '<input id="mssv-input" class="swal2-input input-alert-class" placeholder="MSSV" type="number" value="' + mssv + '" readonly style="background-color: rgba(240, 240, 240, 1);">' +
             '<input id="password-input" class="swal2-input input-alert-class" placeholder="Password" type="password" require>',
         focusConfirm: false,
         showCancelButton: true,
@@ -73,50 +74,46 @@ $(".button-link-dkmh").click(function () {
             const mssv = document.getElementById('mssv-input').value;
             const password = document.getElementById('password-input').value;
 
-            if (!/^[1-9][0-9]{7}$/.test(mssv)) {
-                Swal.showValidationMessage('MSSV phải là một số có 8 chữ số và không bắt đầu bằng số 0');
-            } else {
-                const targetUrl = 'https://dkmh.hcmuaf.edu.vn/api/auth/login';
-                const finalUrl = proxyUrl + targetUrl;
-                const data = new URLSearchParams();
-                data.append('username', mssv);
-                data.append('password', password);
-                data.append('grant_type', 'password');
+            const targetUrl = 'https://dkmh.hcmuaf.edu.vn/api/auth/login';
+            const finalUrl = proxyUrl + targetUrl;
+            const data = new URLSearchParams();
+            data.append('username', mssv);
+            data.append('password', password);
+            data.append('grant_type', 'password');
 
-                try {
-                    const response = await fetch(finalUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: data
-                    });
+            try {
+                const response = await fetch(finalUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: data
+                });
 
-                    const responseData = await response.json();
+                const responseData = await response.json();
 
-                    if (responseData.code === 403) {
-                        return Swal.showValidationMessage(responseData.message);
-                    }
-
-                    if (!response.ok) {
-                        let message;
-                        try {
-                            message = JSON.stringify(responseData);
-                        } catch (e) {
-                            message = await response.text();
-                        }
-                        return Swal.showValidationMessage(message);
-                    }
-                    const {userName, access_token, refresh_token, token_type} = responseData;
-                    return {
-                        mssv: userName,
-                        accessToken: access_token,
-                        refreshToken: refresh_token,
-                        tokenType: token_type
-                    };
-                } catch (error) {
-                    Swal.showValidationMessage(`Request failed: ${error.message}`);
+                if (responseData.code === 403) {
+                    return Swal.showValidationMessage(responseData.message);
                 }
+
+                if (!response.ok) {
+                    let message;
+                    try {
+                        message = JSON.stringify(responseData);
+                    } catch (e) {
+                        message = await response.text();
+                    }
+                    return Swal.showValidationMessage(message);
+                }
+                const {userName, access_token, refresh_token, token_type} = responseData;
+                return {
+                    mssv: userName,
+                    accessToken: access_token,
+                    refreshToken: refresh_token,
+                    tokenType: token_type
+                };
+            } catch (error) {
+                Swal.showValidationMessage(`Request failed: ${error.message}`);
             }
         },
         allowOutsideClick: () => !Swal.isLoading()
@@ -293,7 +290,9 @@ $(".button-reload-data").click(async function () {
             success: function (response) {
                 getSchedule(access_token, proxyUrl, response);
                 getTestSchedule(access_token, proxyUrl, response);
-                location.reload();
+                setTimeout(function () {
+                    location.reload();
+                }, 5000);
             },
             error: function (error) {
                 console.error(error);
@@ -390,7 +389,9 @@ $(".button-reload-data").click(async function () {
                             success: function (response) {
                                 getSchedule(access_token, proxyUrl, response);
                                 getTestSchedule(access_token, proxyUrl, response);
-                                location.reload();
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 5000);
                             },
                             error: function (error) {
                                 console.error(error);
@@ -473,7 +474,7 @@ $(".change-password").click(function () {
             if (!oldPassword || !newPassword || !confirmPassword) {
                 return Swal.showValidationMessage('Vui lòng nhập đầy đủ thông tin!');
             }
-            if(oldPassword === newPassword){
+            if (oldPassword === newPassword) {
                 return Swal.showValidationMessage('Mật khẩu mới không được trùng với mật khẩu cũ!');
             }
 
@@ -499,7 +500,7 @@ $(".change-password").click(function () {
                 new_password: result.value.newPassword
             }),
             success: function (response) {
-                if(response){
+                if (response) {
                     Swal.fire({
                         icon: "success",
                         title: "Thành công",
@@ -511,7 +512,7 @@ $(".change-password").click(function () {
                         },
                         confirmButtonText: 'OK!'
                     });
-                }else{
+                } else {
                     Swal.fire({
                         icon: "error",
                         title: "Thất bại",

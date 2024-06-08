@@ -2,15 +2,12 @@ package vn.edu.hcmuaf.FocusAppProject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vn.edu.hcmuaf.FocusAppProject.dto.PasswordDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserStudentInfoDTO;
 import vn.edu.hcmuaf.FocusAppProject.models.Department;
-import vn.edu.hcmuaf.FocusAppProject.models.Major;
 import vn.edu.hcmuaf.FocusAppProject.models.TrainingProgram;
 import vn.edu.hcmuaf.FocusAppProject.models.User;
 import vn.edu.hcmuaf.FocusAppProject.repository.DepartmentRepository;
-import vn.edu.hcmuaf.FocusAppProject.repository.MajorRepository;
 import vn.edu.hcmuaf.FocusAppProject.repository.TrainingProgramRepository;
 import vn.edu.hcmuaf.FocusAppProject.repository.UserRepository;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.UserServiceImp;
@@ -24,8 +21,6 @@ public class UserService implements UserServiceImp {
     private UserRepository userRepository;
     @Autowired
     private DepartmentRepository departmentRepository;
-    @Autowired
-    private MajorRepository majorRepository;
     @Autowired
     private TrainingProgramRepository trainingProgramRepository;
 
@@ -59,7 +54,7 @@ public class UserService implements UserServiceImp {
     @Override
     public boolean isUpdateInfo(long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User " + userId + " not found"));
-        if (user.getDepartment() != null && user.getDesiredScore() != 0.0 && user.getMajor() != null) {
+        if (user.getDepartment() != null && user.getDesiredScore() != 0.0) {
             return true;
         }
         return false;
@@ -68,11 +63,9 @@ public class UserService implements UserServiceImp {
     @Override
     public void updateStudentInfo(UserStudentInfoDTO userStudentInfoDTO) {
         User user = userRepository.findById(userStudentInfoDTO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
-        Major major = majorRepository.findById(Long.parseLong(userStudentInfoDTO.getMajorId())).orElseThrow(() -> new RuntimeException("Major not found"));
         Department department = departmentRepository.findById(Long.parseLong(userStudentInfoDTO.getDepartmentId())).orElseThrow(() -> new RuntimeException("Department not found"));
 
         user.setDepartment(department);
-        user.setMajor(major);
         user.setDesiredScore(userStudentInfoDTO.getDesiredScore());
         userRepository.save(user);
     }

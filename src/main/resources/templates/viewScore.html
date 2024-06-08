@@ -7,14 +7,16 @@
 <body>
 <div class="view" id="view">
     <div th:replace="fragment/header :: header"></div>
-    <div class="score-title">Xem điểm</div>
-    <div class="grade-board" id="grade-board">
-<!--       list semester-->
+    <div class="score-content">
+        <div class="score-title">Xem điểm</div>
+        <div class="grade-board" id="grade-board">
+            <!--       list semester-->
+        </div>
+        <button class="button-reload button-reload-data">
+            <img class="uiw-reload" th:src="@{/user_style/img/icon/uiw_reload.svg}"/>
+            <div class="reload-text-button">Cập nhật</div>
+        </button>
     </div>
-    <button class="button-reload button-reload-data">
-        <img class="uiw-reload" th:src="@{/user_style/img/icon/uiw_reload.svg}"/>
-        <div class="reload-text-button">Cập nhật</div>
-    </button>
 </div>
 <div th:replace="fragment/script :: script"></div>
 <script th:src="@{/user_style/js/view-score.js}"></script>

@@ -219,6 +219,7 @@
     gap: 10px;
     display: flex;
 }
+
 .google-button {
     background: var(--origin-white);
     border-radius: 7px;
@@ -236,6 +237,7 @@
     box-shadow: var(--shadow-todo);
     overflow: hidden;
 }
+
 .flat-color-icons-google {
     flex-shrink: 0;
     width: 24px;
@@ -243,6 +245,7 @@
     position: relative;
     overflow: visible;
 }
+
 .text-login-button {
     color: var(--origin-black);
     text-align: left;
@@ -251,6 +254,7 @@
     font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
 }
+
 .right-eclipse1-register {
     width: 585px;
     height: 710px;
@@ -554,7 +558,8 @@ h5,
     position: relative;
     margin: 10px 0;
 }
-.ellipse-1 img{
+
+.ellipse-1 img {
     width: 100%;
     height: auto;
 }
@@ -622,7 +627,7 @@ h5,
     padding: 50px;
     display: flex;
     flex-direction: column;
-    gap: 35px;
+    gap: 23px;
     align-items: flex-start;
     justify-content: flex-start;
     width: 47.99%;
@@ -651,10 +656,10 @@ h5,
 }
 
 .frame-34 {
-    padding: 15px 20px 15px 20px;
+    padding: 10px 15px;
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 10px;
     align-items: center;
     justify-content: flex-start;
     align-self: stretch;
@@ -664,8 +669,8 @@ h5,
 
 .rectangle-72 {
     flex-shrink: 0;
-    width: 42px;
-    height: 42px;
+    width: 24px;
+    height: 24px;
     position: relative;
     overflow: visible;
 }
@@ -676,8 +681,8 @@ h5,
     font-family: var(
             --primary-raleway-medium-font-family
     );
-    font-size: var(--primary-raleway-medium-font-size, 24px);
-    font-weight: var(--primary-raleway-medium-font-weight, 700);
+    font-size: var(--primary-raleway-body-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
     flex: 1;
 }
@@ -685,7 +690,7 @@ h5,
 .course-active {
     background: var(--primary-blue);
     border-radius: 12px;
-    padding: 15px 20px;
+    padding: 10px 15px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -712,8 +717,8 @@ h5,
 
 .rectangle-722 {
     flex-shrink: 0;
-    width: 42px;
-    height: 42px;
+    width: 24px;
+    height: 24px;
     position: relative;
 }
 
@@ -746,7 +751,7 @@ h5,
     font-family: var(
             --primary-raleway-medium-font-family
     );
-    font-size: var(--primary-raleway-medium-font-size);
+    font-size: var(--primary-raleway-body-font-size);
     font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
     flex: 1;
@@ -769,7 +774,7 @@ h5,
     color: var(--origin-black);
     text-align: center;
     font-family: var(--primary-raleway-medium-font-family);
-    font-size: 42px;
+    font-size: 3vw;
     font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
     flex: 1;
@@ -973,10 +978,16 @@ h5,
 
 .study-dropdown {
     position: absolute;
-    right: 165px;
+    right: 10%;
     top: 55px;
     z-index: 1;
     display: none;
+}
+
+@media (min-width: 1100px) {
+    .study-dropdown {
+        right: 16.5%;
+    }
 }
 
 .user-dropdown {
@@ -1026,6 +1037,7 @@ h5,
 .popup-menu div:hover, .user-feature div:hover, .popup-calendar-content div:hover {
     background-color: var(--origin-lightgrey);
 }
+
 .date-select:hover + .calendar-dropdown,
 .calendar-dropdown:hover {
     display: block;
@@ -1157,8 +1169,8 @@ h5,
     font-family: var(
             --primary-raleway-medium-font-family
     );
-    font-size: var(--primary-raleway-medium-font-size, 24px);
-    font-weight: var(--primary-raleway-medium-font-weight, 700);
+    font-size: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
     flex: 1;
 }
@@ -1192,8 +1204,9 @@ h5,
     border-radius: 0px 0px 10px 10px;
     height: 100%;
 }
+
 .content {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 20px;
     align-items: center;
@@ -1206,6 +1219,7 @@ h5,
     bottom: 84.67%;
     top: 9.86%;
 }
+
 .header-schedule {
     display: flex;
     flex-direction: row;
@@ -1216,6 +1230,7 @@ h5,
     height: 56px;
     position: relative;
 }
+
 .schedule-main-title {
     color: var(--origin-black);
     text-align: left;
@@ -1228,6 +1243,7 @@ h5,
     flex: 1;
     z-index: 1;
 }
+
 .date-select {
     display: flex;
     flex-direction: row;
@@ -1239,6 +1255,7 @@ h5,
     width: 485px;
     position: relative;
 }
+
 .week-details {
     color: var(--origin-black);
     text-align: right;
@@ -1254,12 +1271,14 @@ h5,
     align-items: center;
     justify-content: flex-end;
 }
+
 .icon-park-outline-drop-down-list {
     flex-shrink: 0;
     width: 24px;
     height: 24px;
     position: relative;
 }
+
 .schedule-group {
     width: 66.67%;
     height: 25%;
@@ -1270,6 +1289,7 @@ h5,
     top: 58.33%;
     overflow: visible;
 }
+
 .schedule {
     display: flex;
     flex-direction: row;
@@ -1285,6 +1305,7 @@ h5,
     bottom: -1507.14%;
     top: 137.5%;
 }
+
 .course-schedule {
     display: flex;
     flex-direction: column;
@@ -1300,6 +1321,7 @@ h5,
     bottom: 0%;
     top: 0%;
 }
+
 .board {
     flex-shrink: 0;
     width: 100%;
@@ -1310,6 +1332,7 @@ h5,
     bottom: 0%;
     top: 11.18%;
 }
+
 .board-frame {
     width: 100%;
     height: 100%;
@@ -1319,6 +1342,7 @@ h5,
     bottom: 0%;
     top: 0%;
 }
+
 .rectangle-52 {
     background: var(--origin-lightgrey);
     width: 0.1%;
@@ -1329,6 +1353,7 @@ h5,
     bottom: 0%;
     top: 0%;
 }
+
 .rectangle-59 {
     background: var(--origin-lightgrey);
     width: 0.1%;
@@ -1339,6 +1364,7 @@ h5,
     bottom: 0%;
     top: 0%;
 }
+
 .rectangle-60 {
     background: var(--origin-lightgrey);
     width: 0.1%;
@@ -1349,6 +1375,7 @@ h5,
     bottom: 0%;
     top: 0%;
 }
+
 .rectangle-61 {
     background: var(--origin-lightgrey);
     width: 0.1%;
@@ -1359,6 +1386,7 @@ h5,
     bottom: 0%;
     top: 0%;
 }
+
 .rectangle-62 {
     background: var(--origin-lightgrey);
     width: 0.1%;
@@ -1369,6 +1397,7 @@ h5,
     bottom: 0%;
     top: 0%;
 }
+
 .rectangle-63 {
     background: var(--origin-lightgrey);
     width: 0.1%;
@@ -1379,6 +1408,7 @@ h5,
     bottom: 0%;
     top: 0%;
 }
+
 .rectangle-64 {
     background: var(--origin-lightgrey);
     width: 100%;
@@ -1389,6 +1419,7 @@ h5,
     bottom: 74.97%;
     top: 24.9%;
 }
+
 .rectangle-65 {
     background: var(--origin-lightgrey);
     width: 100%;
@@ -1399,6 +1430,7 @@ h5,
     bottom: 49.93%;
     top: 49.93%;
 }
+
 .rectangle-66 {
     background: var(--origin-lightgrey);
     width: 100%;
@@ -1409,6 +1441,7 @@ h5,
     bottom: 24.9%;
     top: 74.97%;
 }
+
 .frame-36 {
     width: 9.45%;
     height: 13.68%;
@@ -1419,6 +1452,7 @@ h5,
     top: 4.1%;
     overflow: hidden;
 }
+
 .week-subject {
     display: flex;
     flex-direction: row;
@@ -1433,6 +1467,7 @@ h5,
     bottom: 0.82%;
     top: 0.68%;
 }
+
 .monday-subject {
     display: flex;
     flex-direction: column;
@@ -1464,6 +1499,7 @@ h5,
     align-items: center;
     justify-content: flex-start;
 }
+
 .tuesday-subject {
     display: flex;
     flex-direction: column;
@@ -1479,6 +1515,7 @@ h5,
     bottom: 0%;
     top: 0%;
 }
+
 .wednessday-subject {
     display: flex;
     flex-direction: column;
@@ -1494,6 +1531,7 @@ h5,
     bottom: 0%;
     top: 0%;
 }
+
 .thursday-subject {
     display: flex;
     flex-direction: column;
@@ -1509,6 +1547,7 @@ h5,
     bottom: 0%;
     top: 0%;
 }
+
 .friday-subject {
     display: flex;
     flex-direction: column;
@@ -1524,6 +1563,7 @@ h5,
     bottom: 0%;
     top: 0%;
 }
+
 .saturday-subject {
     display: flex;
     flex-direction: column;
@@ -1539,10 +1579,12 @@ h5,
     bottom: 0.42%;
     top: 0%;
 }
+
 .theory {
     background: var(--primary-blue);
 }
-.subject{
+
+.subject {
     border-radius: 12px;
     padding: 10px;
     display: flex;
@@ -1555,13 +1597,16 @@ h5,
     position: relative;
     box-shadow: var(--shadow-todo);
 }
+
 .subject-disable {
     mix-blend-mode: darken;
     opacity: 0.30000001192092896;
 }
+
 .practice {
     background: var(--primary-lightred);
 }
+
 .sunday-subject {
     display: flex;
     flex-direction: column;
@@ -1577,6 +1622,7 @@ h5,
     bottom: 0.42%;
     top: 0%;
 }
+
 .week {
     display: flex;
     flex-direction: row;
@@ -1592,6 +1638,7 @@ h5,
     bottom: 92.47%;
     top: 0%;
 }
+
 .todo-date-unit {
     background: var(--origin-white);
     flex: 1;
@@ -1599,6 +1646,7 @@ h5,
     position: relative;
     overflow: hidden;
 }
+
 .day {
     color: var(--origin-midgrey);
     text-align: center;
@@ -1612,6 +1660,7 @@ h5,
     left: 0px;
     top: calc(50% - 28px);
 }
+
 .day-disable {
     color: var(--origin-lightgrey);
     text-align: center;
@@ -1625,6 +1674,7 @@ h5,
     left: 0px;
     top: calc(50% - 28px);
 }
+
 .date-bottom-line {
     height: 2px;
     position: absolute;
@@ -1632,13 +1682,16 @@ h5,
     left: 0px;
     bottom: 0px;
 }
+
 .date-bottom-line-active {
     background: var(--primary-blue);
 }
+
 .date-bottom-line-normal {
     background: var(--origin-grey);
 }
-.date{
+
+.date {
     text-align: center;
     font-family: var(
             --primary-raleway-medium-font-family
@@ -1650,15 +1703,19 @@ h5,
     left: 0px;
     top: calc(50% - 6px);
 }
+
 .date-active {
     color: var(--primary-blue);
 }
+
 .date-disable {
     color: var(--origin-lightgrey);
 }
+
 .date-coming {
     color: var(--origin-midgrey);
 }
+
 .timeline-course {
     display: flex;
     flex-direction: column;
@@ -1674,6 +1731,7 @@ h5,
     bottom: 0%;
     top: 10.81%;
 }
+
 .timeline {
     background: var(--primary-yellow);
     border-radius: 7px;
@@ -1692,6 +1750,7 @@ h5,
     top: 75.2%;
     box-shadow: var(--shadow-todo);
 }
+
 .timeline2 {
     background: var(--primary-yellow);
     border-radius: 7px;
@@ -1710,6 +1769,7 @@ h5,
     top: 0%;
     box-shadow: var(--shadow-todo);
 }
+
 .slot {
     color: var(--origin-black);
     text-align: center;
@@ -1724,6 +1784,7 @@ h5,
     align-items: center;
     justify-content: center;
 }
+
 .timeline3 {
     background: var(--primary-yellow);
     border-radius: 7px;
@@ -1742,6 +1803,7 @@ h5,
     top: 25.07%;
     box-shadow: var(--shadow-todo);
 }
+
 .timeline4 {
     background: var(--primary-yellow);
     border-radius: 7px;
@@ -1760,14 +1822,21 @@ h5,
     top: 50.14%;
     box-shadow: var(--shadow-todo);
 }
-.active{
+
+.active {
     background-color: var(--primary-blue);
 }
-.not-study{
+
+.not-study {
     visibility: hidden;
 }
+
 /* End Course Schedule CSS*/
 /* View Score Css*/
+.score-content{
+    display: none;
+}
+
 .score-title {
     color: var(--origin-black);
     text-align: left;
@@ -1779,7 +1848,9 @@ h5,
     position: absolute;
     left: 69px;
     top: 122px;
+
 }
+
 .grade-board {
     display: flex;
     flex-direction: column;
@@ -1794,6 +1865,7 @@ h5,
     bottom: 10px;
     overflow-y: auto;
 }
+
 .semester {
     display: flex;
     flex-direction: column;
@@ -1804,6 +1876,7 @@ h5,
     width: 1239px;
     position: relative;
 }
+
 .table-title {
     background: var(--primary-blue);
     border-radius: 7px 7px 0px 0px;
@@ -1817,6 +1890,7 @@ h5,
     flex-shrink: 0;
     position: relative;
 }
+
 .course-id-header {
     white-space: nowrap;
     color: var(--origin-lightgrey);
@@ -1828,6 +1902,7 @@ h5,
     font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
 }
+
 .course-name-header {
     white-space: nowrap;
     color: var(--origin-lightgrey);
@@ -1840,6 +1915,7 @@ h5,
     position: relative;
     width: 382px;
 }
+
 .credit-header {
     white-space: nowrap;
     color: var(--origin-lightgrey);
@@ -1851,6 +1927,7 @@ h5,
     font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
 }
+
 .test-score-header {
     white-space: nowrap;
     color: var(--origin-lightgrey);
@@ -1862,6 +1939,7 @@ h5,
     font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
 }
+
 .fin10-header {
     white-space: nowrap;
     color: var(--origin-lightgrey);
@@ -1873,6 +1951,7 @@ h5,
     font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
 }
+
 .fin4-header {
     white-space: nowrap;
     color: var(--origin-lightgrey);
@@ -1884,6 +1963,7 @@ h5,
     font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
 }
+
 .result-header {
     white-space: nowrap;
     color: var(--origin-lightgrey);
@@ -1895,6 +1975,7 @@ h5,
     font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
 }
+
 .frame-21 {
     background: var(--primary-yellow);
     padding: 10px;
@@ -1908,6 +1989,7 @@ h5,
     height: 54px;
     position: relative;
 }
+
 .semester-title {
     color: var(--origin-black);
     text-align: left;
@@ -1918,6 +2000,7 @@ h5,
     font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
 }
+
 .score-detail {
     display: flex;
     flex-direction: column;
@@ -1927,6 +2010,7 @@ h5,
     flex-shrink: 0;
     position: relative;
 }
+
 .course-score {
     display: flex;
     flex-direction: row;
@@ -1936,6 +2020,7 @@ h5,
     flex-shrink: 0;
     position: relative;
 }
+
 .course-id-text {
     border-style: solid;
     border-color: var(--origin-lightgrey);
@@ -1951,6 +2036,7 @@ h5,
     position: relative;
     align-self: stretch;
 }
+
 .col-text {
     color: var(--origin-darkgrey);
     text-align: left;
@@ -1961,6 +2047,7 @@ h5,
     font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
 }
+
 .course-name-text {
     border-style: solid;
     border-color: var(--origin-lightgrey);
@@ -1976,6 +2063,7 @@ h5,
     position: relative;
     align-self: stretch;
 }
+
 .credit-text {
     border-style: solid;
     border-color: var(--origin-lightgrey);
@@ -2007,6 +2095,7 @@ h5,
     position: relative;
     align-self: stretch;
 }
+
 .fin10-text {
     border-style: solid;
     border-color: var(--origin-lightgrey);
@@ -2022,6 +2111,7 @@ h5,
     position: relative;
     align-self: stretch;
 }
+
 .fin4-text {
     border-style: solid;
     border-color: var(--origin-lightgrey);
@@ -2037,6 +2127,7 @@ h5,
     position: relative;
     align-self: stretch;
 }
+
 .res-text {
     border-style: solid;
     border-color: var(--origin-lightgrey);
@@ -2052,6 +2143,7 @@ h5,
     position: relative;
     align-self: stretch;
 }
+
 .semester-detail {
     background: var(--origin-lightgrey);
     border-radius: 0px 0px 12px 12px;
@@ -2064,6 +2156,7 @@ h5,
     flex-shrink: 0;
     position: relative;
 }
+
 .cumulative-score {
     display: flex;
     flex-direction: column;
@@ -2073,6 +2166,7 @@ h5,
     flex-shrink: 0;
     position: relative;
 }
+
 .semester-subtext {
     color: var(--origin-darkgrey);
     text-align: left;
@@ -2084,6 +2178,7 @@ h5,
     position: relative;
     align-self: stretch;
 }
+
 .overall-score {
     display: flex;
     flex-direction: column;
@@ -2094,6 +2189,7 @@ h5,
     /*width: fit-content;*/
     position: relative;
 }
+
 .semester-subtext-normal {
     color: var(--origin-darkgrey);
     font-family: var(
@@ -2102,6 +2198,7 @@ h5,
     font-size: var(--primary-raleway-medium-font-size);
     font-weight: var(--primary-raleway-medium-font-weight);
 }
+
 .semester-subtext-predict {
     color: var(--primary-lightred);
     font-family: var(
@@ -2125,6 +2222,7 @@ h5,
     top: 131px;
     box-shadow: var(--shadow-todo);
 }
+
 .uiw-reload {
     flex-shrink: 0;
     width: 20px;
@@ -2132,6 +2230,7 @@ h5,
     position: relative;
     overflow: visible;
 }
+
 .reload-text-button {
     color: var(--origin-white);
     text-align: left;
@@ -2142,8 +2241,12 @@ h5,
     font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
 }
+
 /* End View Score Css*/
 /* View Test CSS*/
+.test-schedule-content {
+    display: none;
+}
 .test-title {
     color: var(--origin-black);
     text-align: left;
@@ -2156,6 +2259,7 @@ h5,
     left: 128px;
     top: 121px;
 }
+
 .test-schedule {
     display: flex;
     flex-direction: column;
@@ -2168,6 +2272,7 @@ h5,
     left: 8.89%;
     top: 227px;
 }
+
 .test-header {
     background: var(--primary-blue);
     border-radius: 12px 12px 0px 0px;
@@ -2181,6 +2286,7 @@ h5,
     flex-shrink: 0;
     position: relative;
 }
+
 .test-course {
     display: flex;
     flex-direction: column;
@@ -2193,6 +2299,7 @@ h5,
     overflow: auto;
     max-height: calc(100vh - 227px - 150px);
 }
+
 .test-title-cid {
     color: var(--origin-white);
     text-align: center;
@@ -2204,6 +2311,7 @@ h5,
     position: relative;
     width: 129px;
 }
+
 .test-title-cname {
     color: var(--origin-white);
     text-align: left;
@@ -2215,6 +2323,7 @@ h5,
     position: relative;
     width: 362px;
 }
+
 .test-title-test-date {
     color: var(--origin-white);
     text-align: center;
@@ -2226,6 +2335,7 @@ h5,
     position: relative;
     width: 222px;
 }
+
 .test-title-troom {
     color: var(--origin-white);
     text-align: center;
@@ -2237,6 +2347,7 @@ h5,
     position: relative;
     width: 173px;
 }
+
 .test-title-cstart {
     color: var(--origin-white);
     text-align: center;
@@ -2248,6 +2359,7 @@ h5,
     position: relative;
     width: 157px;
 }
+
 .test-title-ctime {
     color: var(--origin-white);
     text-align: center;
@@ -2270,6 +2382,7 @@ h5,
     flex-shrink: 0;
     position: relative;
 }
+
 .test-course-id {
     border-style: solid;
     border-color: var(--origin-grey);
@@ -2285,6 +2398,7 @@ h5,
     width: 138px;
     position: relative;
 }
+
 .test-course-name {
     border-style: solid;
     border-color: var(--origin-grey);
@@ -2299,6 +2413,7 @@ h5,
     width: 401px;
     position: relative;
 }
+
 .test-date {
     border-style: solid;
     border-color: var(--origin-grey);
@@ -2314,6 +2429,7 @@ h5,
     width: 204px;
     position: relative;
 }
+
 .test-col {
     color: var(--origin-black);
     text-align: center;
@@ -2326,6 +2442,7 @@ h5,
     align-self: stretch;
     flex: 1;
 }
+
 .test-course-name-col {
     color: var(--origin-black);
     text-align: left;
@@ -2338,6 +2455,7 @@ h5,
     align-self: stretch;
     flex: 1;
 }
+
 .test-room {
     border-style: solid;
     border-color: var(--origin-grey);
@@ -2353,6 +2471,7 @@ h5,
     width: 169px;
     position: relative;
 }
+
 .test-slot {
     border-style: solid;
     border-color: var(--origin-grey);
@@ -2368,6 +2487,7 @@ h5,
     width: 164px;
     position: relative;
 }
+
 .test-time {
     border-style: solid;
     border-color: var(--origin-grey);
@@ -2382,6 +2502,7 @@ h5,
     flex: 1;
     position: relative;
 }
+
 /*End View Test Css*/
 /* forgot password */
 .forgot-pass-view {
@@ -2392,6 +2513,7 @@ h5,
     bottom: -475.91px;
     top: 0px;
 }
+
 .ellipse-31 {
     background: var(--primary-blue);
     border-radius: 50%;
@@ -2403,6 +2525,7 @@ h5,
     transform-origin: 0 0;
     transform: rotate(45deg) scale(1, 1);
 }
+
 .rectangle-67 {
     position: absolute;
     height: auto;
@@ -2411,6 +2534,7 @@ h5,
     bottom: 475.91px;
     object-fit: cover;
 }
+
 .ellipse-32 {
     background: var(--primary-blue);
     border-radius: 50%;
@@ -2422,6 +2546,7 @@ h5,
     transform-origin: 0 0;
     transform: rotate(77deg) scale(1, 1);
 }
+
 .ellipse-33 {
     background: var(--primary-blue);
     border-radius: 50%;
@@ -2433,6 +2558,7 @@ h5,
     transform-origin: 0 0;
     transform: rotate(-135deg) scale(1, 1);
 }
+
 .forgot-pass-content {
     display: flex;
     flex-direction: column;
@@ -2446,6 +2572,7 @@ h5,
     height: fit-content;
     width: fit-content;
 }
+
 .frame-29 {
     display: flex;
     flex-direction: column;
@@ -2456,6 +2583,7 @@ h5,
     width: 600px;
     position: relative;
 }
+
 .forgot-pass-title {
     color: var(--origin-black);
     text-align: center;
@@ -2466,6 +2594,7 @@ h5,
     font-weight: var(--primary-raleway-big-font-weight);
     position: relative;
 }
+
 .forgot-pass-subtitle {
     color: var(--origin-black);
     text-align: center;
@@ -2477,6 +2606,7 @@ h5,
     position: relative;
     align-self: stretch;
 }
+
 .forgot-pass-subtitle-body {
     color: var(--origin-black);
     text-align: center;
@@ -2498,6 +2628,7 @@ h5,
     width: 422px;
     position: relative;
 }
+
 .rectangle-68 {
     border-radius: 12px;
     border-style: solid;
@@ -2509,6 +2640,7 @@ h5,
     position: relative;
     box-shadow: var(--shadow-textfield);
 }
+
 .frame-28 {
     display: flex;
     flex-direction: row;
@@ -2518,6 +2650,7 @@ h5,
     flex-shrink: 0;
     position: relative;
 }
+
 .forgot-back {
     color: var(--origin-black);
     text-align: center;
@@ -2529,6 +2662,7 @@ h5,
     position: relative;
     white-space: nowrap;
 }
+
 .button-register {
     background: var(--primary-blue);
     border-radius: 15px;
@@ -2542,14 +2676,16 @@ h5,
     position: relative;
     box-shadow: var(--shadow-textfield);
 }
-.forgot-input-form{
+
+.forgot-input-form {
     width: 25vw !important;
     height: 7vh !important;
     box-shadow: var(--shadow-textfield) !important;
     border-color: var(--primary-blue) !important;
 
 }
-.button-forgot{
+
+.button-forgot {
     color: var(--origin-white);
     width: 10vw;
     min-width: fit-content;
@@ -2564,6 +2700,7 @@ h5,
     gap: 10px;
     display: flex;
 }
+
 /* End forgot Password Css*/
 /* Reset Password Css*/
 .reset-pass-view {
@@ -2592,6 +2729,7 @@ h5,
     font-weight: var(--primary-raleway-big-font-weight);
     position: relative;
 }
+
 .change-pass-form {
     display: flex;
     flex-direction: column;
@@ -2601,6 +2739,7 @@ h5,
     flex-shrink: 0;
     position: relative;
 }
+
 .reset-pass-control {
     display: flex;
     flex-direction: row;
@@ -2623,6 +2762,7 @@ h5,
     transform: rotate(-46deg) scale(1, 1);
     background: var(--primary-blue);
 }
+
 .reset-pass-pic {
     position: absolute;
     height: auto;
@@ -2643,7 +2783,8 @@ h5,
     transform: rotate(131deg) scale(1, 1);
     background: var(--primary-blue);
 }
-.button-reset{
+
+.button-reset {
     color: var(--origin-white);
     width: 10vw;
     min-width: fit-content;
@@ -2659,4 +2800,5 @@ h5,
     display: flex;
     padding: 10px;
 }
+
 /* End Reset Password Css*/

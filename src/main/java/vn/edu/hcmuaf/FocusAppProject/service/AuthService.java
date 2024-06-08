@@ -88,7 +88,6 @@ public class AuthService implements AuthServiceImp {
                 .roles(role)
                 .build();
         if (!StringUtils.hasText(userDTO.getProvider())) {
-            System.out.println(userDTO.getPassword());
             String password = userDTO.getPassword();
             String encodedPassword = passwordEncoder.encode(password);
             user.setPassword(encodedPassword);
@@ -189,18 +188,26 @@ public class AuthService implements AuthServiceImp {
     public User createUserGoogle(Map<String, Object> data) throws Exception {
         String email = (String) data.get("email");
         if (userRepository.existsByEmail(email)) {
-            throw new DataIntegrityViolationException("Email is already exists");
+            User user = userRepository.findByEmail(email);
+            if (user.getProvider().equals("google")) {
+                return user;
+            } else {
+                user.setProvider("google");
+                user.setToken((String) data.get("sub"));
+                return userRepository.save(user);
+            }
+        } else {
+            User user = User.builder().email(email)
+                    .name((String) data.get("name"))
+                    .provider("google")
+                    .token((String) data.get("sub"))
+                    .isVerify(true)
+                    .status(true)
+                    .roles(roleRepository.findRoleByRoleName("User"))
+                    .provider("google")
+                    .build();
+            return userRepository.save(user);
         }
-        User user = User.builder().email(email)
-                .name((String) data.get("name"))
-                .provider("google")
-                .token((String) data.get("sub"))
-                .isVerify(true)
-                .status(true)
-                .roles(roleRepository.findRoleByRoleName("User"))
-                .provider("google")
-                .build();
-        return userRepository.save(user);
     }
 
     @Override
@@ -232,15 +239,15 @@ public class AuthService implements AuthServiceImp {
         }
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime timeValid = now.plusMinutes(5);
-        String verificationCode = saltString.getSaltString();
+        String token = saltString.getSaltString();
         PasswordResetToken passwordResetToken = PasswordResetToken.builder()
-                .token(verificationCode)
+                .token(token)
                 .expiryDate(timeValid)
                 .user(user)
                 .build();
 
         passwordResetTokenReponsitory.save(passwordResetToken);
-        String resetLink = link + "/auth/reset-password?token=" + verificationCode + "&userId=" + user.getId();
+        String resetLink = link + "/auth/reset-password?token=" + token + "&userId=" + user.getId();
         Map<String, String> values = Map.of("user-name", user.getName(), "reset-link", resetLink);
         emailUtil.sendMail(user.getEmail(), "Quên mật khẩu tài khoản tại Focus App", "forgot-password", values);
         return Pair.of("success", "Link đặt lại mật khẩu đã được gửi đến email của bạn! Vui lòng tiến hành đặt lại mật khẩu trong vòng 5 phút!");
@@ -253,8 +260,7 @@ public class AuthService implements AuthServiceImp {
             return Pair.of("error", "Token không hợp lệ hoặc đã hết hạn! Vui lòng gửi lại yêu cầu đặt lại mật khẩu!");
         }
         User user = passwordResetToken.getUser();
-        String encodedPassword = passwordEncoder.encode(newPassword);
-        user.setPassword(encodedPassword);
+        user.setPassword(newPassword);
         userRepository.save(user);
         passwordResetTokenReponsitory.delete(passwordResetToken);
         return Pair.of("success", "Mật khẩu đã được đặt lại thành công! Bạn sẽ được chuyển về trang đăng nhập sau 5 giây!");

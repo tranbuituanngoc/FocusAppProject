@@ -15,8 +15,6 @@ public class UserStudentInfoDTO {
     long userId;
     @JsonProperty("department_id")
     String departmentId;
-    @JsonProperty("major_id")
-    String majorId;
     @JsonProperty("desired_score")
     double desiredScore;
 }

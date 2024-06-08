@@ -32,9 +32,6 @@ public class Department {
     @JsonBackReference
     @OneToMany(mappedBy = "department")
     private Set<User> users;
-    @JsonBackReference
-    @OneToMany(mappedBy = "department")
-    private Set<Major> majors;
     @Override
     public int hashCode() {
         return Objects.hash(id);

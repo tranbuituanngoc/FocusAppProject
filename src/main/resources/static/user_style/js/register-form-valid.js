@@ -15,6 +15,7 @@ $(document).ready(function () {
         if (!emailRegex.test(email)) {
             $('#error-email').text('Email không hợp lệ');
             isValid = false;
+            console.log('email failed')
         } else {
             $('#error-email').text('');
         }
@@ -22,6 +23,7 @@ $(document).ready(function () {
         if (!passwordRegex.test(password)) {
             $('#error-password').html('Mật khẩu phải có tối thiểu 8 ký tự và phải bao gồm<br> 1 kí tự in hoa, 1 kí tự in thường và 1 chữ số');
             isValid = false;
+            console.log('password failed')
         } else {
             $('#error-password').text('');
         }
@@ -29,6 +31,7 @@ $(document).ready(function () {
         if (password !== rePassword) {
             $('#error-repassword').text('Mật khẩu nhập lại không khớp');
             isValid = false;
+            console.log('repassword  failed')
         } else {
             $('#error-repassword').text('');
         }
@@ -36,13 +39,16 @@ $(document).ready(function () {
         if (!fullName) {
             $('#error-fullname').text('Họ và tên không được để trống');
             isValid = false;
+            console.log('fullname failed')
         } else {
             $('#error-fullname').text('');
         }
 
-        // Nếu tất cả các điều kiện trên đều thoả mãn, hãy gửi form
+
         if (isValid) {
+            console.log('submit')
             this.submit();
         }
     });
 });
+

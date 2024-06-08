@@ -1,15 +1,30 @@
 $(document).ready(function () {
     $.ajax({
-        url: "/api/diem/get-score",
-        type: "GET",
-        contentType: "application/json",
-        data: {
-            userId: user.id
-        },
-        success: function (response) {
-            console.log(response);
-            response.forEach(semester => {
-                let semesterHtml = `
+        url: '/api/dkmh/is-linked/' + user.id,
+        type: 'GET',
+        contentType: 'application/json',
+        success(response) {
+            if (!response) {
+                $('#view').append(
+                    `<div class="notify-user">
+                    <div class="not-linked">
+                      Bạn chưa liên kết tài khoản đăng ký môn học. Vui lòng liên kết tài khoản trước để sử dụng chức năng này.
+                    </div>
+                  </div>`
+                );
+            } else {
+                $(".score-content").css("display", "block");
+                $.ajax({
+                    url: "/api/diem/get-score",
+                    type: "GET",
+                    contentType: "application/json",
+                    data: {
+                        userId: user.id
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        response.forEach(semester => {
+                            let semesterHtml = `
                     <div class="semester">
                         <div class="table-title">
                             <div class="course-id-header">Mã MH</div>
@@ -25,8 +40,8 @@ $(document).ready(function () {
                         </div>
                         <div class="score-detail">`;
 
-                semester.list_scores.forEach(score => {
-                    semesterHtml += `
+                            semester.list_scores.forEach(score => {
+                                semesterHtml += `
                         <div class="course-score">
                             <div class="course-id-text">
                             <div class="col-text" id="course-id">${score.course_id}</div>
@@ -50,9 +65,9 @@ $(document).ready(function () {
                             <div class="col-text" id="result">${score.result===true?`<img src="/user_style/img/icon/bi_check.svg" />`:`<img src="/user_style/img/icon/bi_x.svg" />`}</div>
                         </div>
                         </div>`;
-                });
+                            });
 
-                semesterHtml += `
+                            semesterHtml += `
                         </div>
                         <div class="semester-detail">
                             <div class="cumulative-score">
@@ -110,11 +125,14 @@ $(document).ready(function () {
                         </div>
                     </div>`;
 
-                $('#grade-board').append(semesterHtml);
-            });
-        },
-        error: function (response) {
-            console.error(response);
+                            $('#grade-board').append(semesterHtml);
+                        });
+                    },
+                    error: function (response) {
+                        console.error(response);
+                    }
+                });
+            }
         }
     });
 });

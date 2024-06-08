@@ -7,24 +7,26 @@
 <body>
 <div class="view" id="view">
     <div th:replace="fragment/header :: header"></div>
-    <div class="test-title">Lịch thi</div>
-    <div class="test-schedule">
-        <div class="test-header">
-            <div class="test-title-cid">Mã MH</div>
-            <div class="test-title-cname">Tên môn học</div>
-            <div class="test-title-test-date">Ngày thi</div>
-            <div class="test-title-troom">Phòng thi</div>
-            <div class="test-title-cstart">Tiết bắt đầu</div>
-            <div class="test-title-ctime">Giờ thi</div>
+    <div class="test-schedule-content">
+        <div class="test-title">Lịch thi</div>
+        <div class="test-schedule">
+            <div class="test-header">
+                <div class="test-title-cid">Mã MH</div>
+                <div class="test-title-cname">Tên môn học</div>
+                <div class="test-title-test-date">Ngày thi</div>
+                <div class="test-title-troom">Phòng thi</div>
+                <div class="test-title-cstart">Tiết bắt đầu</div>
+                <div class="test-title-ctime">Giờ thi</div>
+            </div>
+            <div class="test-course">
+                <!-- List Test Course-->
+            </div>
         </div>
-        <div class="test-course">
-
-        </div>
+        <button class="button-reload button-reload-data">
+            <img class="uiw-reload" th:src="@{/user_style/img/icon/uiw_reload.svg}"/>
+            <div class="reload-text-button">Cập nhật</div>
+        </button>
     </div>
-    <button class="button-reload button-reload-data">
-        <img class="uiw-reload" th:src="@{/user_style/img/icon/uiw_reload.svg}"/>
-        <div class="reload-text-button">Cập nhật</div>
-    </button>
 </div>
 <div th:replace="fragment/script :: script"></div>
 <script th:src="@{/user_style/js/test-schedule-script.js}"></script>
