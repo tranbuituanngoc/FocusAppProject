@@ -2802,3 +2802,11 @@ h5,
 }
 
 /* End Reset Password Css*/
+/*Desired Score Css*/
+
+.desired-semester-content {
+    color: var(--primary-lightred) !important;
+}
+.desired-score-content {
+    color: var(--primary-blue) !important;
+}

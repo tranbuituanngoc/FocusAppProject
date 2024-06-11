@@ -6,13 +6,16 @@ import org.springframework.stereotype.Service;
 import vn.edu.hcmuaf.FocusAppProject.dto.ScoreDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.SemesterScoreDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserSemesterDTO;
+import vn.edu.hcmuaf.FocusAppProject.exception.ScoreNotValidException;
 import vn.edu.hcmuaf.FocusAppProject.models.*;
 import vn.edu.hcmuaf.FocusAppProject.repository.*;
 import vn.edu.hcmuaf.FocusAppProject.response.ScoreResponse;
 import vn.edu.hcmuaf.FocusAppProject.response.SemesterScoreResponse;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.ScoreServiceImp;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,6 +80,7 @@ public class ScoreService implements ScoreServiceImp {
         }
     }
 
+
     @Override
     public List<SemesterScoreResponse> getScore(long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User " + userId + " not found"));
@@ -120,4 +124,159 @@ public class ScoreService implements ScoreServiceImp {
         return semesterScoreResponses;
     }
 
+    @Override
+    public SemesterScoreResponse caculateRequireScore(long userId) throws ScoreNotValidException {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User " + userId + " not found"));
+        LocalDate currentDate = LocalDate.now();
+        int semesterId = semesterRepository.findCurrentSemesterIdsByDate(currentDate);
+        List<Course> currentCourses = userCourseRepository.findCoursesBySemesterIdAndUserIdOrderByCourseCreditDESC(semesterId, userId);
+        Optional<UserSemesters> currentUserSemester = userSemesterRepository.findByUserIdAndSemesterSemesterId(userId, semesterId);
+        Semester currentSemester = semesterRepository.findById(semesterId).orElseThrow(() -> new RuntimeException("Semester " + semesterId + " not found"));
+
+        double[] scoreRange = {4, 3.5, 3, 2.5, 2, 1.5, 1};
+        double tolerance = 0.1;
+        double[] credits = currentCourses.stream().mapToDouble(Course::getCredits).toArray();
+
+
+        if (currentUserSemester == null) {
+            throw new RuntimeException("User semester not found");
+        }
+
+        int totalCredit = currentUserSemester.get().getCumulativeCredit();
+        int currentCredit = 0;
+
+        for (Course course : currentCourses) {
+            totalCredit += course.getCredits();
+            currentCredit += course.getCredits();
+        }
+        System.out.println("Total credit: " + totalCredit);
+        System.out.println("Current credit: " + currentCredit);
+
+        double requireGpa = calculateRequireGpa(totalCredit, currentUserSemester.get().getCumulativeGpa4(), currentCredit, user.getDesiredScore(), currentUserSemester.get().getCumulativeCredit());
+        if (requireGpa > 4.0) {
+            throw new ScoreNotValidException("Điểm cần đạt của bạn lớn hơn 4.0. Vui lòng giảm điểm mong muốn xuống để thực hiện tính toán lại.");
+        }
+        requireGpa = Math.round(requireGpa * 100.0) / 100.0;
+
+        double target = requireGpa * currentCredit;
+        System.out.println("Required GPA: " + requireGpa);
+
+        System.out.println("Target: " + target);
+        double[] scoresRequire = new double[credits.length];
+        double[] previousScoresRequire = new double[credits.length];
+        int index = fillScores(scoresRequire, scoreRange, credits, target);
+        scoresRequire = calculateRequiredScores(scoresRequire, credits, target, scoreRange, tolerance, index, previousScoresRequire);
+        List<ScoreResponse> scoreResponses = new ArrayList<>();
+        for (int i = 0; i < scoresRequire.length; i++) {
+            Course course = currentCourses.get(i);
+            double score = scoresRequire[i];
+            ScoreResponse scoreResponse = ScoreResponse.builder()
+                    .courseId(course.getId())
+                    .courseName(course.getCourseName())
+                    .credit(course.getCredits())
+                    .finalScore4(score)
+                    .result(true)
+                    .build();
+            scoreResponses.add(scoreResponse);
+        }
+        SemesterScoreResponse semesterScoreResponse = SemesterScoreResponse.builder()
+                .semesterId(currentSemester.getSemesterId())
+                .semesterName(currentSemester.getSemesterName())
+                .gpa4(requireGpa)
+                .cumulativeGpa4(user.getDesiredScore())
+                .cumulativeCredit(totalCredit)
+                .creditHours(currentCredit)
+                .scores(scoreResponses)
+                .build();
+
+        return semesterScoreResponse;
+    }
+
+
+    private double[] calculateRequiredScores(double[] scoresRequire, double[] credits, double target, double[] scoreRange, double tolerance, int index, double[] previous_scoresRequire) {
+        double old_sum = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < scoresRequire.length; i++) {
+            System.out.println("index: " + index);
+            scoresRequire[i] = index == 0 ? scoreRange[index] : scoreRange[index - 1];
+            double sum = calculateSum(credits, scoresRequire);
+            if (sum >= target - 1 && sum < target) {
+                for (int j = scoresRequire.length - 1; j > i; j--) {
+                    scoresRequire[j] = index == 0 ? scoreRange[index] : scoreRange[index - 1];
+                    double sum2 = calculateSum(credits, scoresRequire);
+                    if (Math.abs(sum2 - target) <= tolerance) {
+                        System.out.print("Score Array: \t");
+                        return scoresRequire;
+                    }
+                    if (sum2 > old_sum) {
+                        System.out.print("Score Array: \t");
+                        return previous_scoresRequire;
+                    }
+                    old_sum = sum2;
+                    System.arraycopy(scoresRequire, 0, previous_scoresRequire, 0, scoresRequire.length);
+                }
+            } else {
+                if (sum > target) {
+                    for (int j = scoresRequire.length - 1; j > i; j--) {
+                        System.arraycopy(scoresRequire, 0, previous_scoresRequire, 0, scoresRequire.length);
+                        scoresRequire[j] = index == scoresRequire.length ? scoreRange[index] : scoreRange[index + 1];
+                        double sum2 = calculateSum(credits, scoresRequire);
+                        if(sum2>target){
+                            if (Math.abs(sum2 - target) <= tolerance) {
+                                System.out.print("Score Array: \t");
+                                printArray(scoresRequire);
+                                return scoresRequire;
+                            }
+                        }else{
+                            break;
+                        }
+                    }
+
+                        System.out.print("Pre-Score Array: \t");
+                        printArray(previous_scoresRequire);
+                        return previous_scoresRequire;
+
+                }
+            }
+        }
+        return scoresRequire;
+    }
+
+    private int fillScores(double[] scoresRequire, double[] values, double[] credits, double target) {
+        for (int i = 0; i < values.length; i++) {
+            Arrays.fill(scoresRequire, values[i]);
+            double sum = calculateSum(credits, scoresRequire);
+            if (sum < target) {
+                printArray(scoresRequire);
+                return i;
+            }
+        }
+        return scoresRequire.length;
+    }
+
+    private void printArray(double[] variants) {
+        for (double v : variants) {
+            System.out.print(v + "\t");
+        }
+        System.out.print("\n");
+    }
+
+
+    private double calculateSum(double[] credits, double[] scoresRequire) {
+        double sum = 0;
+        for (int i = 0; i < credits.length; i++) {
+            sum += credits[i] * scoresRequire[i];
+        }
+        return sum;
+    }
+
+
+    private double calculateRequireGpa(int totalCredit, double cumulateGpa, int currentCredit, double desireGpa, int cumulateCredit) {
+        double result = 0.0;
+        try {
+            result = (desireGpa * totalCredit - cumulateGpa * cumulateCredit) / currentCredit;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

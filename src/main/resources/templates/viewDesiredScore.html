@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragment/head :: head"></head>
+<meta charset="UTF-8">
+<title>Title</title>
+</head>
+<body>
+<div class="view" id="view">
+    <div th:replace="fragment/header :: header"></div>
+    <div class="score-content">
+        <div class="score-title">Tính điểm cần thiết</div>
+        <div class="grade-board" id="grade-board">
+            <!--       list semester-->
+        </div>
+                <button class="button-reload button-update-desired-score">
+                    <img class="uiw-reload" th:src="@{/user_style/img/icon/uiw_reload.svg}"/>
+                    <div class="reload-text-button">Cập nhật điểm mong muốn</div>
+                </button>
+    </div>
+</div>
+<div th:replace="fragment/script :: script"></div>
+<script th:src="@{/user_style/js/view-desire-score.js}"></script>
+</body>
+</html>

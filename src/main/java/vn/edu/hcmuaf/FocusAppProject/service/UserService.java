@@ -78,6 +78,12 @@ public class UserService implements UserServiceImp {
         userRepository.save(user);
     }
 
+    @Override
+    public User updateDesiredScore(long userId, double desiredScore) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        user.setDesiredScore(desiredScore);
+        return userRepository.save(user);
+    }
 
 
 }

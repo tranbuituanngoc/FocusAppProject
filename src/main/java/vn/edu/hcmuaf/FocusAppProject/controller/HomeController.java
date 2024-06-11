@@ -52,4 +52,9 @@ public class HomeController {
         model.addAttribute("title", "Xem lịch thi");
         return "viewTestSchedule";
     }
+    @GetMapping("/tinh-diem")
+    public String calculateScore(Model model) {
+        model.addAttribute("title", "Tính điểm cần đạt");
+        return "viewDesiredScore";
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import vn.edu.hcmuaf.FocusAppProject.FocusAppProjectApplication;
 import vn.edu.hcmuaf.FocusAppProject.service.CourseScheduleService;
+import vn.edu.hcmuaf.FocusAppProject.service.ScoreService;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -73,9 +74,9 @@ public class EmailUtil {
 
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(FocusAppProjectApplication.class, args);
-        CourseScheduleService courseScheduleService = context.getBean(CourseScheduleService.class);
+        ScoreService scoreService = context.getBean(ScoreService.class);
         try {
-            courseScheduleService.sendCourseNotifications(4);
+            scoreService.caculateRequireScore(3l);
         } catch (Exception e) {
             e.printStackTrace();
         }

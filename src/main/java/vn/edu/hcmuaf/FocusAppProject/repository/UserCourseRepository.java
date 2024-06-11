@@ -23,4 +23,7 @@ public interface UserCourseRepository extends JpaRepository<UserCourse, Long> {
     @Query("SELECT uc.course FROM user_course uc WHERE uc.userSemesters.semester.semesterId = :semesterId AND uc.user.id = :userId")
     List<Course> findCoursesBySemesterIdAndUserId(@Param("semesterId") int semesterId, @Param("userId") long userId);
     List<UserCourse> findByUserSemestersId(long userSemesterId);
+    List<UserCourse> findByUserId(long userId);
+    @Query("SELECT uc.course FROM user_course uc WHERE uc.userSemesters.semester.semesterId = :semesterId AND uc.user.id = :userId ORDER BY uc.course.credits DESC")
+    List<Course> findCoursesBySemesterIdAndUserIdOrderByCourseCreditDESC(@Param("semesterId") int semesterId, @Param("userId") long userId);
 }

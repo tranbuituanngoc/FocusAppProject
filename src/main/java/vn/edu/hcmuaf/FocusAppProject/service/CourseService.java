@@ -323,7 +323,7 @@ public class CourseService implements CourseServiceImp {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         LocalDate currentDate = LocalDate.now();
         int semesterId = semesterRepository.findCurrentSemesterIdsByDate(currentDate);
-        return userCourseRepository.findCoursesBySemesterIdAndUserId(semesterId, userId);
+        return userCourseRepository.findCoursesBySemesterIdAndUserId(semesterId, user.getId());
     }
 
     private String getCurrentAcademicPerformance(long userId) {
