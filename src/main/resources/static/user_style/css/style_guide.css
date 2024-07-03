@@ -35,4 +35,5 @@
     --primary-raleway-small-font-style: normal;
     --shadow-textfield: 7px 7px 4px 0px rgba(0, 0, 0, 0.25);
     --shadow-todo: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    --shadow-todo-table:-2px 25px 22px 0px rgba(0, 0, 0, 0.15);
 }

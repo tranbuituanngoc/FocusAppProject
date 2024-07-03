@@ -59,9 +59,6 @@ public class User implements UserDetails {
     @JoinColumn(name = "training_program_id")
     private TrainingProgram trainingProgram;
     @JsonBackReference
-    @OneToMany(mappedBy = "users")
-    List<Note> notes;
-    @JsonBackReference
     @OneToMany(mappedBy = "user")
     List<UserSemesters> semesters;
     @JsonBackReference
@@ -73,9 +70,6 @@ public class User implements UserDetails {
     @JsonBackReference
     @OneToMany(mappedBy = "user")
     List<PasswordResetToken> passwordResetTokens;
-    @JsonBackReference
-    @OneToMany(mappedBy = "user")
-    List<Project> projects;
     @JsonBackReference
     @OneToMany(mappedBy = "user")
     List<UserCourse> userCourses;

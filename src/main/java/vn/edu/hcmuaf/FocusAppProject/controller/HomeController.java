@@ -57,4 +57,9 @@ public class HomeController {
         model.addAttribute("title", "Tính điểm cần đạt");
         return "viewDesiredScore";
     }
+    @GetMapping("/to-do")
+    public String todoList(Model model) {
+        model.addAttribute("title", "Công việc cần làm");
+        return "to-do";
+    }
 }

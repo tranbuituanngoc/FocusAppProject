@@ -24,6 +24,8 @@ public class Todo {
     private LocalDate deadline;
     @Column(name = "content")
     private String content;
+    @Column(name="title")
+    private String title;
     @Column(name = "is_complete")
     private boolean isComplete;
     @ManyToOne

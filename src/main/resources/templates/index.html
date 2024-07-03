@@ -5,9 +5,73 @@
 <body>
 <div class="view">
     <div th:replace="fragment/header :: header"></div>
+    <div class="index-content">
+        <div class="work">
+            <div class="index-welcome-title">
+                Xin chào <b><i><span th:text="${session.user.name}"></span></i></b> !,
+                <br />
+                Hãy làm cho ngày hôm nay của bạn trở thành một ngày năng suất nhé!
+            </div>
+            <div class="to-do-table">
+                <div class="table-content">
+                    <div class="task-list">
+                        <!-- list task to-do -->
+                    </div>
+                    <div class="to-do-table-title">To-do</div>
+                </div>
+                <img class="noto-pushpin" th:src="@{/user_style/img/icon/noto-pushpin0.svg}" />
+            </div>
+            <div class="course-table">
+                <div class="table-content">
+                    <div class="task-list">
+                        <!-- list course -->
+                    </div>
+                    <div class="course-table-title">Môn học</div>
+                </div>
+                <img class="noto-pushpin2"th:src="@{/user_style/img/icon/noto-pushpin1.svg}" />
+            </div>
+        </div>
+        <div class="study-set">
+            <div class="study-set-title">
+                <div class="study-set-title-text">Study Set</div>
+                <div class="study-set-subtitle-text">
+                    Hãy sử dụng thời gian của bạn một cách thật hợp lý nào!
+                </div>
+            </div>
+            <div class="timer">
+                <div class="video-clock">
+                    <video width="340" height="auto" id="timer">
+                        <source th:src="@{/user_style/video/timer.mp4}" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="study-set-selection">
+                    <div class="timer-content">
+                        <select class="timer-dropdown" id="timerDropdown">
+                            <option value="1">25:00</option>
+                            <option value="2">50:00</option>
+                        </select>
+                        <div
+                                class="icon-park-outline-drop-down-list"
+                                id="create-study-set"
+                        >
+                            <img
+                                    class="study-set-icon"
+                                    th:src="@{/user_style/img/icon/gravity-ui_play-fill.svg}"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="achievement">
+            <div class="saving-time-title">
+                <div class="save-time-subtitle">Hôm nay bạn đã tiết kiệm được</div>
+                <div class="saving-time">2 giờ 30 phút</div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
 <div th:replace="fragment/script :: script"></div>
 <!--Home Script-->
 <script type="text/javascript" th:src="@{/user_style/js/homescript.js}"></script>

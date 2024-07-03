@@ -149,8 +149,6 @@ public class ScoreService implements ScoreServiceImp {
             totalCredit += course.getCredits();
             currentCredit += course.getCredits();
         }
-        System.out.println("Total credit: " + totalCredit);
-        System.out.println("Current credit: " + currentCredit);
 
         double requireGpa = calculateRequireGpa(totalCredit, currentUserSemester.get().getCumulativeGpa4(), currentCredit, user.getDesiredScore(), currentUserSemester.get().getCumulativeCredit());
         if (requireGpa > 4.0) {
@@ -159,9 +157,7 @@ public class ScoreService implements ScoreServiceImp {
         requireGpa = Math.round(requireGpa * 100.0) / 100.0;
 
         double target = requireGpa * currentCredit;
-        System.out.println("Required GPA: " + requireGpa);
 
-        System.out.println("Target: " + target);
         double[] scoresRequire = new double[credits.length];
         double[] previousScoresRequire = new double[credits.length];
         int index = fillScores(scoresRequire, scoreRange, credits, target);
@@ -196,7 +192,6 @@ public class ScoreService implements ScoreServiceImp {
     private double[] calculateRequiredScores(double[] scoresRequire, double[] credits, double target, double[] scoreRange, double tolerance, int index, double[] previous_scoresRequire) {
         double old_sum = Double.POSITIVE_INFINITY;
         for (int i = 0; i < scoresRequire.length; i++) {
-            System.out.println("index: " + index);
             scoresRequire[i] = index == 0 ? scoreRange[index] : scoreRange[index - 1];
             double sum = calculateSum(credits, scoresRequire);
             if (sum >= target - 1 && sum < target) {
@@ -204,11 +199,9 @@ public class ScoreService implements ScoreServiceImp {
                     scoresRequire[j] = index == 0 ? scoreRange[index] : scoreRange[index - 1];
                     double sum2 = calculateSum(credits, scoresRequire);
                     if (Math.abs(sum2 - target) <= tolerance) {
-                        System.out.print("Score Array: \t");
                         return scoresRequire;
                     }
                     if (sum2 > old_sum) {
-                        System.out.print("Score Array: \t");
                         return previous_scoresRequire;
                     }
                     old_sum = sum2;
@@ -222,7 +215,6 @@ public class ScoreService implements ScoreServiceImp {
                         double sum2 = calculateSum(credits, scoresRequire);
                         if(sum2>target){
                             if (Math.abs(sum2 - target) <= tolerance) {
-                                System.out.print("Score Array: \t");
                                 printArray(scoresRequire);
                                 return scoresRequire;
                             }
@@ -231,7 +223,6 @@ public class ScoreService implements ScoreServiceImp {
                         }
                     }
 
-                        System.out.print("Pre-Score Array: \t");
                         printArray(previous_scoresRequire);
                         return previous_scoresRequire;
 
