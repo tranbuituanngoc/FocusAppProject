@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="admin/fragment/head :: head"></head>
+
+<body>
+<div class="app">
+    <div class="layout">
+        <!-- Header START -->
+        <div th:replace="admin/fragment/header :: header"></div>
+        <!-- Header END -->
+
+        <!-- Side Nav START -->
+        <div th:replace="admin/fragment/side-nav :: side-nav"></div>
+        <!-- Side Nav END -->
+
+        <!-- Page Container START -->
+        <div class="page-container">
+            <!-- Content Wrapper START -->
+            <div class="main-content">
+                <div class="page-header">
+                    <h2 class="header-title">Quản lý quyền hạn</h2>
+                    <div class="header-sub-title">
+                        <nav class="breadcrumb breadcrumb-dash">
+                            <a href="#" class="breadcrumb-item"
+                            ><i class="anticon anticon-home m-r-5"></i>Home</a
+                            >
+                        </nav>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col align-self-start">
+                                <h4>Quản lý quyền hạn</h4>
+                            </div>
+                            <div class="col align-self-end text-right">
+                                <div class="col align-self-end text-right">
+                                    <a class="btn btn-info btn-tone m-r-5" th:href="@{/admin/role-form}">Thêm quyền hạn
+                                        mới</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="m-t-25" id="role-data-table">
+                            <!--                 data-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Content Wrapper END -->
+        </div>
+        <!-- Page Container END -->
+
+        <!-- Search Start-->
+        <div th:replace="admin/fragment/search-start :: search-start"></div>
+        <!-- Search End-->
+    </div>
+</div>
+
+<div th:replace="admin/fragment/scripts :: scripts"></div>
+<script th:src="@{/admin_style/js/role-manager-script.js}"></script>
+</body>
+</html>

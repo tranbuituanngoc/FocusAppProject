@@ -3397,7 +3397,7 @@ button.create-task-button:focus {
     text-align: left;
     font-family: var(--primary-raleway-medium-font-family);
     font-size: var(--primary-raleway-body-font-size);
-    font-weight: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
     position: absolute;
     left: 48px;
     top: 18px;
@@ -3488,7 +3488,7 @@ button.create-task-button:focus {
     text-align: center;
     font-family: var(--primary-raleway-medium-font-family);
     font-size: var(--primary-raleway-medium-font-size);
-    font-weight: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-big-font-weight);
     position: absolute;
     left: calc(50% - 38px);
     top: 15px;
@@ -3498,7 +3498,7 @@ button.create-task-button:focus {
     text-align: center;
     font-family: var(--primary-raleway-medium-font-family);
     font-size: var(--primary-raleway-medium-font-size);
-    font-weight: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
     position: absolute;
     left: calc(50% - 53px);
     top: 15px;
@@ -3668,7 +3668,7 @@ button.create-task-button:focus {
     text-align: center;
     font-family: var(--primary-raleway-medium-font-family);
     font-size: var(--primary-raleway-medium-font-size);
-    font-weight: var(--primary-raleway-medium-font-size);
+    font-weight: var(--primary-raleway-medium-font-weight);
     position: relative;
 }
 .saving-time {

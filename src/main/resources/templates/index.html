@@ -8,13 +8,13 @@
     <div class="index-content">
         <div class="work">
             <div class="index-welcome-title">
-                Xin chào <b><i><span th:text="${session.user.name}"></span></i></b> !,
+                Xin chào <i><span th:text="${session.user.name}"></span></i>!,
                 <br />
                 Hãy làm cho ngày hôm nay của bạn trở thành một ngày năng suất nhé!
             </div>
             <div class="to-do-table">
                 <div class="table-content">
-                    <div class="task-list">
+                    <div class="task-list" id="to-do-list">
                         <!-- list task to-do -->
                     </div>
                     <div class="to-do-table-title">To-do</div>
@@ -23,7 +23,7 @@
             </div>
             <div class="course-table">
                 <div class="table-content">
-                    <div class="task-list">
+                    <div class="task-list" id="course-list">
                         <!-- list course -->
                     </div>
                     <div class="course-table-title">Môn học</div>
@@ -75,6 +75,7 @@
 <div th:replace="fragment/script :: script"></div>
 <!--Home Script-->
 <script type="text/javascript" th:src="@{/user_style/js/homescript.js}"></script>
+<script type="text/javascript" th:src="@{/user_style/js/index-script.js}"></script>
 
 </body>
 </html>

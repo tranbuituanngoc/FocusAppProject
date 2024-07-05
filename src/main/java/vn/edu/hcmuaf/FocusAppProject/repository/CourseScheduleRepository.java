@@ -18,6 +18,9 @@ public interface CourseScheduleRepository extends JpaRepository<CourseSchedule, 
     @Query("SELECT cs FROM course_schedule cs WHERE cs.userCourse.user.id = :userId AND cs.week.id = :weekId")
     List<CourseSchedule> findByUserIdAndWeekId(@Param("userId") Long userId, @Param("weekId") Long weekId);
 
+    @Query("SELECT cs FROM course_schedule cs WHERE cs.userCourse.user.id = :userId AND cs.week.startDate <= :date AND cs.week.endDate >= :date")
+    List<CourseSchedule> findCourseSchedulesByUserIdAndDate(@Param("userId") Long userId, @Param("date") LocalDate date);
+
     @Query("SELECT cs FROM course_schedule cs WHERE cs.studySlot = :studySlot AND cs.week.startDate <= :date AND cs.week.endDate >= :date AND cs.dateNumType = :dateNumType")
     List<CourseSchedule> findCoursesByStudySlotAndDate(@Param("studySlot") int studySlot, @Param("date") LocalDate date, @Param("dateNumType") int dateNumType);
 }

@@ -10,6 +10,7 @@ import vn.edu.hcmuaf.FocusAppProject.models.User;
 import vn.edu.hcmuaf.FocusAppProject.repository.DepartmentRepository;
 import vn.edu.hcmuaf.FocusAppProject.repository.TrainingProgramRepository;
 import vn.edu.hcmuaf.FocusAppProject.repository.UserRepository;
+import vn.edu.hcmuaf.FocusAppProject.response.AdminUserResponse;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.UserServiceImp;
 
 import java.util.ArrayList;
@@ -83,6 +84,45 @@ public class UserService implements UserServiceImp {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         user.setDesiredScore(desiredScore);
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<AdminUserResponse> getAllUserForAdmin() {
+        List<User> userList = userRepository.findAll();
+        List<AdminUserResponse> adminUserResponses = new ArrayList<>();
+        for(User u : userList){
+            if(!u.isDelete()){
+                String provider = u.getProvider();
+                if (provider != null) {
+                    provider = provider.substring(0, 1).toUpperCase() + provider.substring(1).toLowerCase();
+                }
+                AdminUserResponse adminUserResponse = new AdminUserResponse();
+                adminUserResponse.setId(u.getId());
+                adminUserResponse.setName(u.getName());
+                adminUserResponse.setDepartment(u.getDepartment().getDepartmentName());
+                adminUserResponse.setTypeAccount(provider == null ? "Hệ thống" : provider);
+                adminUserResponse.setVerify(u.isVerify()? "Đã xác thực":"Chưa xác thực");
+                adminUserResponses.add(adminUserResponse);
+            }
+        }
+        return adminUserResponses;
+    }
+
+    @Override
+    public User findByUserId(long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public void deleteUser(long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        user.setDelete(true);
+        userRepository.save(user);
     }
 
 

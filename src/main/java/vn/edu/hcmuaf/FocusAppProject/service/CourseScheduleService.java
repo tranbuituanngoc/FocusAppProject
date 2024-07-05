@@ -209,6 +209,30 @@ public class CourseScheduleService implements CourseScheduleServiceImp {
         }
     }
 
+    @Override
+    public List<CourseScheduleDTO> getCourseSchedulesByDateForUser(Long userId) throws DataNotFoundException {
+        User user = userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException("User " + userId + " not found"));
+        LocalDate currentDate = LocalDate.now();
+        List<CourseSchedule> courseSchedules = courseScheduleRepository.findCourseSchedulesByUserIdAndDate(user.getId(), currentDate);
+        if(courseSchedules!= null) {
+            List<CourseScheduleDTO> courseScheduleDTOS = new ArrayList<>();
+            for (CourseSchedule courseSchedule : courseSchedules) {
+                Course course = courseSchedule.getUserCourse().getCourse();
+                courseScheduleDTOS.add(new CourseScheduleDTO().builder()
+                        .courseId(course.getId())
+                        .courseName(course.getCourseName())
+                        .courseRoom(courseSchedule.getCourseRoom())
+                        .dateNumType(courseSchedule.getDateNumType())
+                        .numOfLession(courseSchedule.getNumOfLession())
+                        .practice(courseSchedule.isPractice())
+                        .studySlot(courseSchedule.getStudySlot())
+                        .build());
+            }
+            return courseScheduleDTOS;
+        }
+        return null;
+    }
+
     @Scheduled(cron = "0 30 6 * * ?") // Run at 6:30AM
     public void sendCourseNotificationsSlot1() throws Exception {
         sendCourseNotifications(1);

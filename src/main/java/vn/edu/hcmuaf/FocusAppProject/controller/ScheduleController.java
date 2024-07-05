@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.hcmuaf.FocusAppProject.dto.CourseScheduleDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserScheduleDTO;
 import vn.edu.hcmuaf.FocusAppProject.service.Imp.CourseScheduleServiceImp;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tkb")
@@ -40,6 +43,19 @@ public class ScheduleController {
     public ResponseEntity<?> getScheduleByWeek(@RequestParam long userId, @RequestParam long weekId) {
         try {
             return ResponseEntity.ok(courseScheduleService.getCourseSchedulesByWeekIdAndUserId(weekId, userId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("/get-schedule-by-date")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getScheduleByDate(@RequestParam long userId) {
+        try {
+          List<CourseScheduleDTO> courseScheduleDTOS= courseScheduleService.getCourseSchedulesByDateForUser(userId);
+            if (courseScheduleDTOS == null || courseScheduleDTOS.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(courseScheduleDTOS);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

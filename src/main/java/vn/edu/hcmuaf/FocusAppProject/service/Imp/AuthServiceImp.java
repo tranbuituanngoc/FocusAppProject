@@ -2,9 +2,14 @@ package vn.edu.hcmuaf.FocusAppProject.service.Imp;
 
 import com.nimbusds.jose.util.Pair;
 import vn.edu.hcmuaf.FocusAppProject.dto.PasswordDTO;
+import vn.edu.hcmuaf.FocusAppProject.dto.RoleDTO;
+import vn.edu.hcmuaf.FocusAppProject.dto.UserAdminDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserDTO;
+import vn.edu.hcmuaf.FocusAppProject.exception.DataNotFoundException;
+import vn.edu.hcmuaf.FocusAppProject.models.Role;
 import vn.edu.hcmuaf.FocusAppProject.models.User;
 
+import java.util.List;
 import java.util.Map;
 
 public interface AuthServiceImp {
@@ -18,4 +23,12 @@ public interface AuthServiceImp {
     User findByEmail(String email);
     Pair<String, String> forgotPassword(String email) throws Exception;
     Pair<String, String> resetPassword(String newPassword, String token) throws Exception;
+    List<Role> getAllRole();
+    User createUserAdmin(UserDTO userDTO) throws Exception;
+    User updateUserAdmin(UserAdminDTO userDTO) throws Exception;
+    Role getRoleById(int roleId) throws DataNotFoundException;
+
+    Role createRole(RoleDTO role) throws Exception;
+    Role updateRole(RoleDTO role) throws Exception;
+    void deleteRole(int roleId) throws Exception;
 }

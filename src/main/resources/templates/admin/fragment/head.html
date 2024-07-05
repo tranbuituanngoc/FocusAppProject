@@ -1,0 +1,21 @@
+<head th:fragment="head">
+  <meta charset="utf-8"/>
+  <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+  <title th:text="${title}">Title</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" th:href="@{/admin_style/images/logo/favicon.png}"/>
+
+  <!-- page css -->
+  <link
+          th:href="@{/admin_style/vendors/datatables/dataTables.bootstrap.min.css}"
+          rel="stylesheet"
+  />
+  <link th:href="@{/admin_style/vendors/select2/select2.css}" rel="stylesheet">
+
+  <!-- Core css -->
+  <link th:href="@{/admin_style/css/app.min.css}" rel="stylesheet"/>
+</head>

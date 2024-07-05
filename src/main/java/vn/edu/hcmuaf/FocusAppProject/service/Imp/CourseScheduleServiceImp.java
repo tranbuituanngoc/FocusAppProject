@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.FocusAppProject.service.Imp;
 
+import vn.edu.hcmuaf.FocusAppProject.dto.CourseScheduleDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserScheduleDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.WeekDTO;
 import vn.edu.hcmuaf.FocusAppProject.exception.DataNotFoundException;
@@ -13,4 +14,6 @@ public interface CourseScheduleServiceImp {
     WeekResponse getWeeksByCurrentSemester() throws DataNotFoundException;
     CourseScheduleResponse getCourseSchedulesByWeekIdAndUserId(Long weekId, Long userId) throws DataNotFoundException;
     void sendCourseNotifications(int studySlot) throws Exception;
+    List<CourseScheduleDTO> getCourseSchedulesByDateForUser(Long userId) throws DataNotFoundException;
+
 }

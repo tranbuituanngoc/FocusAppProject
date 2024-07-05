@@ -11,6 +11,8 @@ import org.springframework.util.StringUtils;
 import vn.edu.hcmuaf.FocusAppProject.Util.EmailUtil;
 import vn.edu.hcmuaf.FocusAppProject.Util.SaltStringUtil;
 import vn.edu.hcmuaf.FocusAppProject.dto.PasswordDTO;
+import vn.edu.hcmuaf.FocusAppProject.dto.RoleDTO;
+import vn.edu.hcmuaf.FocusAppProject.dto.UserAdminDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserDTO;
 import vn.edu.hcmuaf.FocusAppProject.exception.DataNotFoundException;
 import vn.edu.hcmuaf.FocusAppProject.exception.PermissionDenyException;
@@ -27,6 +29,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -53,7 +56,7 @@ public class AuthService implements AuthServiceImp {
     @Override
     public boolean checkLogin(String email, String password) {
         User users = userRepository.findByEmail(email);
-        if (users == null) return false;
+        if (users == null || users.isDelete()) return false;
         return passwordEncoder.matches(password, users.getPassword());
     }
 
@@ -82,6 +85,7 @@ public class AuthService implements AuthServiceImp {
                 .provider(userDTO.getProvider())
                 .token(userDTO.getToken())
                 .isVerify(false)
+                .isDelete(false)
                 .verificationCode(verificationCode)
                 .timeValid(timeValid)
                 .status(true)
@@ -107,7 +111,7 @@ public class AuthService implements AuthServiceImp {
     public Pair<String, String> updateVerify(long userId, String verificationCode) throws Exception {
         Optional<User> existingUser = userRepository.findById(userId);
         User user = null;
-        if (existingUser.isPresent()) {
+        if (existingUser.isPresent() && !existingUser.get().isDelete()) {
             user = existingUser.get();
             Calendar c = Calendar.getInstance();
             Date todayDate = new Date(new java.util.Date().getTime());
@@ -174,7 +178,7 @@ public class AuthService implements AuthServiceImp {
     @Override
     public boolean updatePassword(PasswordDTO passwordDTO, long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        if (passwordEncoder.matches(passwordDTO.getOldPassword(), user.getPassword())) {
+        if (passwordEncoder.matches(passwordDTO.getOldPassword(), user.getPassword()) && !user.isDelete()) {
             String encodedPassword = passwordEncoder.encode(passwordDTO.getNewPassword());
             user.setPassword(encodedPassword);
             userRepository.save(user);
@@ -265,4 +269,68 @@ public class AuthService implements AuthServiceImp {
         passwordResetTokenReponsitory.delete(passwordResetToken);
         return Pair.of("success", "Mật khẩu đã được đặt lại thành công! Bạn sẽ được chuyển về trang đăng nhập sau 5 giây!");
     }
+
+    @Override
+    public List<Role> getAllRole() {
+        return roleRepository.findAll().stream().filter(role -> !role.isDelete()).toList();
+    }
+
+    @Override
+    public User createUserAdmin(UserDTO userDTO) throws Exception {
+        if (userRepository.existsByEmail(userDTO.getEmail())) {
+            throw new DataIntegrityViolationException("Email is already exists");
+        }
+        String password = userDTO.getPassword();
+        String encodedPassword = passwordEncoder.encode(password);
+        User user = User.builder()
+                .email(userDTO.getEmail())
+                .name(userDTO.getName())
+                .password(encodedPassword)
+                .isVerify(true)
+                .isDelete(false)
+                .status(true)
+                .roles(roleRepository.findById(userDTO.getRole_id()).orElseThrow(() -> new DataNotFoundException("Role not found")))
+                .build();
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateUserAdmin(UserAdminDTO userDTO) throws Exception {
+        User user = userRepository.findById(userDTO.getId()).orElseThrow(() -> new DataNotFoundException("User not found"));
+        user.setName(userDTO.getName());
+        user.setRoles(roleRepository.findById(userDTO.getRoleId()).orElseThrow(() -> new DataNotFoundException("Role not found")));
+        user.setEmail(userDTO.getEmail());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public Role getRoleById(int roleId) throws DataNotFoundException {
+        Role role = roleRepository.findById(roleId).orElseThrow(() -> new DataNotFoundException("Role not found"));
+        if (role.isDelete()) throw new DataNotFoundException("Role is deleted");
+        return role;
+    }
+
+    @Override
+    public Role createRole(RoleDTO role) throws Exception {
+        return roleRepository.save(Role.builder().roleName(role.getRoleName()).userPermission(role.isUserPermission()).rolePermission(role.isRolePermission()).build());
+    }
+
+    @Override
+    public Role updateRole(RoleDTO roleDTO) throws Exception {
+        Role role = roleRepository.findById(roleDTO.getId()).orElseThrow(() -> new DataNotFoundException("Role not found"));
+        if(role.isDelete()) throw new DataNotFoundException("Role is deleted");
+        role.setRoleName(roleDTO.getRoleName());
+        role.setUserPermission(roleDTO.isUserPermission());
+        role.setRolePermission(roleDTO.isRolePermission());
+        return roleRepository.save(role);
+    }
+
+    @Override
+    public void deleteRole(int roleId) throws Exception {
+        Role role = roleRepository.findById(roleId).orElseThrow(() -> new DataNotFoundException("Role not found"));
+        if(role.isDelete()) throw new DataNotFoundException("Role is deleted");
+        role.setDelete(true);
+        roleRepository.save(role);
+    }
+
 }

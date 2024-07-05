@@ -5,6 +5,7 @@ import vn.edu.hcmuaf.FocusAppProject.dto.UserDTO;
 import vn.edu.hcmuaf.FocusAppProject.dto.UserStudentInfoDTO;
 import vn.edu.hcmuaf.FocusAppProject.models.TrainingProgram;
 import vn.edu.hcmuaf.FocusAppProject.models.User;
+import vn.edu.hcmuaf.FocusAppProject.response.AdminUserResponse;
 
 import java.util.List;
 
@@ -15,4 +16,8 @@ public interface UserServiceImp {
     void updateStudentInfo(UserStudentInfoDTO userStudentInfoDTO);
     void updateTrainingProgram(long userId, long trainingProgramId);
     User updateDesiredScore(long userId, double desiredScore);
+    List<AdminUserResponse> getAllUserForAdmin();
+    User findByUserId(long userId);
+    boolean existsByEmail(String email);
+    void deleteUser(long userId);
 }

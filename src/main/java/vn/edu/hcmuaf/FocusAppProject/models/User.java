@@ -44,6 +44,8 @@ public class User implements UserDetails {
     private Timestamp timeValid;
     @Column(name = "status")
     private boolean status;
+    @Column(name="is_delete")
+    private boolean isDelete;
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "role_id")

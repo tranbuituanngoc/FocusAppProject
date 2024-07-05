@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="admin/fragment/head :: head"></head>
+
+<body>
+<div class="app">
+    <div class="layout">
+        <!-- Header START -->
+        <div th:replace="admin/fragment/header :: header"></div>
+        <!-- Header END -->
+
+        <!-- Side Nav START -->
+        <div th:replace="admin/fragment/side-nav :: side-nav"></div>
+        <!-- Side Nav END -->
+
+        <!-- Page Container START -->
+        <div class="page-container">
+            <div class="main-content">
+                <div class="page-header">
+                    <h2 class="header-title" th:text="${header}"></h2>
+                    <div class="header-sub-title">
+                        <nav class="breadcrumb breadcrumb-dash">
+                            <a th:href="@{/admin/home}" class="breadcrumb-item"><i
+                                    class="anticon anticon-home m-r-5"></i>Quản lý tài khoản</a>
+                            <span class="breadcrumb-item active" th:text="${header}"></span>
+                        </nav>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 th:text="${header}"></h3>
+                        <div class="m-t-25">
+                            <form id="form-validation">
+                                <div class="m-t-25">
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label control-label">Họ và Tên *</label>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control" name="name" th:value="${name}" required
+                                                   placeholder="Required *">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label control-label">Email</label>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control" name="inputEmail"
+                                                   th:value="${email}"
+                                                   placeholder="Enter a valid email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label control-label">Mật khẩu</label>
+                                        <div class="col-md-5">
+                                            <input id="password" type="password" class="form-control"
+                                                   th:attr="disabled=${userId != null ? 'disabled' : null}"
+                                                   name="inputPassword" placeholder="Enter your password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label control-label">Nhập lại mật khẩu</label>
+                                        <div class="col-md-5">
+                                            <input type="password" class="form-control" name="inputPasswordConfirm"
+                                                   th:attr="disabled=${userId != null ? 'disabled' : null}"
+                                                   placeholder="Enter your password again">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label control-label">Quyền hạn*</label>
+                                        <!-- Single select boxes -->
+                                        <div class="col-md-5">
+                                            <div class="m-b-15">
+                                                <select class="select2" name="role" th:value="${role}" id="role-selection" title="Role Selection">
+                                                    <!-- Options will be populated by Ajax -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group text-right">
+                                        <button class="btn btn-primary" id="add-user" th:if="${userId}==null">Thêm tài khoản</button>
+                                        <button class="btn btn-primary" id="update-user" th:if="${userId}!=null">Cập nhật tài khoản</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Container END -->
+
+        <!-- Search Start-->
+        <div th:replace="admin/fragment/search-start :: search-start"></div>
+        <!-- Search End-->
+    </div>
+</div>
+<script th:src="@{/admin_style/js/vendors.min.js}"></script>
+
+<!-- page js -->
+<script th:src="@{/admin_style/vendors/jquery-validation/jquery.validate.min.js}"></script>
+<script th:src="@{/admin_style/js/pages/form-validation.js}"></script>
+<script th:src="@{/admin_style/vendors/select2/select2.min.js}"></script>
+<script th:src="@{/admin_style/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/admin_style/vendors/quill/quill.min.js}"></script>
+<script th:src="@{/admin_style/js/pages/form-elements.js}"></script>
+<!-- Core JS -->
+<script th:src="@{/admin_style/js/app.min.js}"></script>
+<!--Sweet Alert-->
+<script th:src="@{'https://cdn.jsdelivr.net/npm/sweetalert2@11'}"></script>
+
+<script th:src="@{/admin_style/js/add-user-form-script.js}"></script>
+<script th:inline="javascript" th:if="${userId}!=null">
+    /*<![CDATA[*/
+    var roleId = /*[[${role}]]*/ 'default';
+    var userId = /*[[${userId}]]*/ 'default';
+    /*]]>*/
+</script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<div class="side-nav"  th:fragment="side-nav">
+  <div class="side-nav-inner">
+    <ul class="side-nav-menu scrollable">
+      <li class="nav-item dropdown">
+        <a th:href="@{/admin/home}">
+                  <span class="icon-holder">
+                    <i class="anticon anticon-team"></i>
+                  </span>
+          <span class="title">Quản lý người dùng</span>
+        </a>
+      </li>
+
+      <li class="nav-item dropdown" th:if="${session.user.roles.rolePermission}" >
+        <a th:href="@{/admin/role}">
+                  <span class="icon-holder">
+                    <i class="anticon anticon-safety"></i>
+                  </span>
+          <span class="title">Quản lý quyền hạn</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

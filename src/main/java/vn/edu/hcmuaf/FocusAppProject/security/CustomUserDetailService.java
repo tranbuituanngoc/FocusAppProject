@@ -26,7 +26,7 @@ public class CustomUserDetailService {
     public UserDetailsService userDetailsService() {
         return email -> {
             User user = userRepository.findByEmail(email);
-            if (user == null) {
+            if (user == null || user.isDelete()) {
                 throw new UsernameNotFoundException("User is not exist");
             }
             if (!user.isVerify()) {
