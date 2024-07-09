@@ -193,7 +193,8 @@ public class AuthService implements AuthServiceImp {
         String email = (String) data.get("email");
         if (userRepository.existsByEmail(email)) {
             User user = userRepository.findByEmail(email);
-            if (user.getProvider().equals("google")) {
+            String provider = user.getProvider()==null?"Hệ thống":user.getProvider();
+            if (provider.equals("google")) {
                 return user;
             } else {
                 user.setProvider("google");
@@ -208,7 +209,6 @@ public class AuthService implements AuthServiceImp {
                     .isVerify(true)
                     .status(true)
                     .roles(roleRepository.findRoleByRoleName("User"))
-                    .provider("google")
                     .build();
             return userRepository.save(user);
         }

@@ -90,8 +90,8 @@ public class UserService implements UserServiceImp {
     public List<AdminUserResponse> getAllUserForAdmin() {
         List<User> userList = userRepository.findAll();
         List<AdminUserResponse> adminUserResponses = new ArrayList<>();
-        for(User u : userList){
-            if(!u.isDelete()){
+        for (User u : userList) {
+            if (!u.isDelete()) {
                 String provider = u.getProvider();
                 if (provider != null) {
                     provider = provider.substring(0, 1).toUpperCase() + provider.substring(1).toLowerCase();
@@ -99,9 +99,13 @@ public class UserService implements UserServiceImp {
                 AdminUserResponse adminUserResponse = new AdminUserResponse();
                 adminUserResponse.setId(u.getId());
                 adminUserResponse.setName(u.getName());
-                adminUserResponse.setDepartment(u.getDepartment().getDepartmentName());
                 adminUserResponse.setTypeAccount(provider == null ? "Hệ thống" : provider);
-                adminUserResponse.setVerify(u.isVerify()? "Đã xác thực":"Chưa xác thực");
+                adminUserResponse.setVerify(u.isVerify() ? "Đã xác thực" : "Chưa xác thực");
+                if (u.getDepartment() != null) {
+                    adminUserResponse.setDepartment(u.getDepartment().getDepartmentName());
+                } else {
+                    adminUserResponse.setDepartment("Chưa cập nhật");
+                }
                 adminUserResponses.add(adminUserResponse);
             }
         }

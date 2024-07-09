@@ -11,7 +11,6 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import java.io.IOException;
 
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
-    private String value;
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
@@ -27,7 +26,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 System.out.println("Time valid is expired. UserId: " + userId);
                 request.getSession().setAttribute("info", userId);
             }  else {
-                request.getSession().setAttribute("error", value);
+                request.getSession().setAttribute("error", "Tài khoản không tồn tại hoặc chưa được xác thực. Vui lòng xác thực tài khoản trước khi đăng nhập!");
             }
         } else if (exception instanceof BadCredentialsException) {
             System.out.println("BadCredentialsException");

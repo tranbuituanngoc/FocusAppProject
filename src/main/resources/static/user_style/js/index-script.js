@@ -218,10 +218,6 @@ $(document).ready(function () {
                     } else if (xhr.status === 204) {
                         result = `
                     <div class="date-to-do" id="${dateToIso}">
-                        <div class="todo-date">
-                            <div class="to-do-date-title">${dateString}</div>
-                            <div class="to-do-date-line"></div>
-                        </div>
                         <div class="add-task" data-date="${dateToIso}">
                             <div class="frame-37">
                                 <div class="frame-38">

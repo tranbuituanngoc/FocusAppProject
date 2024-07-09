@@ -2,8 +2,8 @@ $(document).ready(function () {
     $("#add-role").on('click', function (e) {
         e.preventDefault();
         var name = $('input[name="name"]').val();
-        var userPermission = $('#user-permission').is(':checked');
-        var rolePermission = $('#role-permission').is(':checked');
+        var userPermission = $('#user-permit').is(':checked');
+        var rolePermission = $('#role-permit').is(':checked');
 
         $.ajax({
             url: "/api/nguoi-dung/create-role",

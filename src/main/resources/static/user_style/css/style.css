@@ -905,7 +905,6 @@ h5,
     height: 24px;
     position: relative;
 }
-
 .group {
     width: 66.67%;
     height: 25%;
@@ -1272,12 +1271,6 @@ h5,
     justify-content: flex-end;
 }
 
-.icon-park-outline-drop-down-list {
-    flex-shrink: 0;
-    width: 24px;
-    height: 24px;
-    position: relative;
-}
 
 .schedule-group {
     width: 66.67%;
@@ -2849,12 +2842,7 @@ input#to-do-date-picker:focus {
     outline: none;
     border: none;
 }
-.icon-park-outline-drop-down-list {
-    flex-shrink: 0;
-    width: 24px;
-    height: 24px;
-    position: relative;
-}
+
 .group {
     width: 66.67%;
     height: 25%;
@@ -3622,13 +3610,12 @@ button.create-task-button:focus {
     text-align-last: center;
 }
 
-.icon-park-outline-drop-down-list {
+.to-do-icon-park-outline-drop-down-list {
     flex-shrink: 0;
     width: 24px;
     height: 24px;
     position: relative;
     cursor: pointer;
-    z-index: 2;
 }
 
 .study-set-icon {
